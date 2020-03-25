@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateJornal extends Migration
+class CreateJournals extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateJornal extends Migration
      */
     public function up()
     {
-        Schema::create('jornal', function (Blueprint $table) {
+        Schema::create('journals', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('lesson_id')->unsigned();
             $table->foreign('lesson_id')->references('id')->on('lessons')->onDelete('cascade');
-            $table->integer('student_id');
-            $table->integer('exist');
-            $table->integer('mark');
+            $table->integer('student_id')->unsigned();
+            $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('exist');
+            $table->integer('mark')->nullable();;
         });
     }
 
@@ -30,6 +31,6 @@ class CreateJornal extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jornal');
+        Schema::dropIfExists('journals');
     }
 }

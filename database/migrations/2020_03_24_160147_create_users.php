@@ -15,21 +15,24 @@ class CreateUsers extends Migration
     {
             Schema::create('users', function (Blueprint $table) {
                 $table->increments('id');
-                $table->string('login');
+                $table->string('login')->unique();
                 $table->string('password');
                 $table->string('email')->unique();
                 $table->timestamp('email_verified_at')->nullable();
                 $table->string('first_name');
                 $table->string('surname');
-                $table->integer('phone')->unique();
-                $table->integer('type_user')->unsigned();
-                $table->integer('student_group')->unsigned();
-                $table->foreign('type_user')->references('id')->on('type_users')->onDelete('cascade');
-                $table->foreign('student_group')->references('id')->on('groups')->onDelete('cascade');
+                $table->string('phone')->unique();
+                $table->integer('type_user_id')->unsigned();
+                $table->foreign('type_user_id')->references('id')->on('type_users')->onDelete('cascade');
+                $table->integer('group_id')->unsigned()->nullable();
+                $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
                 $table->rememberToken();
                 $table->timestamps();
 
             });
+
+                
+
     }
 
     /**

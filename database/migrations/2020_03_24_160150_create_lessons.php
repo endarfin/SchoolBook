@@ -17,13 +17,13 @@ class CreateLessons extends Migration
             $table->increments('id');
             $table->timestamp('date_event');
             $table->integer('group_id')->unsigned();
-            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
             $table->integer('subject_id')->unsigned();
-            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
-            $table->integer('course_id')->unsigned();
-            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
-            $table->integer("class_room")->unsigned();
-            $table->foreign("class_room")->references('id')->on('class_rooms')->onDelete('cascade');
+            $table->integer('user_id')->unsigned();
+            $table->integer("class_room_id")->unsigned();
+            $table->foreign("class_room_id")->references('id')->on('class_rooms')->onDelete('cascade');
+            $table->foreign(array('group_id', 'subject_id'))->references(array('group_id', 'subject_id'))->on('group_subject')->onDelete('cascade');
+            $table->foreign(array('user_id', 'subject_id'))->references(array('user_id', 'subject_id'))->on('teacher_subject')->onDelete('cascade');
+           
         });
     }
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGroupsSabject extends Migration
+class CreateTeacherSubject extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateGroupsSabject extends Migration
      */
     public function up()
     {
-        Schema::create('groups_sabject', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('students_group')->unsigned();
-            $table->foreign('students_group')->references('id')->on('groups')->onDelete('cascade');
+        Schema::create('teacher_subject', function (Blueprint $table) {
+            
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('subject_id')->unsigned();
             $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
+            $table->primary(array('user_id', 'subject_id'));    
         });
     }
 
@@ -29,6 +30,6 @@ class CreateGroupsSabject extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('groups_sabject');
+        Schema::dropIfExists('teacher_subject');
     }
 }

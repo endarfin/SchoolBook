@@ -15,7 +15,7 @@ class CreateClassRooms extends Migration
     {
         Schema::create('class_rooms', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('room');
+            $table->string('name')->unique();
         });
     }
 
