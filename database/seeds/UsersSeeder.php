@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class UsersSeeder extends Seeder
 {
@@ -12,9 +14,9 @@ class UsersSeeder extends Seeder
     public function run()
     {
 
- 
+
     	DB::table('users')->insert([
-   
+
    ['id'=>1, 'login' =>'user 1', 'password'=>'secret 1', 'email'=>Str::random(5).'@gmail.com', 'first_name'=>'Имя 1', 'surname'=>'Фамилия 1', 'phone'=>'0986706801', 'type_user_id'=>3, 'group_id'=>NULL ],
 
    ['id'=>2, 'login' =>'user 2', 'password'=>'secret 2', 'email'=>Str::random(5).'@gmail.com', 'first_name'=>'Имя 2', 'surname'=>'Фамилия 2', 'phone'=>'0986706802', 'type_user_id'=>2, 'group_id'=>NULL ],
@@ -37,8 +39,8 @@ class UsersSeeder extends Seeder
    ['id'=>19, 'login' =>'user 19', 'password'=>'secret 19', 'email'=>Str::random(5).'@gmail.com', 'first_name'=>'Имя 19', 'surname'=>'Фамилия 19', 'phone'=>'0986706819', 'type_user_id'=>1, 'group_id'=>5 ],
    ['id'=>20, 'login' =>'user 20', 'password'=>'secret 20', 'email'=>Str::random(5).'@gmail.com', 'first_name'=>'Имя 20', 'surname'=>'Фамилия 20', 'phone'=>'0986706820', 'type_user_id'=>1, 'group_id'=>5 ],
    ['id'=>21, 'login' =>'user 21', 'password'=>'secret 21', 'email'=>Str::random(5).'@gmail.com', 'first_name'=>'Имя 21', 'surname'=>'Фамилия 21', 'phone'=>'0986706821', 'type_user_id'=>1, 'group_id'=>5 ],
-    									
+
     								]);
-    
+
 	}
 }
