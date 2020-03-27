@@ -13,6 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'SiteController@index');
+Route::get('/timetable', 'SiteController@timetable');
+Route::get('rank', 'SiteController@rank');
