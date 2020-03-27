@@ -16,3 +16,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'SiteController@index');
 Route::get('/timetable', 'SiteController@timetable');
 Route::get('rank', 'SiteController@rank');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
