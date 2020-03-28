@@ -35,8 +35,10 @@
           <div class="float-right ">
             <nav class="nav">
               <a class="nav-link" href="#">Личный кабинет</a>
-            <a class="nav-link" href="#">Обратная связь</a>
-          </nav>
+              @if(Auth::user() &&  Auth::user()->type_user_id == 3)
+              <a class="nav-link" href="/admin">Administrator</a>
+              @endif
+        </nav>
         </div>
         </div>
       </div>
@@ -45,6 +47,7 @@
 
       <div class="row align-items-end">
         <footer id="footer" class="footer navbar-fixed-bottom">© 2020 Copyright: <a href="#"> LEXA & PETROV </a>
+
     </footer>
     </div>
   </body>
