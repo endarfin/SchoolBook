@@ -31,7 +31,7 @@
                 </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="admin/message">Опубливать новость</a>
+                <a class="nav-link" href="admin/message">Опубликовать новость</a>
               </li>
               <li class="nav-item">
               <a class="nav-link" href="/">На сайт</a>
