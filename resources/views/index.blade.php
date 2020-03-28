@@ -28,7 +28,7 @@
     		<span class="sr-only">Next</span>
   		</a>
 	</div>
-	<div class="row align-items-center">
+	
 		<div class="card-deck">
   		<div class="card">
     		<img class="card-img-top" src="{{ asset('/img/logo.jpg')}}"  alt="Card image cap">
@@ -93,7 +93,7 @@
     			</div>
   			</div>
 		</div>
-	</div>
+	
 </div>
 @endsection
   

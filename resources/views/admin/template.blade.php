@@ -20,13 +20,13 @@
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-haspopup="true" aria-expanded="false">Управление</a>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" href="admin/user">Пользователи</a>
-                  <a class="dropdown-item" href="admin/timetable">Расписание</a>
-                  <a class="dropdown-item" href="admin/rank">Успеваемость</a>
-                  <a class="dropdown-item" href="admin/group">Группы</a>
-                  <a class="dropdown-item" href="admin/course">Курсы</a>
-                  <a class="dropdown-item" href="admin/subject">Предметы</a>
-                  <a class="dropdown-item" href="admin/room">Аудитории</a>
+                  <a class="dropdown-item" href="/admin/user">Пользователи</a>
+                  <a class="dropdown-item" href="/admin/timetable">Расписание</a>
+                  <a class="dropdown-item" href="/admin/rank">Успеваемость</a>
+                  <a class="dropdown-item" href="/admin/group">Группы</a>
+                  <a class="dropdown-item" href="/admin/course">Курсы</a>
+                  <a class="dropdown-item" href="/admin/subject">Предметы</a>
+                  <a class="dropdown-item" href="/admin/room">Аудитории</a>
                   
                 </div>
               </li>
@@ -47,7 +47,7 @@
       <div>@yield('content')</div>
   </article>
   <footer id="footer" class="footer navbar-fixed-bottom">
-    © 2020 Copyright: <a class="copy" href=""> LEXA & PETROV
+    © 2020 Copyright: <a class="copy" href=""> LEXA & PETROV</a>
   </footer>
   
   
