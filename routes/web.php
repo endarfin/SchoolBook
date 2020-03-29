@@ -21,8 +21,10 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 //правило: все урл админ лежат в группе админ, чтобы не писать префикс и все урл подчиняются одним правилам
-Route::prefix('admin')->group(function(){
-Route::get('/','admin\IndexController@index');
-Route::get('/subject','admin\SubjectController@index');
+//ADMIN
 
-});  
+Route::group(['namespace' => 'Admin', 'prefix' =>'admin'],function ()
+{
+    Route::get('/','IndexController@index');
+    Route::resource('subjects', 'SubjectController')->names('admin.subjects');
+});

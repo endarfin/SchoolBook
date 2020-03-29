@@ -9,6 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <link rel="stylesheet" href="{{ asset('/css/admin/style.css')}}">
+
     <title>Administrator</title>
   </head>
   <body>
@@ -20,18 +21,18 @@
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-haspopup="true" aria-expanded="false">Управление</a>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" href="/admin/user">Пользователи</a>
-                  <a class="dropdown-item" href="/admin/timetable">Расписание</a>
-                  <a class="dropdown-item" href="/admin/rank">Успеваемость</a>
-                  <a class="dropdown-item" href="/admin/group">Группы</a>
-                  <a class="dropdown-item" href="/admin/course">Курсы</a>
-                  <a class="dropdown-item" href="/admin/subject">Предметы</a>
-                  <a class="dropdown-item" href="/admin/room">Аудитории</a>
-                  
+                  <a class="dropdown-item" href="/">Пользователи</a>
+                  <a class="dropdown-item" href="/">Расписание</a>
+                  <a class="dropdown-item" href="/">Успеваемость</a>
+                  <a class="dropdown-item" href="/">Группы</a>
+                  <a class="dropdown-item" href="/">Курсы</a>
+                  <a class="dropdown-item" href="{{ route('admin.subjects.index') }}">Предметы</a>
+                  <a class="dropdown-item" href="/">Аудитории</a>
+
                 </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="admin/message">Опубликовать новость</a>
+                <a class="nav-link" href="/">Опубликовать новость</a>
               </li>
               <li class="nav-item">
               <a class="nav-link" href="/">На сайт</a>
@@ -43,14 +44,14 @@
 
     </header>
     <article>
-    
+
       <div>@yield('content')</div>
   </article>
   <footer id="footer" class="footer navbar-fixed-bottom">
     © 2020 Copyright: <a class="copy" href=""> LEXA & PETROV</a>
   </footer>
-  
-  
+
+
   </body>
   </html>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
