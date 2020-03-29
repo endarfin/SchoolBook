@@ -19,7 +19,7 @@ class CreateUsers extends Migration
                 $table->string('password');
                 $table->string('email')->unique();
                 $table->timestamp('email_verified_at')->nullable();
-                $table->string('first_name');
+                $table->string('name');
                 $table->string('surname');
                 $table->string('phone')->unique();
                 $table->integer('type_user_id')->unsigned();

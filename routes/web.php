@@ -13,10 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::get('/', 'SiteController@index');
+Route::get('/timetable', 'SiteController@timetable');
+Route::get('rank', 'SiteController@rank');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//правило: все урл админ лежат в группе админ, чтобы не писать префикс и все урл подчиняются одним правилам
+Route::prefix('admin')->group(function(){
+Route::get('/','admin\IndexController@index');
+
+});
