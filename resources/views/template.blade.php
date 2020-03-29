@@ -19,7 +19,7 @@
         <div class="col alert alert-light" id="header">
           <div class="float-left">
             <nav class="nav">
-              <a class="nav-link" href="/" disabled>Academy Book</a>
+              <a class="nav-link" href="/" disabled>AcademyBook</a>
               <a class="nav-link" href="timetable">Расписание</a>
               <a class="nav-link" href="rank">Оценки</a>
               <li class="nav-item dropdown">
@@ -45,7 +45,7 @@
         </div>
         </div>
       </div>
- <div class="container">  
+ <div class="container">
       <div>@yield('content')</div>
  </div>
       <div >
