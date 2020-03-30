@@ -23,11 +23,11 @@
                   <a class="dropdown-item" href="admin/user">Пользователи</a>
                   <a class="dropdown-item" href="admin/timetable">Расписание</a>
                   <a class="dropdown-item" href="admin/rank">Успеваемость</a>
-                  <a class="dropdown-item" href="admin/group">Группы</a>
+                  <a class="dropdown-item" href="{{route('admin.groups.index')}}">Группы</a>
                   <a class="dropdown-item" href="admin/course">Курсы</a>
                   <a class="dropdown-item" href="admin/subject">Предметы</a>
                   <a class="dropdown-item" href="admin/room">Аудитории</a>
-                  
+
                 </div>
               </li>
               <li class="nav-item">
@@ -43,14 +43,14 @@
 
     </header>
     <article>
-    
+
       <div>@yield('content')</div>
   </article>
   <footer id="footer" class="footer navbar-fixed-bottom">
     © 2020 Copyright: <a class="copy" href=""> LEXA & PETROV
-  </footer>
-  
-  
+  <footer>
+
+
   </body>
   </html>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
