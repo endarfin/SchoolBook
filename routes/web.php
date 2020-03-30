@@ -26,5 +26,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['namespace' => 'Admin', 'prefix' =>'admin'],function ()
 {
     Route::get('/','IndexController@index');
-    Route::resource('subjects', 'SubjectController')->names('admin.subjects');
+    Route::resource('subjects', 'AdminSubjectController')->names('admin.subjects');
 });

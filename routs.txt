@@ -9,13 +9,13 @@
 |        | GET|HEAD  | _debugbar/open                | debugbar.openhandler   | Barryvdh\Debugbar\Controllers\OpenHandlerController@handle             | Barryvdh\Debugbar\Middleware\DebugbarEnabled,Closure |
 |        | GET|HEAD  | _debugbar/telescope/{id}      | debugbar.telescope     | Barryvdh\Debugbar\Controllers\TelescopeController@show                 | Barryvdh\Debugbar\Middleware\DebugbarEnabled,Closure |
 |        | GET|HEAD  | admin                         |                        | App\Http\Controllers\Admin\IndexController@index                       | web                                                  |
-|        | POST      | admin/subjects                | admin.subjects.store   | App\Http\Controllers\Admin\SubjectController@store                     | web                                                  |
-|        | GET|HEAD  | admin/subjects                | admin.subjects.index   | App\Http\Controllers\Admin\SubjectController@index                     | web                                                  |
-|        | GET|HEAD  | admin/subjects/create         | admin.subjects.create  | App\Http\Controllers\Admin\SubjectController@create                    | web                                                  |
-|        | PUT|PATCH | admin/subjects/{subject}      | admin.subjects.update  | App\Http\Controllers\Admin\SubjectController@update                    | web                                                  |
-|        | GET|HEAD  | admin/subjects/{subject}      | admin.subjects.show    | App\Http\Controllers\Admin\SubjectController@show                      | web                                                  |
-|        | DELETE    | admin/subjects/{subject}      | admin.subjects.destroy | App\Http\Controllers\Admin\SubjectController@destroy                   | web                                                  |
-|        | GET|HEAD  | admin/subjects/{subject}/edit | admin.subjects.edit    | App\Http\Controllers\Admin\SubjectController@edit                      | web                                                  |
+|        | POST      | admin/subjects                | admin.subjects.store   | App\Http\Controllers\Admin\AdminSubjectController@store                | web                                                  |
+|        | GET|HEAD  | admin/subjects                | admin.subjects.index   | App\Http\Controllers\Admin\AdminSubjectController@index                | web                                                  |
+|        | GET|HEAD  | admin/subjects/create         | admin.subjects.create  | App\Http\Controllers\Admin\AdminSubjectController@create               | web                                                  |
+|        | PUT|PATCH | admin/subjects/{subject}      | admin.subjects.update  | App\Http\Controllers\Admin\AdminSubjectController@update               | web                                                  |
+|        | GET|HEAD  | admin/subjects/{subject}      | admin.subjects.show    | App\Http\Controllers\Admin\AdminSubjectController@show                 | web                                                  |
+|        | DELETE    | admin/subjects/{subject}      | admin.subjects.destroy | App\Http\Controllers\Admin\AdminSubjectController@destroy              | web                                                  |
+|        | GET|HEAD  | admin/subjects/{subject}/edit | admin.subjects.edit    | App\Http\Controllers\Admin\AdminSubjectController@edit                 | web                                                  |
 |        | GET|HEAD  | api/user                      |                        | Closure                                                                | api,auth:api                                         |
 |        | GET|HEAD  | home                          | home                   | App\Http\Controllers\HomeController@index                              | web,auth                                             |
 |        | POST      | login                         |                        | App\Http\Controllers\Auth\LoginController@login                        | web,guest                                            |

@@ -1,54 +1,51 @@
 @extends('admin.template')
 @section('content')
+    <h1 align="center">Предметы</h1>
+    <div class="row align-items-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-8">
+                    <table class="table table-striped ">
+                        <thead>
+                            <tr>
+                                <th scope="col">№</th>
+                                <th scope="col">Название предмета</th>
+                                <th scope="col">Изменить</th>
+                                <th scope="col">Удалить</th>
+                            </tr>
+                        </thead>
+                            <tbody>
+                            @foreach($subjects as $subject)
+                                <tr>
+                                    <th scope="row">{{ $subject->id }}</th>
+                                    <td>{{ $subject->name }}</td>
+                                    <td><a class="btn btn-primary" href="{{ route('admin.subjects.edit', $subject->id) }}">Edit</a></td>
+                                    <td><form action="{{ route('admin.subjects.destroy', $subject->id) }}" method="POST">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button class="btn btn-primary" type="submit">Delete</button>
+                                        </form></td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                    </table>
 
-<h1 align="center">Предметы</h1>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-8">
-
-                <table class="table table-hover auto__table table-bordered ">
-                    <thead>
-                    <tr>
-                        <th scope="col">№</th>
-                        <th scope="col">Название предмета</th>
-                        <th scope="col">Изменить</th>
-                        <th scope="col">Удалить</th>
-                    </tr>
-                    </thead>
-
-                    <tbody class="table table-secondary">
-                    @foreach($paginator as $item)
-                        @php /** @var \App\Models\Subject $item */ @endphp
-                        <tr>
-                            <td>{{ $item->id }}</td>
-                            <td>{{ $item->name }}</td>
-                            <td><a class="btn btn-primary" href="{{ route('admin.subjects.edit', $item->id) }}">Edit</a></td>
-                            <td><a class="btn btn-primary" href="{{ route('admin.subjects.destroy', $item->id) }}">Delete</a></td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-            <div class="text-right"><a class="btn btn-primary" href="{{ route('admin.subjects.create') }}">Add</a></div><br>
-        </div>
-
-{{--        <nav class="navbar-toggleable-md navbar-light bg-faded">--}}
-{{--            <a class="btn btn-primary" href="{{ route('admin.subjects.create') }}">Add</a>--}}
-{{--        </nav>--}}
-
-        @if ($paginator->total() > $paginator->count())
-
-        <div class="row justify-content-end" >
-            <div class="col-md-12">
-                <div>
-                    <div class="card-body">
-                        {{ $paginator->links() }}
+            @if ($subjects->total() > $subjects->count())
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        {{$subjects->links()}}
+                    </ul>
+                </nav>
+            @endif
+                </div>
+                    <div class="col-4">
+                        <div class="card">
+                            <nav class="nav nav-pills nav-justified">
+                                <a class="nav-item nav-link active" href="{{ route('admin.subjects.create') }} ">Add</a>
+                        </nav>
                     </div>
                 </div>
             </div>
         </div>
-        @endif
     </div>
-
 @endsection
