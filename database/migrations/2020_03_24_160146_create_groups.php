@@ -18,7 +18,8 @@ class CreateGroups extends Migration
             $table->string('name')->unique();
             $table->integer('course_id')->unsigned();
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
-
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

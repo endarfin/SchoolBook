@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ClassRoomsSeeder extends Seeder
 {
@@ -19,6 +20,6 @@ class ClassRoomsSeeder extends Seeder
         	$rooms[] = ['name' => $sName];
         }
 
-        \DB::table('class_rooms')->insert($rooms);
+        DB::table('class_rooms')->insert($rooms);
     }
 }

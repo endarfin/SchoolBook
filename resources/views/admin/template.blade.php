@@ -9,7 +9,6 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <link rel="stylesheet" href="{{ asset('/css/admin/style.css')}}">
-
     <title>Administrator</title>
   </head>
   <body>
@@ -21,13 +20,13 @@
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-haspopup="true" aria-expanded="false">Управление</a>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" href="/">Пользователи</a>
-                  <a class="dropdown-item" href="/">Расписание</a>
-                  <a class="dropdown-item" href="/">Успеваемость</a>
-                  <a class="dropdown-item" href="/">Группы</a>
-                  <a class="dropdown-item" href="/">Курсы</a>
+                  <a class="dropdown-item" href="admin/user">Пользователи</a>
+                  <a class="dropdown-item" href="admin/timetable">Расписание</a>
+                  <a class="dropdown-item" href="admin/rank">Успеваемость</a>
+                  <a class="dropdown-item" href="{{route('admin.groups.index')}}">Группы</a>
+                  <a class="dropdown-item" href="admin/course">Курсы</a>
                   <a class="dropdown-item" href="{{ route('admin.subjects.index') }}">Предметы</a>
-                  <a class="dropdown-item" href="/">Аудитории</a>
+                  <a class="dropdown-item" href="admin/room">Аудитории</a>
 
                 </div>
               </li>
@@ -48,8 +47,8 @@
       <div>@yield('content')</div>
   </article>
   <footer id="footer" class="footer navbar-fixed-bottom">
-    © 2020 Copyright: <a class="copy" href=""> LEXA & PETROV</a>
-  </footer>
+    © 2020 Copyright: <a class="copy" href=""> LEXA & PETROV
+  <footer>
 
 
   </body>

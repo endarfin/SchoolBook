@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class SubjectsSeeder extends Seeder
 {
@@ -19,6 +20,6 @@ class SubjectsSeeder extends Seeder
         	$subjects[] = ['name' => $sName];
         }
 
-        \DB::table('subjects')->insert($subjects);
+        DB::table('subjects')->insert($subjects);
     }
 }

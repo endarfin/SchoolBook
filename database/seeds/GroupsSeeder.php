@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class GroupsSeeder extends Seeder
 {
@@ -17,7 +18,7 @@ class GroupsSeeder extends Seeder
         	$sName = 'Группа '.$i;
         	$courseId = $i;
 
-        	$groups[] = [	
+        	$groups[] = [
         					'id' => $i,
         					'name' => $sName,
         					'course_id' => $courseId,
@@ -25,6 +26,6 @@ class GroupsSeeder extends Seeder
         				];
         }
 
-        \DB::table('groups')->insert($groups);
+        DB::table('groups')->insert($groups);
     }
 }
