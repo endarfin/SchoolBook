@@ -1,10 +1,19 @@
 @extends('admin.template')
 @section('content')
-    <h1 align="center">Предметы</h1>
     <div class="row align-items-center">
         <div class="container">
             <div class="row">
                 <div class="col-8">
+                    <h1 align="center">Предметы</h1>
+                    @if(session('success'))
+
+                        <div class="alert alert-success" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">x</span>
+                            </button>
+                            {{ session()->get('success') }}
+                        </div>
+                    @endif
                     <table class="table table-striped ">
                         <thead>
                             <tr>
@@ -29,7 +38,7 @@
                             @endforeach
                             </tbody>
                     </table>
-
+                    <div class="float-right"><a class="btn btn-primary" href="{{ route('admin.subjects.create') }}">Add</a></div>
             @if ($subjects->total() > $subjects->count())
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
@@ -37,13 +46,6 @@
                     </ul>
                 </nav>
             @endif
-                </div>
-                    <div class="col-4">
-                        <div class="card">
-                            <nav class="nav nav-pills nav-justified">
-                                <a class="nav-item nav-link active" href="{{ route('admin.subjects.create') }} ">Add</a>
-                        </nav>
-                    </div>
                 </div>
             </div>
         </div>

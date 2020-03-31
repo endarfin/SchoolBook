@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\AdminSubjectCreateRequest;
+use App\Http\Requests\AdminSubjectUpdateRequest;
 use App\Models\Subject;
 use App\Http\Controllers\Controller;
 
@@ -63,7 +64,7 @@ class AdminSubjectController extends Controller
      */
     public function show($id)
     {
-        dd(__METHOD__);
+        //
     }
 
     /**
@@ -87,7 +88,7 @@ class AdminSubjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AdminSubjectUpdateRequest $request, $id)
     {
         $subject = Subject::find($id);
         if (empty($subject)) {
@@ -118,6 +119,15 @@ class AdminSubjectController extends Controller
      */
     public function destroy($id)
     {
-        dd(__METHOD__);
+        $subject = Subject::find($id);
+        if ($subject) {
+            return redirect()
+                ->route('admin.subjects.index')
+                ->with(['success' => 'Успешно удалено']);
+        } else {
+            return back()
+                ->withErrors(['msg' => 'Ошибка сохранения']);
+
+        }
     }
 }
