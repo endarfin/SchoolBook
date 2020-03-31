@@ -5,6 +5,21 @@
         <div class="container">
             <div class="row">
                 <div class="col-8">
+                    @if($errors->any())
+                        <div class="col-4">
+                            <div class="alert alert-danger" role="alert">
+                                {{$errors->first()}}
+                            </div>
+                        </div>
+                    @endif
+                    @if(session('success'))
+                        <div class="col-4">
+                            <div class="alert alert-success" role="alert">
+
+                                {{session()->get('success')}}
+                            </div>
+                        </div>
+                    @endif
                     <table class="table table-striped">
                         <thead>
                             <tr>

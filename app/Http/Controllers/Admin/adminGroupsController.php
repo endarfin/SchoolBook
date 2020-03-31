@@ -69,17 +69,6 @@ class adminGroupsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        dd(__METHOD__);
-    }
-
-    /**
      * @param $id
      * @param GroupsRepository $groupRepository
      * @param CoursesRepository $coursesRepository
@@ -140,6 +129,14 @@ class adminGroupsController extends Controller
      */
     public function destroy($id)
     {
-        dd(__METHOD__);
+        //dd(__METHOD__, $id);
+        $softDelete =  $this->groupsRepository->softDelete($id);
+
+        if ($softDelete)
+        {
+            return redirect()
+                ->route('admin.groups.index')
+                ->with(['success' => 'Успешно удалина']);
+        }
     }
 }

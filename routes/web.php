@@ -33,5 +33,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['namespace' => 'Admin', 'prefix' =>'admin'],function ()
 {
     Route::get('/','IndexController@index');
-    Route::resource('groups', 'adminGroupsController')->names('admin.groups');
+    Route::resource('groups', 'adminGroupsController')->except("show")->names('admin.groups');
 });

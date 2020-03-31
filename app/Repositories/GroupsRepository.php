@@ -35,5 +35,14 @@ class GroupsRepository extends CoreRepository
     {
         return Model::class;
     }
+
+    public function softDelete($id)
+    {
+        $result = $this->startConditions()
+            ->find($id)
+            ->Delete();
+
+        return $result;
+    }
 }
 
