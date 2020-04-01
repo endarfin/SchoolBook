@@ -6,19 +6,28 @@
             <div class="row">
                 <div class="col-8">
                     @if($errors->any())
-                        <div class="col-4">
-                            <div class="alert alert-danger" role="alert">
-                                {{$errors->first()}}
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <div class="alert alert-danger" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">x</span>
+                                    </button>
+                                    {!! $errors->first() !!}
+                                </div>
                             </div>
                         </div>
                     @endif
                     @if(session('success'))
-                        <div class="col-4">
-                            <div class="alert alert-success" role="alert">
-
-                                {{session()->get('success')}}
+                            <div class="row justify-content-center">
+                                <div class="col-md-8">
+                                    <div class="alert alert-success" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">x</span>
+                                        </button>
+                                        {{ session()->get('success') }}
+                                    </div>
+                                </div>
                             </div>
-                        </div>
                     @endif
                     <table class="table table-striped">
                         <thead>
@@ -30,9 +39,9 @@
                                 <th scope="col">Удалить</th>
                             </tr>
                         </thead>
-                        @foreach($groups as $group)
                         <tbody>
-                        <tr>
+                        @foreach($groups as $group)
+                            <tr>
                             <th scope="row">{{$group->id}}</th>
                             <td>{{$group->name}}</td>
                             <td>{{$group->courses->name}}</td>
@@ -43,8 +52,8 @@
                                     <button class="btn btn-primary" type="submit">Delete</button>
                                 </form></td>
                         </tr>
-                        </tbody>
                         @endforeach
+                        </tbody>
                     </table>
                     @if($groups->total() > $groups->count())
                     <nav aria-label="Page navigation example">

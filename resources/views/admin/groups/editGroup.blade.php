@@ -7,15 +7,20 @@
             @if($errors->any())
                     <div class="col-4">
                         <div class="alert alert-danger" role="alert">
-                            {{$errors->first()}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">x</span>
+                            </button>
+                            {!! $errors->first() !!}
                         </div>
                     </div>
             @endif
             @if(session('success'))
                     <div class="col-4">
                         <div class="alert alert-success" role="alert">
-
-                            {{session()->get('success')}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">x</span>
+                            </button>
+                            {{ session()->get('success') }}
                         </div>
                     </div>
             @endif
