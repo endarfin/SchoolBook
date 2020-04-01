@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\AdminSubjectCreateRequest;
-use App\Http\Requests\AdminSubjectUpdateRequest;
+use App\Http\Requests\SubjectRequest;
 use App\Models\Subject;
 use App\Http\Controllers\Controller;
 
@@ -39,7 +38,7 @@ class AdminSubjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AdminSubjectCreateRequest $request)
+    public function store(SubjectRequest $request)
     {
         $data = $request->input();
         $subject = (new Subject())->create($data);
@@ -76,9 +75,8 @@ class AdminSubjectController extends Controller
     public function edit($id)
     {
         $subject = Subject::findOrFail($id);
-        $subjectList = Subject::all();
 
-        return view('admin.subjects.edit', compact('subject','subjectList'));
+        return view('admin.subjects.edit', compact('subject'));
     }
 
     /**
@@ -88,7 +86,7 @@ class AdminSubjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(AdminSubjectUpdateRequest $request, $id)
+    public function update(SubjectRequest $request, $id)
     {
         $subject = Subject::find($id);
         if (empty($subject)) {
@@ -119,7 +117,7 @@ class AdminSubjectController extends Controller
      */
     public function destroy($id)
     {
-        $subject = Subject::find($id);
+        $subject = Subject::find($id)->delete();
         if ($subject) {
             return redirect()
                 ->route('admin.subjects.index')
