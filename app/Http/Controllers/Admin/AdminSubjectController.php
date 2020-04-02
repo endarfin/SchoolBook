@@ -45,8 +45,8 @@ class AdminSubjectController extends Controller
 
         if ($subject) {
             return redirect()
-                ->route('admin.subjects.create', [$subject->id])
-                ->with(['success' => 'Успешно сохранено']);
+                ->route('admin.subjects.create')
+                ->with(['success' => 'Успешно добавлено']);
         } else {
             return back()
                 ->withErrors(['msg' => 'Ошибка сохранения'])

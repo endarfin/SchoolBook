@@ -1,6 +1,6 @@
 @extends('admin.template')
 @section('content')
-    <form method="POST" action="{{ route('admin.subjects.update', $subject->id) }}">
+    <form action="{{ route('admin.subjects.update', $subject->id) }}" method="post">
         @method('PATCH')
         @csrf
         <br>
