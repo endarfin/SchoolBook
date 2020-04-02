@@ -15,7 +15,7 @@ class AdminSubjectController extends Controller
      */
     public function index()
     {
-        $subjects = Subject::paginate(5);
+        $subjects = Subject::paginate(10);
         return view('admin.subjects.index', compact('subjects'));
     }
 
@@ -26,10 +26,7 @@ class AdminSubjectController extends Controller
      */
     public function create()
     {
-        $subjectList = Subject::all();
-
-        return view('admin.subjects.create',
-                    compact('subjectList'));
+        return view('admin.subjects.create');
     }
 
     /**
@@ -56,25 +53,14 @@ class AdminSubjectController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Subject $subject)
     {
-        $subject = Subject::findOrFail($id);
+        if (!$subject) { abort (404); }
 
         return view('admin.subjects.edit', compact('subject'));
     }
@@ -83,15 +69,14 @@ class AdminSubjectController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param
      * @return \Illuminate\Http\Response
      */
-    public function update(SubjectRequest $request, $id)
+    public function update(SubjectRequest $request, Subject $subject)
     {
-        $subject = Subject::find($id);
-        if (empty($subject)) {
+       if (empty($subject)) {
             return back()
-                ->withErrors(['msg' => "Запись id = [{$id}] не найдена"])
+                ->withErrors(['msg' => "Запись id = [$subject->$id] не найдена"])
                 ->withInput();
         }
 
@@ -112,12 +97,13 @@ class AdminSubjectController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Subject $subject)
     {
-        $subject = Subject::find($id)->delete();
+        $subject->delete();
+
         if ($subject) {
             return redirect()
                 ->route('admin.subjects.index')
