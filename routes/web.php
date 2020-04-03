@@ -29,11 +29,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 //Так будет красивей
-Route::group(['namespace' => 'Admin', 'prefix' =>'admin'],function ()
-{
-    Route::get('/','IndexController@index');
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
+    Route::get('/', 'IndexController@index');
     Route::resource('groups', 'adminGroupsController')->except("show")->names('admin.groups');
     Route::resource('subjects', 'AdminSubjectController')->names('admin.subjects');
+    Route::resource('Lessons', 'AdminLessonsController')->except("show")->names('admin.lessons');
+    Route::get('timetable/{name}/{id}', 'AdminTimetable@showTimetable')->name('admin.showTimetable');
 });
 
 
