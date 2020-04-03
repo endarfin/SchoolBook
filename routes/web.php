@@ -34,6 +34,8 @@ Route::group(['namespace' => 'Admin', 'prefix' =>'admin'],function ()
     Route::get('/','IndexController@index');
     Route::resource('groups', 'adminGroupsController')->except("show")->names('admin.groups');
     Route::resource('subjects', 'AdminSubjectController')->names('admin.subjects');
+    Route::resource('users', 'AdminUserController')->names('admin.users');
+    Route::resource('users/typeusers', 'AdminTypeUserController')->names('admin.typeusers');
 });
 
 
