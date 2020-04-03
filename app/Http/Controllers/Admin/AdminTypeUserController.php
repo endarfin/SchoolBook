@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\TypeUser;
-use Illuminate\Http\Request;
 
 class AdminTypeUserController extends Controller
 {
@@ -15,7 +14,9 @@ class AdminTypeUserController extends Controller
      */
     public function index()
     {
-        //
+        $TypeUser = TypeUser::all();
+        return view('admin.users.types.index', compact('$TypeUser'));
+
     }
 
     /**
@@ -58,7 +59,7 @@ class AdminTypeUserController extends Controller
      */
     public function edit(TypeUser $typeUser)
     {
-        //
+        dd(1);
     }
 
     /**

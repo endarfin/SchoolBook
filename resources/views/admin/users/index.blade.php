@@ -1,5 +1,7 @@
 @extends('admin.template')
 @section('content')
+    awvawvasdvasd
+    <div class="float"><a class="btn btn-primary" href="{{ route('admin.types.index') }}">TypeUsers</a></div>
     <div class="row align-items-center">
         <div class="container">
             <div class="row">
@@ -8,7 +10,7 @@
                     @if(session('success'))
 
                         <div class="alert alert-success" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <button types="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">x</span>
                             </button>
                             {{ session()->get('success') }}
@@ -32,7 +34,7 @@
                                     <td><form action="{{ route('admin.subjects.destroy', $subject->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button class="btn btn-primary" type="submit">Delete</button>
+                                            <button class="btn btn-primary" types="submit">Delete</button>
                                         </form></td>
                                 </tr>
                             @endforeach

@@ -26,7 +26,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 //Route::get('/','admin\IndexController@index');
 //
 //});
-
+Route::group(['namespace' => 'Admin', 'prefix' =>'admin/users',],function ()
+{
+    Route::resource('types', 'AdminTypeUserController')->names('admin.types');
+});
 
 //Так будет красивей
 Route::group(['namespace' => 'Admin', 'prefix' =>'admin'],function ()
@@ -35,7 +38,6 @@ Route::group(['namespace' => 'Admin', 'prefix' =>'admin'],function ()
     Route::resource('groups', 'adminGroupsController')->except("show")->names('admin.groups');
     Route::resource('subjects', 'AdminSubjectController')->names('admin.subjects');
     Route::resource('users', 'AdminUserController')->names('admin.users');
-    Route::resource('users/typeusers', 'AdminTypeUserController')->names('admin.typeusers');
 });
 
 

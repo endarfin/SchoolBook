@@ -13,7 +13,7 @@ return array(
 
     'filename'  => '_ide_helper',
     'format'    => 'php',
-    
+
     'meta_filename' => '.phpstorm.meta.php',
 
     /*
@@ -131,17 +131,17 @@ return array(
     | Support for custom DB types
     |--------------------------------------------------------------------------
     |
-    | This setting allow you to map any custom database type (that you may have
+    | This setting allow you to map any custom database types (that you may have
     | created using CREATE TYPE statement or imported using database plugin
-    | / extension to a Doctrine type.
+    | / extension to a Doctrine types.
     |
     | Each key in this array is a name of the Doctrine2 DBAL Platform. Currently valid names are:
     | 'postgresql', 'db2', 'drizzle', 'mysql', 'oracle', 'sqlanywhere', 'sqlite', 'mssql'
     |
     | This name is returned by getName() method of the specific Doctrine/DBAL/Platforms/AbstractPlatform descendant
     |
-    | The value of the array is an array of type mappings. Key is the name of the custom type,
-    | (for example, "jsonb" from Postgres 9.4) and the value is the name of the corresponding Doctrine2 type (in
+    | The value of the array is an array of types mappings. Key is the name of the custom types,
+    | (for example, "jsonb" from Postgres 9.4) and the value is the name of the corresponding Doctrine2 types (in
     | our case it is 'json_array'. Doctrine types are listed here:
     | http://doctrine-dbal.readthedocs.org/en/latest/reference/types.html
     |
@@ -187,7 +187,7 @@ return array(
     | Property Casts
     |--------------------------------------------------------------------------
     |
-    | Cast the given "real type" to the given "type".
+    | Cast the given "real types" to the given "types".
     |
     */
     'type_overrides' => array(

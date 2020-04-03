@@ -1,14 +1,15 @@
 @extends('admin.template')
 @section('content')
+    adfbsdfbsdfbsd
     <div class="row align-items-center">
         <div class="container">
             <div class="row">
                 <div class="col-8">
-                    <h1 align="center">Предметы</h1>
+                    <h1 align="center">Тип пользователей на сайте</h1>
                     @if(session('success'))
 
                         <div class="alert alert-success" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <button types="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">x</span>
                             </button>
                             {{ session()->get('success') }}
@@ -18,34 +19,27 @@
                         <thead>
                             <tr>
                                 <th scope="col">№</th>
-                                <th scope="col">Название предмета</th>
+                                <th scope="col">Тип пользователя</th>
                                 <th scope="col">Изменить</th>
                                 <th scope="col">Удалить</th>
                             </tr>
                         </thead>
                             <tbody>
-                            @foreach($subjects as $subject)
+                            @foreach($typeUser as $typeUser)
                                 <tr>
-                                    <th scope="row">{{ $subject->id }}</th>
-                                    <td>{{ $subject->name }}</td>
-                                    <td><a class="btn btn-primary" href="{{ route('admin.subjects.edit', $subject->id) }}">Edit</a></td>
-                                    <td><form action="{{ route('admin.subjects.destroy', $subject->id) }}" method="POST">
+                                    <th scope="row">{{ $typeUser->id }}</th>
+                                    <td>{{ $typeUser->name }}</td>
+                                    <td><a class="btn btn-primary" href="{{ route('admin.types.edit', $typeUser->id) }}">Edit</a></td>
+                                    <td><form action="{{ route('admin.types.destroy', $typeUser->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button class="btn btn-primary" type="submit">Delete</button>
+                                            <button class="btn btn-primary" types="submit">Delete</button>
                                         </form></td>
                                 </tr>
                             @endforeach
                             </tbody>
                     </table>
-                    <div class="float-right"><a class="btn btn-primary" href="{{ route('admin.subjects.create') }}">Add</a></div>
-            @if ($subjects->total() > $subjects->count())
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        {{$subjects->links()}}
-                    </ul>
-                </nav>
-            @endif
+                    <div class="float-right"><a class="btn btn-primary" href="{{ route('admin.types.create') }}">Add</a></div>
                 </div>
             </div>
         </div>
