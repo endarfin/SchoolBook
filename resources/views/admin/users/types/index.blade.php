@@ -1,6 +1,5 @@
 @extends('admin.template')
 @section('content')
-    adfbsdfbsdfbsd
     <div class="row align-items-center">
         <div class="container">
             <div class="row">
@@ -25,7 +24,7 @@
                             </tr>
                         </thead>
                             <tbody>
-                            @foreach($type as $type)
+                            @foreach($typeUser as $type)
                                 <tr>
                                     <th scope="row">{{ $type->id }}</th>
                                     <td>{{ $type->name }}</td>
