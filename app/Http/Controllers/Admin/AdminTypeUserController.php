@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\TypeUser;
+use App\Http\Requests\TypeUserRequest;
 
 class AdminTypeUserController extends Controller
 {
@@ -26,7 +27,7 @@ class AdminTypeUserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.users.types.create');
     }
 
     /**
@@ -35,20 +36,20 @@ class AdminTypeUserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TypeUserRequest $request)
     {
-        //
-    }
+        $data = $request->input();
+        $typeUser = (new TypeUser())->create($data);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\TypeUser  $typeUser
-     * @return \Illuminate\Http\Response
-     */
-    public function show(TypeUser $typeUser)
-    {
-        //
+        if ($typeUser) {
+            return redirect()
+                ->route('admin.types.create')
+                ->with(['success' => 'Успешно добавлено']);
+        } else {
+            return back()
+                ->withErrors(['msg' => 'Ошибка сохранения'])
+                ->withInput();
+        }
     }
 
     /**
