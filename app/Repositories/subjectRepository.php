@@ -1,42 +1,45 @@
 <?php
+
 namespace App\Repositories;
 
-use App\Models\Groups as Model;
-
+use App\Models\Subject as Model;
 /**
- * Class GroupsRepository
- * @package App\Repositories
+ * Class SubjectRepository.
  */
-class GroupsRepository extends CoreRepository
+class SubjectRepository extends CoreRepository
 {
     /**
-     * @param int $id
-     * @return Model
+     * @return string
+     *  Return the model
+     * Получить модель для редактирования
      */
+    public function getModelClass()
+    {
+        return Model::class;
+    }
+
     public function getEdit($id)
     {
         return $this->startConditions()->find($id);
     }
 
-    public function getAllWithPaginate($perPage)
+
+    /**
+     * Получить категории для вывода пагинатором
+     */
+
+    public function getAllWithPaginate($perPage = null)
     {
-        $columns = ['id', 'name', 'course_id'];
+        $columns = ['id', 'name'];
+
         $result = $this
             ->startConditions()
             ->select($columns)
-            ->with(['courses:id,name'])
             ->paginate($perPage);
         return $result;
     }
-    /**
-     * @return string
-     */
-    protected function getModelClass()
-    {
-        return Model::class;
-    }
 
-    public function softDelete($id)
+    public function itemDelete($id)
     {
         $result = $this->startConditions()
             ->find($id)
@@ -44,6 +47,7 @@ class GroupsRepository extends CoreRepository
 
         return $result;
     }
+
     public function getForComboBox()
     {
         $columns = ['id', 'name'];
@@ -56,4 +60,3 @@ class GroupsRepository extends CoreRepository
         return $result;
     }
 }
-

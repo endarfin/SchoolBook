@@ -50,9 +50,9 @@
                                 <td>{{$lesson->Subject->name}}</td>
                                 <td><a href="{{route('admin.showTimetable',['name'=>'user_id','id'=>$lesson->user_id])}}">{{$lesson->Users->surname}}</a></td>
                                 <td><a href="{{route('admin.showTimetable',['name'=>'class_room_id','id'=>$lesson->class_room_id])}}">{{$lesson->ClassRooms->name}}</a></td>
-                                <td>{{date( "d:m:Y" , $lesson->date_event)}}</td>
+                                <td>{{date( "d-m-Y H:m" , $lesson->date_event)}}</td>
                                 <td><a class="btn btn-primary" href="{{ route('admin.lessons.edit', $lesson->id) }}" role="button">Edit</a></td>
-                                <td><form action="{{ route('admin.lessons.destroy', $lesson->group_id) }}" method="POST">
+                                <td><form action="{{ route('admin.lessons.destroy', $lesson->id) }}" method="POST">
                                         @method('DELETE')
                                         @csrf
                                         <button class="btn btn-primary" type="submit">Delete</button>

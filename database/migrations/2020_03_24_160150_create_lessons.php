@@ -24,6 +24,8 @@ class CreateLessons extends Migration
             $table->foreign("class_room_id")->references('id')->on('class_rooms')->onDelete('cascade');
             $table->foreign(array('group_id', 'subject_id'))->references(array('group_id', 'subject_id'))->on('group_subject')->onDelete('cascade');
             $table->foreign(array('user_id', 'subject_id'))->references(array('user_id', 'subject_id'))->on('teacher_subject')->onDelete('cascade');
+            $table->timestamps();
+            $table->softDeletes();
 
         });
     }

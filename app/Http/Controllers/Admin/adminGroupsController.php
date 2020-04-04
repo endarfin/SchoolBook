@@ -55,7 +55,6 @@ class adminGroupsController extends Controller
         $group = $request->input();
         $result = new Groups($group);
         $result->save();
-
         if ($result)
         {
             return redirect()
@@ -108,7 +107,6 @@ class adminGroupsController extends Controller
         $result = $ed_group
             ->fill($date)
             ->save();
-
         if ($result)
         {
             return redirect()

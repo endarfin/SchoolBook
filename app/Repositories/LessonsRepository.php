@@ -63,5 +63,24 @@ class LessonsRepository extends CoreRepository
 
         return $result;
     }
+
+    public function upDate($ed_lesson, $request)
+    {
+        $date = $request->all();
+        $result = $ed_lesson
+            ->fill($date)
+            ->save();
+        return  $result;
+    }
+    public function lessonCreated($request)
+    {
+            $request['date_event'] = strtotime($request['date_event']);
+            $lesson = $request->input();
+
+            $result = $this->startConditions()
+                ->create($lesson);
+            return $result;
+
+    }
 }
 

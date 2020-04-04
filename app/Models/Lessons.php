@@ -3,15 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Lessons extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'date_event',
-        'group_id ',
-        'subject_id ',
-        'user_id ',
-        'class_room_id ',
+        'group_id',
+        'subject_id',
+        'user_id',
+        'class_room_id',
     ];
 
     public function Groups()

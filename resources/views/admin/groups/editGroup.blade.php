@@ -10,7 +10,7 @@
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">x</span>
                             </button>
-                            {!! $errors->first() !!}
+                            {!! $errors->all() !!}
                         </div>
                     </div>
             @endif

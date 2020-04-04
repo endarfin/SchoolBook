@@ -3,20 +3,30 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AdminLessonsRequest;
+use App\Repositories\classRoomRepository;
 use App\Repositories\GroupsRepository;
 use App\Repositories\LessonsRepository;
-use Illuminate\Http\Request;
+use App\Repositories\subjectRepository;
+use App\Repositories\usersRepository;
+
 
 class AdminLessonsController extends Controller
 {
 
     private $groupsRepository;
     private $lessonsRepository;
+    private $subjectRepository;
+    private $usersRepository;
+    private $classRoomRepository;
 
     public function __construct()
     {
         $this->groupsRepository = app(GroupsRepository::class);
         $this->lessonsRepository = app(LessonsRepository::class);
+        $this->subjectRepository = app(subjectRepository::class);
+        $this->usersRepository = app(usersRepository::class);
+        $this->classRoomRepository = app(classRoomRepository::class);
     }
     /**
      * Display a listing of the resource.
@@ -37,7 +47,13 @@ class AdminLessonsController extends Controller
      */
     public function create()
     {
-        dd(__METHOD__);
+        $groups =  $this->groupsRepository->getForComboBox();
+        $subjects =  $this->subjectRepository->getForComboBox();
+        $teachers =  $this->usersRepository->getForComboBox();
+        $classRooms =  $this->classRoomRepository->getForComboBox();
+        //dd(__METHOD__, $lesson, $groups, $subjects, $teachers, $classRooms  );
+        return view('admin.lessons.createLessons', compact( 'groups', 'subjects', 'teachers', 'classRooms'));
+
     }
 
     /**
@@ -46,9 +62,20 @@ class AdminLessonsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AdminLessonsRequest $request)
     {
-        dd(__METHOD__, $request);
+        //dd(__METHOD__, $request);
+        $result = $this->lessonsRepository->lessonCreated($request);
+        if ($result)
+        {
+            return redirect()
+                ->route('admin.lessons.edit', $result->id)
+                ->with(['success' => 'Успешно создано']);
+        }else {
+            return back()
+                ->withErrors(['msg' => 'Ошибка соханения'])
+                ->withInput();
+        }
     }
 
     /**
@@ -70,7 +97,13 @@ class AdminLessonsController extends Controller
      */
     public function edit($id)
     {
-        dd(__METHOD__, $id);
+        $lesson =  $this->lessonsRepository->GetEdit($id);
+        $groups =  $this->groupsRepository->getForComboBox();
+        $subjects =  $this->subjectRepository->getForComboBox();
+        $teachers =  $this->usersRepository->getForComboBox();
+        $classRooms =  $this->classRoomRepository->getForComboBox();
+        //dd(__METHOD__, $lesson, $groups, $subjects, $teachers, $classRooms  );
+        return view('admin.lessons.editLessons', compact('lesson', 'groups', 'subjects', 'teachers', 'classRooms'));
     }
 
     /**
@@ -80,9 +113,36 @@ class AdminLessonsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AdminLessonsRequest $request, $id)
     {
-        dd(__METHOD__, $id, $request);
+        $ed_lesson = $this->lessonsRepository->getEdit($id);
+        if (empty($ed_lesson))
+        {
+            return back()
+                ->withErrors(['msg' => "Запись id={$id} не найдена"])
+                ->withInput();
+        }else{
+            $request['date_event'] = strtotime($request['date_event']);
+        }
+
+        $result = $this->lessonsRepository->upDate($ed_lesson, $request);
+//        $date = $request->input();
+//        $result = $ed_lesson
+//            ->fill($date)
+//            ->save();
+//        dd(__METHOD__, $id, $date);
+
+        if ($result)
+        {
+            return redirect()
+                ->route('admin.lessons.edit', $ed_lesson->id)
+                ->with(['success' => 'Успешно измененно']);
+        }else {
+            return back()
+                ->withErrors(['msg' => 'Ошибка соханения'])
+                ->withInput();
+        }
+
     }
 
     /**
@@ -93,6 +153,13 @@ class AdminLessonsController extends Controller
      */
     public function destroy($id)
     {
-        dd(__METHOD__, $id);
+        $softDelete = $this->lessonsRepository->softDelete($id);
+
+        if ($softDelete)
+        {
+            return redirect()
+                ->route('admin.groups.index')
+                ->with(['success' => 'Успешно удалина']);
+        }
     }
 }
