@@ -60,7 +60,9 @@ class AdminTypeUserController extends Controller
      */
     public function edit(TypeUser $typeUser)
     {
-        dd(1);
+        if (!$typeUser) { abort (404); }
+
+        return view('admin.users.types.edit', compact('typeUser'));
     }
 
     /**
