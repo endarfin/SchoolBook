@@ -14,8 +14,8 @@ class AdminTypeUserController extends Controller
      */
     public function index()
     {
-        $TypeUser = TypeUser::all();
-        return view('admin.users.types.index', compact('$TypeUser'));
+        $type= TypeUser::all();
+        return view('admin.users.types.index', compact('type'));
 
     }
 

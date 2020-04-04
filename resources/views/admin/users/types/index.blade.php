@@ -25,12 +25,12 @@
                             </tr>
                         </thead>
                             <tbody>
-                            @foreach($typeUser as $typeUser)
+                            @foreach($type as $type)
                                 <tr>
-                                    <th scope="row">{{ $typeUser->id }}</th>
-                                    <td>{{ $typeUser->name }}</td>
-                                    <td><a class="btn btn-primary" href="{{ route('admin.types.edit', $typeUser->id) }}">Edit</a></td>
-                                    <td><form action="{{ route('admin.types.destroy', $typeUser->id) }}" method="POST">
+                                    <th scope="row">{{ $type->id }}</th>
+                                    <td>{{ $type->name }}</td>
+                                    <td><a class="btn btn-primary" href="{{ route('admin.types.edit', $type->id) }}">Edit</a></td>
+                                    <td><form action="{{ route('admin.types.destroy', $type->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
                                             <button class="btn btn-primary" types="submit">Delete</button>
