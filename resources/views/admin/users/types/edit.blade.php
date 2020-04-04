@@ -1,6 +1,6 @@
 @extends('admin.template')
 @section('content')
-    <form action="{{ route('admin.subjects.update', $typeUser->id) }}" method="post">
+    <form action="{{ route('admin.types.update', $type->id) }}" method="post">
         @method('PATCH')
         @csrf
         <br>
@@ -40,12 +40,12 @@
                                     </li>
                                 </ul>
                                 <br>
-                                <div class="float-right">ID: {{ $typeUser->id }}</div>
+                                <div class="float-right">ID: {{ $type->id }}</div>
                                 <div class="tab-content">
                                     <div class="form-group">
                                         <div class="form-group">
                                             <label for="title">Название</label>
-                                            <input name="name" value="{{ $typeUser->name }}"
+                                            <input name="name" value="{{ $type->name }}"
                                             id="name"
                                             type="text"
                                             class="form-control"

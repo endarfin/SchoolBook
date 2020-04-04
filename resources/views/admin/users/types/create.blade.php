@@ -1,6 +1,6 @@
 @extends('admin.template')
 @section('content')
-    <form action="{{ route('admin.subjects.store') }}" method="post">
+    <form action="{{ route('admin.types.store') }}" method="post">
         @csrf
         <br>
         <div class="container">
@@ -50,7 +50,7 @@
                                             required>
                                         </div>
                                         <div class="float-right">
-                                            <a class="btn btn-primary" href="{{ route('admin.subjects.index') }}" >Back</a>
+                                            <a class="btn btn-primary" href="{{ route('admin.types.index') }}" >Back</a>
                                             <button type="submit" class="btn btn-primary" >Save</button>
                                         </div>
 

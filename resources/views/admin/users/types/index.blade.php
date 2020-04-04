@@ -24,7 +24,7 @@
                             </tr>
                         </thead>
                             <tbody>
-                            @foreach($typeUser as $type)
+                            @foreach($types as $type)
                                 <tr>
                                     <th scope="row">{{ $type->id }}</th>
                                     <td>{{ $type->name }}</td>
@@ -32,7 +32,7 @@
                                     <td><form action="{{ route('admin.types.destroy', $type->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button class="btn btn-primary" types="submit">Delete</button>
+                                    <button class="btn btn-primary" types="submit">Delete</button>
                                         </form></td>
                                 </tr>
                             @endforeach
