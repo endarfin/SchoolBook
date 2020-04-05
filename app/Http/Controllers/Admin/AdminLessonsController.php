@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminLessonsRequest;
 use App\Repositories\classRoomRepository;
 use App\Repositories\GroupsRepository;
+use App\Repositories\groupSubjectRepository;
 use App\Repositories\LessonsRepository;
 use App\Repositories\subjectRepository;
+use App\Repositories\teacherSubjectRepository;
 use App\Repositories\usersRepository;
 
 
@@ -19,6 +21,8 @@ class AdminLessonsController extends Controller
     private $subjectRepository;
     private $usersRepository;
     private $classRoomRepository;
+    private $groupSubjectRepository;
+    private $teacherSubjectRepository;
 
     public function __construct()
     {
@@ -27,6 +31,8 @@ class AdminLessonsController extends Controller
         $this->subjectRepository = app(subjectRepository::class);
         $this->usersRepository = app(usersRepository::class);
         $this->classRoomRepository = app(classRoomRepository::class);
+        $this->groupSubjectRepository = app(groupSubjectRepository::class);
+        $this->teacherSubjectRepository = app(teacherSubjectRepository::class);
     }
     /**
      * Display a listing of the resource.
@@ -36,7 +42,6 @@ class AdminLessonsController extends Controller
     public function index()
     {
         $lessons =  $this->lessonsRepository->getAllWithPaginate(10);
-        //dd($lessons);
         return view('admin.lessons.lessons', compact('lessons'));
     }
 
@@ -51,7 +56,6 @@ class AdminLessonsController extends Controller
         $subjects =  $this->subjectRepository->getForComboBox();
         $teachers =  $this->usersRepository->getForComboBox();
         $classRooms =  $this->classRoomRepository->getForComboBox();
-        //dd(__METHOD__, $lesson, $groups, $subjects, $teachers, $classRooms  );
         return view('admin.lessons.createLessons', compact( 'groups', 'subjects', 'teachers', 'classRooms'));
 
     }
@@ -64,8 +68,20 @@ class AdminLessonsController extends Controller
      */
     public function store(AdminLessonsRequest $request)
     {
-        //dd(__METHOD__, $request);
-        $result = $this->lessonsRepository->lessonCreated($request);
+        $lessons = $request;
+        $groupSubjects =  $this->groupSubjectRepository->getAllWhere($lessons->group_id);
+        $teacherSubjects =  $this->teacherSubjectRepository->getAllWhere($lessons->user_id);
+
+        $result = false;
+        foreach ($groupSubjects as $groupSubject)
+        {
+            foreach ($teacherSubjects as $teacherSubject)
+            {
+                if($lessons->subject_id == $groupSubject->subject_id)
+                    if ($teacherSubject->subject_id == $lessons->subject_id)
+                    $result = $this->lessonsRepository->lessonCreated($request);
+            }
+        }
         if ($result)
         {
             return redirect()
@@ -102,7 +118,6 @@ class AdminLessonsController extends Controller
         $subjects =  $this->subjectRepository->getForComboBox();
         $teachers =  $this->usersRepository->getForComboBox();
         $classRooms =  $this->classRoomRepository->getForComboBox();
-        //dd(__METHOD__, $lesson, $groups, $subjects, $teachers, $classRooms  );
         return view('admin.lessons.editLessons', compact('lesson', 'groups', 'subjects', 'teachers', 'classRooms'));
     }
 
@@ -116,21 +131,27 @@ class AdminLessonsController extends Controller
     public function update(AdminLessonsRequest $request, $id)
     {
         $ed_lesson = $this->lessonsRepository->getEdit($id);
+        $ed_request = $request;
         if (empty($ed_lesson))
         {
             return back()
                 ->withErrors(['msg' => "Запись id={$id} не найдена"])
                 ->withInput();
-        }else{
-            $request['date_event'] = strtotime($request['date_event']);
+        }
+        $groupSubjects =  $this->groupSubjectRepository->getAllWhere($ed_request->group_id);
+        $teacherSubjects =  $this->teacherSubjectRepository->getAllWhere($ed_request->user_id);
+
+        $result = false;
+        foreach ($groupSubjects as $groupSubject)
+        {
+            foreach ($teacherSubjects as $teacherSubject)
+            {
+                if($ed_request->subject_id == $groupSubject->subject_id)
+                    if ($teacherSubject->subject_id == $ed_request->subject_id)
+                        $result = $this->lessonsRepository->upDate($ed_lesson, $request);
+            }
         }
 
-        $result = $this->lessonsRepository->upDate($ed_lesson, $request);
-//        $date = $request->input();
-//        $result = $ed_lesson
-//            ->fill($date)
-//            ->save();
-//        dd(__METHOD__, $id, $date);
 
         if ($result)
         {
@@ -158,7 +179,7 @@ class AdminLessonsController extends Controller
         if ($softDelete)
         {
             return redirect()
-                ->route('admin.groups.index')
+                ->route('admin.lessons.index')
                 ->with(['success' => 'Успешно удалина']);
         }
     }

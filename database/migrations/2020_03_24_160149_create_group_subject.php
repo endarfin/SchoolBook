@@ -13,13 +13,13 @@ class CreateGroupSubject extends Migration
      */
     public function up()
     {
-        Schema::create('group_subject', function (Blueprint $table) {
-            
+        Schema::create('group_subjects', function (Blueprint $table) {
+
             $table->integer('group_id')->unsigned();
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
             $table->integer('subject_id')->unsigned();
             $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
-            $table->primary(array('group_id', 'subject_id'));    
+            $table->primary(array('group_id', 'subject_id'));
         });
     }
 

@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Models\Lessons as Model;
+
 /**
  * Class GroupsRepository
  * @package App\Repositories
@@ -24,8 +26,7 @@ class LessonsRepository extends CoreRepository
             ->startConditions()
             ->select($columns)
             ->orderBy('id', 'DESC')
-            ->with(['Subject:id,name','Users:id,surname','ClassRooms:id,name','Groups:id,name'])
-            //->with(['Subject:id,name'])
+            ->with(['Subject:id,name', 'Users:id,surname', 'ClassRooms:id,name', 'Groups:id,name'])
             ->paginate($perPage);
 
 
@@ -47,6 +48,7 @@ class LessonsRepository extends CoreRepository
         //dd($table, $id, $result);
         return $result;
     }
+
     /**
      * @return string
      */
@@ -67,19 +69,22 @@ class LessonsRepository extends CoreRepository
     public function upDate($ed_lesson, $request)
     {
         $date = $request->all();
+        $date['date_event'] = strtotime($request['date_event']);
         $result = $ed_lesson
             ->fill($date)
             ->save();
-        return  $result;
+        return $result;
     }
+
     public function lessonCreated($request)
     {
-            $request['date_event'] = strtotime($request['date_event']);
-            $lesson = $request->input();
+        $request['date_event'] = strtotime($request['date_event']);
+        $lesson = $request->input();
 
-            $result = $this->startConditions()
-                ->create($lesson);
-            return $result;
+       // dd($request, $lesson);
+        $result = $this->startConditions()
+            ->create($lesson);
+        return $result;
 
     }
 }
