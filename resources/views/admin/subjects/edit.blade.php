@@ -56,7 +56,6 @@
                                             <a class="btn btn-primary" href="{{ route('admin.subjects.index') }}">Back</a>
                                             <button type="submit" class="btn btn-primary">Save</button>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -66,5 +65,4 @@
             </div>
         </div>
     </form>
-
 @endsection

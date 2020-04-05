@@ -75,25 +75,10 @@
                                     <div class="form-group">
                                         <input name="password" value="{{ old('password') }}" placeholder="Пароль" type="text" class="form-control" required>
                                     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
                                         <div class="float-right">
                                             <a class="btn btn-primary" href="{{ route('admin.users.index') }}" >Back</a>
                                             <button type="submit" class="btn btn-primary" >Save</button>
                                         </div>
-
-
                                 </div>
                             </div>
                         </div>
@@ -102,5 +87,4 @@
             </div>
         </div>
     </form>
-
 @endsection

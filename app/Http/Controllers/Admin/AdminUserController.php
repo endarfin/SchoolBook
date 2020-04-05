@@ -62,25 +62,19 @@ class AdminUserController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        if (!user) { abort (404); }
+
+        $userList = User::all();
+
+        return view('admin.subjects.edit', compact('subject','subjectList'));
+
     }
 
     /**
@@ -101,8 +95,18 @@ class AdminUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+
+        if ($user) {
+            return redirect()
+                ->route('admin.users.index')
+                ->with(['success' => 'Успешно удалено']);
+        } else {
+            return back()
+                ->withErrors(['msg' => 'Ошибка сохранения']);
+
+        }
     }
 }
