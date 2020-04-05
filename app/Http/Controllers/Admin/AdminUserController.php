@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Groups;
+use App\Models\Type;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
+
 
 
 class AdminUserController extends Controller
@@ -27,7 +31,12 @@ class AdminUserController extends Controller
      */
     public function create()
     {
-        //
+        $userList = User::all();
+        $types = Type::all();
+        $groups = Groups::all();
+
+        return view('admin.users.create',
+            compact('userList','types','groups'));
     }
 
     /**
@@ -36,9 +45,20 @@ class AdminUserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        $data = $request->input();
+        $user = (new User())->create($data);
+
+        if ($user) {
+            return redirect()
+                ->route('admin.users.create', [$user->id])
+                ->with(['success' => 'Успешно добавлено']);
+        } else {
+            return back()
+                ->withErrors(['msg' => 'Ошибка сохранения'])
+                ->withInput();
+        }
     }
 
     /**

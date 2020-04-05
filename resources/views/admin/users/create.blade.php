@@ -1,6 +1,6 @@
 @extends('admin.template')
 @section('content')
-    <form action="{{ route('admin.subjects.store') }}" method="post">
+    <form action="{{ route('admin.users.store') }}" method="post">
         @csrf
         <br>
         <div class="container">
@@ -41,20 +41,59 @@
                                 <br>
                                 <div class="tab-content">
                                     <div class="form-group">
-                                        <div class="form-group">
-                                            <label for="title">Название</label>
-                                            <input name="name"
-                                            id="name"
-                                            type="text"
-                                            class="form-control"
-                                            required>
-                                        </div>
+                                        <input name="name" placeholder="Имя" type="text" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input name="surname" placeholder="Фамилия" type="text" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input name="phone" placeholder="Телефон, для примера 0986706899" type="text" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input name="email" placeholder="Почта" type="text" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <select class="form-control" name="type_user_id" type="text" required>
+                                            <option value="" disabled selected hidden>Тип пользователя</option>
+                                            @foreach($types as $type)
+                                                <option value="{{$type->id}}">{{$type->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <select class="form-control" name="group_id" type="text" required>
+                                            <option value="" disabled selected hidden>Группа</option>
+                                            <option value="">нет</option>
+                                            @foreach($groups as $group)
+                                                <option value="{{$group->id}}">{{$group->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <input name="login" placeholder="Логин" type="text" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input name="password" placeholder="Пароль" type="text" class="form-control" required>
+                                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
                                         <div class="float-right">
-                                            <a class="btn btn-primary" href="{{ route('admin.subjects.index') }}" >Back</a>
+                                            <a class="btn btn-primary" href="{{ route('admin.users.index') }}" >Back</a>
                                             <button type="submit" class="btn btn-primary" >Save</button>
                                         </div>
 
-                                    </div>
+
                                 </div>
                             </div>
                         </div>

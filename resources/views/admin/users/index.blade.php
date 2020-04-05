@@ -3,7 +3,7 @@
     <div class="row align-items-center">
         <div class="container">
             <div class="row">
-                <div class="col-11">
+                <div class="col-13">
                     <h1 align="center">Пользователи</h1>
                     @if(session('success'))
                         <div class="alert alert-success" role="alert">
@@ -23,8 +23,8 @@
                                 <th scope="col">Почта</th>
                                 <th scope="col"><a href="{{ route('admin.types.index') }}">Тип пользователя</a></th>
                                 <th scope="col"><a href="{{ route('admin.groups.index') }}">Группа</a></th>
-{{--                                <th scope="col">Логин</th>--}}
-{{--                                <th scope="col">Пароль</th>--}}
+                                <th scope="col">Логин</th>
+                                <th scope="col">Пароль</th>
                                 <th scope="col">Изменить</th>
                                 <th scope="col">Удалить</th>
                             </tr>
@@ -39,8 +39,8 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->type->name }}</td>
                                     <td>{{ $user->group->name }}</td>
-{{--                                    <td>{{ $user->login }}</td>--}}
-{{--                                    <td>{{ $user->password }}</td>--}}
+                                    <td>{{ $user->login }}</td>
+                                    <td>{{ $user->password }}</td>
                                     <td><a class="btn btn-primary" href="{{ route('admin.users.edit', $user->id) }}">Edit</a></td>
                                     <td><form action="{{ route('admin.users.destroy', $user->id) }}" method="POST">
                                             @method('DELETE')
