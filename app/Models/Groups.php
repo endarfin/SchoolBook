@@ -19,8 +19,4 @@ class Groups extends Model
         return $this->belongsTo(Courses::class, 'course_id');
     }
 
-    public function user()
-    {
-        return $this->belongsTo(User::class,'group_id');
-    }
 }

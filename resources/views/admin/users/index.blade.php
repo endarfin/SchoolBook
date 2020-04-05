@@ -13,7 +13,7 @@
                             {{ session()->get('success') }}
                         </div>
                     @endif
-                    <table class="table table-sm ">
+                    <table class="table table-striped">
                         <thead>
                             <tr>
                                 <th scope="col">№</th>
@@ -23,8 +23,8 @@
                                 <th scope="col">Почта</th>
                                 <th scope="col"><a href="{{ route('admin.types.index') }}">Тип пользователя</a></th>
                                 <th scope="col"><a href="{{ route('admin.groups.index') }}">Группа</a></th>
-                                <th scope="col">Логин</th>
-                                <th scope="col">Пароль</th>
+{{--                                <th scope="col">Логин</th>--}}
+{{--                                <th scope="col">Пароль</th>--}}
                                 <th scope="col">Изменить</th>
                                 <th scope="col">Удалить</th>
                             </tr>
@@ -37,24 +37,24 @@
                                     <td>{{ $user->surname }}</td>
                                     <td>{{ $user->phone }}</td>
                                     <td>{{ $user->email }}</td>
-{{--                                    <td>{{ $user->type_users->name }}</td>--}}
-                                    <td>{{ $user->groups->name }}</td>
-                                    <td>{{ $user->login }}</td>
-                                    <td>{{ $user->password }}</td>
-                                    <td><a class="btn btn-outline-info btn-sm" href="{{ route('admin.users.edit', $user->id) }}">Edit</a></td>
+                                    <td>{{ $user->type->name }}</td>
+                                    <td>{{ $user->group->name }}</td>
+{{--                                    <td>{{ $user->login }}</td>--}}
+{{--                                    <td>{{ $user->password }}</td>--}}
+                                    <td><a class="btn btn-primary" href="{{ route('admin.users.edit', $user->id) }}">Edit</a></td>
                                     <td><form action="{{ route('admin.users.destroy', $user->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button class="btn btn-outline-info btn-sm" types="submit">Delete</button>
+                                            <button class="btn btn-primary" types="submit">Delete</button>
                                         </form></td>
                                 </tr>
                             @endforeach
                             </tbody>
                     </table>
-                    <div class="float-right"><a class="btn btn-outline-info btn-sm" href="{{ route('admin.users.create') }}">Add</a></div>
+                    <div class="float-right"><a class="btn btn-primary" href="{{ route('admin.users.create') }}">Add</a></div>
             @if ($users->total() > $users->count())
                 <nav aria-label="Page navigation example">
-                    <ul class="pagination pagination-sm">
+                    <ul class="pagination">
                         {{$users->links()}}
                     </ul>
                 </nav>

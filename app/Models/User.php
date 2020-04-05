@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'login', 'name', 'surname', 'phone', 'type_user_id', 'email', 'password',
+        'login', 'name', 'surname', 'phone', 'type_user_id', 'email', 'password', 'group_id',
     ];
 
     /**
@@ -37,11 +37,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-//    public function type()
-//    {
-//        return $this->hasOne('App\Models\Type');
-//    }
-//
-  
+    public function type()
+    {
+        return $this->belongsTo(Type::Class, 'type_user_id');
+    }
+    public function group()
+    {
+       return $this->belongsTo(Groups::Class, 'group_id')->withDefault([
+           'name' => 'x'
+       ]);
+
+
+    }
+
 
 }
