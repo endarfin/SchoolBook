@@ -41,16 +41,16 @@
                                 <br>
                                 <div class="tab-content">
                                     <div class="form-group">
-                                        <input name="name" placeholder="Имя" type="text" class="form-control" required>
+                                        <input name="name" placeholder="Имя" type="text" class="form-control" value="{{ old('name') }}" required>
                                     </div>
                                     <div class="form-group">
-                                        <input name="surname" placeholder="Фамилия" type="text" class="form-control" required>
+                                        <input name="surname" value="{{ old('surname') }}" placeholder="Фамилия" type="text" class="form-control"  required>
                                     </div>
                                     <div class="form-group">
-                                        <input name="phone" placeholder="Телефон, для примера 0986706899" type="text" class="form-control" required>
+                                        <input name="phone" value="{{ old('phone') }}" placeholder="Телефон, для примера 0986706899" type="text" class="form-control" required>
                                     </div>
                                     <div class="form-group">
-                                        <input name="email" placeholder="Почта" type="text" class="form-control" required>
+                                        <input name="email" value="{{ old('email') }}" placeholder="Почта" type="text" class="form-control" required>
                                     </div>
                                     <div class="form-group">
                                         <select class="form-control" name="type_user_id" type="text" required>
@@ -70,10 +70,10 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <input name="login" placeholder="Логин" type="text" class="form-control" required>
+                                        <input name="login" value="{{ old('login') }}" placeholder="Логин" type="text" class="form-control" required>
                                     </div>
                                     <div class="form-group">
-                                        <input name="password" placeholder="Пароль" type="text" class="form-control" required>
+                                        <input name="password" value="{{ old('password') }}" placeholder="Пароль" type="text" class="form-control" required>
                                     </div>
 
 

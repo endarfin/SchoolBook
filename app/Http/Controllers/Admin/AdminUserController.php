@@ -52,7 +52,7 @@ class AdminUserController extends Controller
 
         if ($user) {
             return redirect()
-                ->route('admin.users.create', [$user->id])
+                ->route('admin.users.create')
                 ->with(['success' => 'Успешно добавлено']);
         } else {
             return back()

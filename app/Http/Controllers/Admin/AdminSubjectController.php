@@ -45,9 +45,9 @@ class AdminSubjectController extends Controller
                 ->route('admin.subjects.create')
                 ->with(['success' => 'Успешно добавлено']);
         } else {
-            return back()
-                ->withErrors(['msg' => 'Ошибка сохранения'])
-                ->withInput();
+            return Redirect::back()->withInput()
+                ->withErrors(['msg' => 'Ошибка сохранения']);
+
         }
 
     }
