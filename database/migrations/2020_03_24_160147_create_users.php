@@ -28,7 +28,7 @@ class CreateUsers extends Migration
                 $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
                 $table->rememberToken();
                 $table->timestamps();
-                $table->softDeletes();
+                
 
             });
 
