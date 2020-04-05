@@ -30,8 +30,8 @@
                                 <th scope="col">Удалить</th>
                             </tr>
                         </thead>
-                        @foreach($groups as $group)
                         <tbody>
+                        @foreach($groups as $group)
                         <tr>
                             <th scope="row">{{$group->id}}</th>
                             <td>{{$group->name}}</td>
@@ -43,8 +43,9 @@
                                     <button class="btn btn-primary" type="submit">Delete</button>
                                 </form></td>
                         </tr>
-                        </tbody>
                         @endforeach
+                        </tbody>
+
                     </table>
                     @if($groups->total() > $groups->count())
                     <nav aria-label="Page navigation example">

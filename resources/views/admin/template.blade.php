@@ -15,7 +15,7 @@
     <header>
           <ul class="nav nav-tabs">
               <li class="nav-item">
-                <a class="nav-link active" href="">Главная</a>
+                <a class="nav-link active" href="/admin">Главная</a>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-haspopup="true" aria-expanded="false">Управление</a>

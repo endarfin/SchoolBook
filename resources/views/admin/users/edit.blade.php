@@ -56,15 +56,15 @@
                                     </div>
                                     <div class="form-group">
                                         <select class="form-control" name="type_user_id" type="text" required>
-                                            <option value="" disabled selected hidden>Тип пользователя</option>
+                                            <option value="{{$user->type->name}}" hidden>{{$user->type->name}}</option>
                                             @foreach($types as $type)
-                                                <option value="{{$type->id}}">{{$type->name}}</option>
+                                                <option value="{{$type->id}}" >{{$type->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <select class="form-control" name="group_id" type="text" required>
-                                            <option value="" disabled selected hidden>Группа</option>
+                                            <option value="$user->group->name" hidden>{{$user->group->name}}</option>
                                             <option value="">нет</option>
                                             @foreach($groups as $group)
                                                 <option value="{{$group->id}}">{{$group->name}}</option>

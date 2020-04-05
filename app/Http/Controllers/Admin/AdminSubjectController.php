@@ -76,7 +76,7 @@ class AdminSubjectController extends Controller
     {
        if (empty($subject)) {
             return back()
-                ->withErrors(['msg' => "Запись id = [$subject->$id] не найдена"])
+                ->withErrors(['msg' => "Запись id = [$subject->id] не найдена"])
                 ->withInput();
         }
 

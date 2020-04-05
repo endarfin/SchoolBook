@@ -29,7 +29,7 @@ class UserRequest extends FormRequest
             'phone'  =>  'required|regex:/^[0-9\-\+]{9,15}$/',
             'email'  =>  'required|email',
             'type_user_id' => 'required',
-            'group_id' => 'required|integer|exists:App\Models\Groups,id',
+//            'group_id' => 'required',
             'login' => 'required|string|min:2|max:20',
             'password' => 'required|min:8',
 

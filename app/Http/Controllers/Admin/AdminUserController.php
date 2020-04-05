@@ -31,12 +31,11 @@ class AdminUserController extends Controller
      */
     public function create()
     {
-        $userList = User::all();
         $types = Type::all();
         $groups = Groups::all();
 
         return view('admin.users.create',
-            compact('userList','types','groups'));
+            compact('types','groups'));
     }
 
     /**
@@ -69,11 +68,11 @@ class AdminUserController extends Controller
      */
     public function edit(User $user)
     {
-        if (!user) { abort (404); }
+        if (!$user) { abort (404); }
+        $types = Type::all();
+        $groups = Groups::all();
 
-        $userList = User::all();
-
-        return view('admin.subjects.edit', compact('subject','subjectList'));
+        return view('admin.users.edit', compact('user', 'types', 'groups'));
 
     }
 
@@ -84,9 +83,26 @@ class AdminUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, User $user)
     {
-        //
+        if (empty($user)) {
+            return back()
+                ->withErrors(['msg' => "Запись id = [$user->id] не найдена"])
+                ->withInput();
+        }
+
+        $data = $request->all();
+        $result = $user->update($data);
+
+        if ($result) {
+            return redirect()
+                ->route('admin.users.edit', $user->id)
+                ->with(['success' => 'Успешно сохранено']);
+        } else {
+            return back()
+                ->withErrors(['msg' => 'Ошибка сохранения'])
+                ->withInput();
+        }
     }
 
     /**
