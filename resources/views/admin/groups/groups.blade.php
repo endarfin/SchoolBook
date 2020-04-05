@@ -1,10 +1,10 @@
 @extends('admin.template')
 @section('content')
-    <h1 align="center">Группы</h1>
     <div class="row align-items-center ">
         <div class="container">
             <div class="row">
                 <div class="col-8">
+                    <h1 align="center">Группы</h1>
                     @if($errors->any())
                         <div class="col-4">
                             <div class="alert alert-danger" role="alert">
@@ -47,6 +47,7 @@
                         </tbody>
 
                     </table>
+                    <div class="float-right"><a class="btn btn-primary" href="{{route('admin.groups.create')}}">Add</a></div>
                     @if($groups->total() > $groups->count())
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
@@ -58,12 +59,6 @@
                      @endif
                 </div>
                 <div class="col-4">
-                    <div class="card">
-
-                        <nav class="nav nav-pills nav-justified">
-                            <a class="nav-item nav-link active" href="{{route('admin.groups.create')}} ">Дбавить группу</a>
-                        </nav>
-                </div>
             </div>
         </div>
     </div>

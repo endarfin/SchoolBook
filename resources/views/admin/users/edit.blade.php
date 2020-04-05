@@ -78,8 +78,8 @@
                                         <input name="password" value="{{  $user->password }}" placeholder="Пароль" type="text" class="form-control" required>
                                     </div>
                                     <div class="float-right">
-                                        <a class="btn btn-primary" href="{{ route('admin.users.index') }}" >Back</a>
-                                        <button type="submit" class="btn btn-primary" >Save</button>
+                                        <a class="btn btn-outline-info btn-sm" href="{{ route('admin.users.index') }}" >Back</a>
+                                        <button type="submit" class="btn btn-outline-info btn-sm" >Save</button>
                                     </div>
                                 </div>
                             </div>

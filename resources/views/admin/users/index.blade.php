@@ -13,7 +13,7 @@
                             {{ session()->get('success') }}
                         </div>
                     @endif
-                    <table class="table table-striped">
+                    <table class="table table-sm table-bordered">
                         <thead>
                             <tr>
                                 <th scope="col">№</th>
@@ -41,20 +41,20 @@
                                     <td>{{ $user->group->name }}</td>
                                     <td>{{ $user->login }}</td>
                                     <td>{{ $user->password }}</td>
-                                    <td><a class="btn btn-primary" href="{{ route('admin.users.edit', $user->id) }}">Edit</a></td>
+                                    <td><a class="btn btn-outline-info btn-sm" href="{{ route('admin.users.edit', $user->id) }}">Edit</a></td>
                                     <td><form action="{{ route('admin.users.destroy', $user->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button class="btn btn-primary" types="submit">Delete</button>
+                                            <button class="btn btn-outline-info btn-sm" types="submit">Delete</button>
                                         </form></td>
                                 </tr>
                             @endforeach
                             </tbody>
                     </table>
-                    <div class="float-right"><a class="btn btn-primary" href="{{ route('admin.users.create') }}">Add</a></div>
+                    <div class="float-right"><a class="btn btn-outline-info btn-sm" href="{{ route('admin.users.create') }}">Add</a></div>
             @if ($users->total() > $users->count())
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination pagination-sm">
                         {{$users->links()}}
                     </ul>
                 </nav>
