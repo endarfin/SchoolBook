@@ -26,7 +26,7 @@
                   <a class="dropdown-item" href="{{route('admin.groups.index')}}">Группы</a>
                   <a class="dropdown-item" href="admin/course">Курсы</a>
                   <a class="dropdown-item" href="{{ route('admin.subjects.index') }}">Предметы</a>
-                  <a class="dropdown-item" href="admin/room">Аудитории</a>
+                  <a class="dropdown-item" href="{{ route('admin.rooms.index') }}">Аудитории</a>
 
                 </div>
               </li>

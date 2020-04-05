@@ -4,11 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Type extends Model
+class Room extends Model
 {
     public $timestamps = false;
     protected $fillable = ['name',];
-    protected $table = 'type_users';
-
+    protected $table = 'class_rooms';
 
 }
