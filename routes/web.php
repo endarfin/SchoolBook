@@ -33,6 +33,7 @@ Route::group(['namespace' => 'Admin', 'prefix' =>'admin'],function ()
     Route::resource('subjects', 'AdminSubjectController')->names('admin.subjects');
     Route::resource('users', 'AdminUserController')->names('admin.users');
     Route::resource('rooms', 'AdminRoomController')->names('admin.rooms');
+    Route::resource('courses', 'AdminCourseController')->names('admin.courses');
 });
 
 

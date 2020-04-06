@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Courses extends Model
 {
-
+    public $timestamps = false;
+    protected $fillable = ['name',];
+    protected $table = 'courses';
 
 }
