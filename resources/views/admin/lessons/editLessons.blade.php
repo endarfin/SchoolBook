@@ -79,7 +79,7 @@
                             <div class="form-group">
                                 <label >Дата</label>
                                 <input type="datetime-local" name="date_event" max="3000-12-31"
-                                       min="1000-01-01" class="form-control" value={{date('Y-m-d', $lesson->date_event )}}T{{date('H:m', $lesson->date_event )}} >
+                                       min="1000-01-01" class="form-control" value={{date('Y-m-d', $lesson->date_event )}}T{{date('H:i', $lesson->date_event )}} >
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary mb-2">Изменить</button>

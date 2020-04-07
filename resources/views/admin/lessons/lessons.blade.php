@@ -5,30 +5,30 @@
         <div class="container">
             <div class="row">
                 <div class="col-10">
-{{--                    @if($errors->any())--}}
-{{--                        <div class="row justify-content-center">--}}
-{{--                            <div class="col-md-8">--}}
-{{--                                <div class="alert alert-danger" role="alert">--}}
-{{--                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">--}}
-{{--                                        <span aria-hidden="true">x</span>--}}
-{{--                                    </button>--}}
-{{--                                    {!! $errors->first() !!}--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    @endif--}}
-{{--                    @if(session('success'))--}}
-{{--                        <div class="row justify-content-center">--}}
-{{--                            <div class="col-md-8">--}}
-{{--                                <div class="alert alert-success" role="alert">--}}
-{{--                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">--}}
-{{--                                        <span aria-hidden="true">x</span>--}}
-{{--                                    </button>--}}
-{{--                                    {{ session()->get('success') }}--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    @endif--}}
+                    @if($errors->any())
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <div class="alert alert-danger" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">x</span>
+                                    </button>
+                                    {!! $errors->first() !!}
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                    @if(session('success'))
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <div class="alert alert-success" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">x</span>
+                                    </button>
+                                    {{ session()->get('success') }}
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                     <table class="table table-striped">
                         <thead>
                         <tr>
@@ -50,7 +50,7 @@
                                 <td>{{$lesson->Subject->name}}</td>
                                 <td><a href="{{route('admin.showTimetable',['name'=>'user_id','id'=>$lesson->user_id])}}">{{$lesson->Users->surname}}</a></td>
                                 <td><a href="{{route('admin.showTimetable',['name'=>'class_room_id','id'=>$lesson->class_room_id])}}">{{$lesson->ClassRooms->name}}</a></td>
-                                <td>{{date( "d-m-Y H:m" , $lesson->date_event)}}</td>
+                                <td>{{date( "d-m-Y H:i" , $lesson->date_event)}}</td>
                                 <td><a class="btn btn-primary" href="{{ route('admin.lessons.edit', $lesson->id) }}" role="button">Edit</a></td>
                                 <td><form action="{{ route('admin.lessons.destroy', $lesson->id) }}" method="POST">
                                         @method('DELETE')

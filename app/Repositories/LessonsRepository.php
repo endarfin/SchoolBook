@@ -41,7 +41,7 @@ class LessonsRepository extends CoreRepository
             ->startConditions()
             ->select($columns)
             ->where($table, $id)
-            ->orderBy('id', 'DESC')
+            //->orderBy('id', 'DESC')
             ->toBase()
             ->get();
 
