@@ -3,8 +3,7 @@
     <div class="row align-items-center">
         <div class="container">
             <div class="row">
-                <div class="col-13">
-                    <h1 align="center">Пользователи</h1>
+                <div class="col-15">
                     @if(session('success'))
                         <div class="alert alert-success" role="alert">
                             <button types="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -13,20 +12,21 @@
                             {{ session()->get('success') }}
                         </div>
                     @endif
-                    <table class="table table-sm table-bordered">
+
+                    <br><table class="table table-bordered table-hover text-nowrap">
                         <thead>
+                            <tr><th colspan="10">Users</th></tr>
                             <tr>
                                 <th scope="col">№</th>
-                                <th scope="col">Имя</th>
-                                <th scope="col">Фамилия</th>
-                                <th scope="col">Телефон</th>
-                                <th scope="col">Почта</th>
-                                <th scope="col"><a href="{{ route('admin.types.index') }}">Тип пользователя</a></th>
-                                <th scope="col"><a href="{{ route('admin.groups.index') }}">Группа</a></th>
-                                <th scope="col">Логин</th>
-                                <th scope="col">Пароль</th>
-                                <th scope="col">Изменить</th>
-                                <th scope="col">Удалить</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Surname</th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">Email</th>
+                                <th scope="col"><a href="{{ route('admin.types.index') }}">Type</a></th>
+                                <th scope="col"><a href="{{ route('admin.groups.index') }}">Group</a></th>
+                                <th scope="col">Login</th>
+                                <th scope="col">Password</th>
+                                <th scope="col">Action</th>
                             </tr>
                         </thead>
                             <tbody>
@@ -41,11 +41,13 @@
                                     <td>{{ $user->group->name }}</td>
                                     <td>{{ $user->login }}</td>
                                     <td>{{ $user->password }}</td>
-                                    <td><a class="btn btn-outline-info btn-sm" href="{{ route('admin.users.edit', $user->id) }}">Edit</a></td>
-                                    <td><form action="{{ route('admin.users.destroy', $user->id) }}" method="POST">
+                                    <td class="text-nowrap">
+                                        <a class="btn btn-outline-primary btn-sm" href="{{ route('admin.users.show', $user->id) }}">View</a>
+                                        <a class="btn btn-outline-info btn-sm" href="{{ route('admin.users.edit', $user->id) }}">Edit</a>
+                                    <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" style="display: inline-block;">
                                             @method('DELETE')
                                             @csrf
-                                            <button class="btn btn-outline-info btn-sm" types="submit">Delete</button>
+                                            <button class="btn btn-outline-danger btn-sm" types="submit">Delete</button>
                                         </form></td>
                                 </tr>
                             @endforeach

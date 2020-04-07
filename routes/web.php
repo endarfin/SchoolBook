@@ -16,10 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'SiteController@index');
 Route::get('/timetable', 'SiteController@timetable');
 Route::get('/rank', 'SiteController@rank');
-Auth::routes();
+
+//отлючил регистрацию и включил редирект на админку
+Route::redirect('/', 'admin');
+Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
-
 
 Route::group(['namespace' => 'Admin', 'prefix' =>'admin/users',],function ()
 {
