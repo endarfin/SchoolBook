@@ -43,13 +43,11 @@ class User extends Authenticatable
     }
     public function group()
     {
-       return $this->belongsTo(Groups::Class, 'group_id')->withDefault([
-           'name' => 'x'
-       ]);
+       return $this->belongsTo(Groups::Class, 'group_id')->withDefault();
     }
     public function subjects()
     {
-       return $this->belongsTo(Subject::Class, 'teacher_subject', 'user_id', 'subject_id');
+       return $this->belongsToMany(Subject::Class, 'teacher_subject', 'user_id', 'subject_id');
     }
 
 

@@ -1,7 +1,7 @@
 @extends('admin.template')
 @section('content')
-    <form action="{{ route('admin.users.update', $user->id) }}" method="post">
-        @method('PATCH')
+    <form action="{{ route('admin.users.update', [$user->id]) }}" method="post" enctype="multipart/form-data">
+        @method('PUT')
         @csrf
         <br>
         <div class="container">
@@ -41,42 +41,65 @@
                                 </ul>
                                 <br>
                                 <div class="float-right">ID: {{ $user->id }}</div>
-                                <div class="tab-content">
-                                    <div class="form-group">
-                                        <input name="name" placeholder="Имя" type="text" class="form-control" value="{{  $user->name }}" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <input name="surname" value="{{  $user->surname }}" placeholder="Фамилия" type="text" class="form-control"  required>
-                                    </div>
-                                    <div class="form-group">
-                                        <input name="phone" value="{{ $user->phone }}" placeholder="Телефон, для примера 0986706899" type="text" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <input name="email" value="{{  $user->email }}" placeholder="Почта" type="text" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <select class="form-control" name="type_user_id" type="text" required>
-                                            <option value="{{$user->type->name}}" hidden>{{$user->type->name}}</option>
-                                            @foreach($types as $type)
-                                                <option value="{{$type->id}}" >{{$type->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <select class="form-control" name="group_id" type="text" required>
-                                            <option value="$user->group->name" hidden>{{$user->group->name}}</option>
-                                            <option value="">нет</option>
-                                            @foreach($groups as $group)
-                                                <option value="{{$group->id}}">{{$group->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <input name="login" value="{{  $user->login }}" placeholder="Логин" type="text" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <input name="password" value="{{  $user->password }}" placeholder="Пароль" type="text" class="form-control" required>
-                                    </div>
+                                <table class="table table-bordered table-hover">
+                                    <tbody>
+                                    <tr>
+                                        <th>Name</th>
+                                        <td> <input name="name" type="text" class="form-control" value="{{  $user->name }}" required></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Surname</th>
+                                        <td><input name="surname" value="{{  $user->surname }}" type="text" class="form-control"  required></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Phone</th>
+                                        <td><input name="phone" value="{{ $user->phone }}"  type="text" class="form-control" required></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Email</th>
+                                        <td><input name="email" value="{{  $user->email }}" type="text" class="form-control" required></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Type</th>
+                                        <td>
+                                            <select class="form-control" name="type_user_id" type="text" required>
+                                                <option value="{{$user->type->id}}" hidden>{{$user->type->name}}</option>
+                                                @foreach($types as $type)
+                                                    <option value="{{$type->id}}">{{$type->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Subject</th>
+                                        <td>
+{{--                                            <select multiple class="form-control" name="subject_id[]" type="text" required>--}}
+{{--                                                        @foreach ($subjects as $subject)--}}
+{{--                                                            <option value="{{$subject->id}}">{{$subject->name}}</option>--}}
+{{--                                                        @endforeach--}}
+{{--                                            </select>--}}
+                                            <select class="form-control" name="subjects[]" multiple type="text" >
+                                                @foreach($subjects as $id => $subjects)
+                                                    <option value="{{ $id }}" {{ (in_array($id, old('$subjects', [])) || $user->subjects->contains($id)) ? 'selected' : '' }}>{{ $subjects }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Group</th>
+                                        <td>
+                                            <select class="form-control" name="group_id" type="text" required>
+                                                <option>{{$user->group->name}}</option>
+                                                <option value="">no</option>
+                                                @foreach($groups as $group)
+                                                    <option>{{$group->name}}</option>
+                                                @endforeach
+                                            </select>
+
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                                     <div class="float-right">
                                         <a class="btn btn-outline-info btn-sm" href="{{ route('admin.users.index') }}" >Back</a>
                                         <button type="submit" class="btn btn-outline-info btn-sm" >Save</button>
@@ -87,6 +110,5 @@
                     </div>
                 </div>
             </div>
-        </div>
     </form>
 @endsection

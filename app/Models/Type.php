@@ -10,5 +10,9 @@ class Type extends Model
     protected $fillable = ['name',];
     protected $table = 'type_users';
 
+    public function users()
+    {
+        return $this->hasMany(User::Class);
+    }
 
 }

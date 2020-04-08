@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Groups;
 use App\Models\Type;
 use App\Models\User;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 
@@ -18,9 +19,14 @@ class AdminUserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::paginate(10);
+        $users = User::when($request->type, function ($query) use ($request) {
+            $query->whereHas('type', function ($query) use ($request) {
+                $query->whereId($request->type);
+            });
+        })
+            ->paginate(10);
         return view('admin.users.index', compact('users'));
     }
 
@@ -63,17 +69,21 @@ class AdminUserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $user
-     * @return \Illuminate\Http\Response
      */
+    public function show(User $user)
+    {
+        $user->load('type', 'group', 'subjects');
+        return view('admin.users.show', compact('user'));
+    }
+
     public function edit(User $user)
     {
         if (!$user) { abort (404); }
         $types = Type::all();
         $groups = Groups::all();
-
-        return view('admin.users.edit', compact('user', 'types', 'groups'));
-
+        $subjects = Subject::all()->pluck('name', 'id');
+        $user->load('type','group','subjects');
+        return view('admin.users.edit', compact('types','groups', 'subjects', 'user'));
     }
 
     /**
@@ -93,6 +103,7 @@ class AdminUserController extends Controller
 
         $data = $request->all();
         $result = $user->update($data);
+        $user->subjects()->sync($request->input('subjects', []));
 
         if ($result) {
             return redirect()
