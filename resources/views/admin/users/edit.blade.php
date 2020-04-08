@@ -32,6 +32,10 @@
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="card">
+                        <div class="card-header">
+                            <div class="float-left">{{$user->type->name}}: {{$user->surname}} {{$user->name}}</div>
+                            <div class="float-right">ID: {{ $user->id }}</div>
+                        </div>
                         <div class="card-body">
                             <div class="card-title">
                                 <ul class="nav nav-tabs" role="tablist">
@@ -40,7 +44,6 @@
                                     </li>
                                 </ul>
                                 <br>
-                                <div class="float-right">ID: {{ $user->id }}</div>
                                 <table class="table table-bordered table-hover">
                                     <tbody>
                                     <tr>
@@ -73,11 +76,6 @@
                                     <tr>
                                         <th>Subject</th>
                                         <td>
-{{--                                            <select multiple class="form-control" name="subject_id[]" type="text" required>--}}
-{{--                                                        @foreach ($subjects as $subject)--}}
-{{--                                                            <option value="{{$subject->id}}">{{$subject->name}}</option>--}}
-{{--                                                        @endforeach--}}
-{{--                                            </select>--}}
                                             <select class="form-control" name="subjects[]" multiple type="text" >
                                                 @foreach($subjects as $id => $subjects)
                                                     <option value="{{ $id }}" {{ (in_array($id, old('$subjects', [])) || $user->subjects->contains($id)) ? 'selected' : '' }}>{{ $subjects }}</option>
@@ -92,7 +90,7 @@
                                                 <option>{{$user->group->name}}</option>
                                                 <option value="">no</option>
                                                 @foreach($groups as $group)
-                                                    <option>{{$group->name}}</option>
+                                                    <option value="{{$group->id}}">{{$group->name}}</option>
                                                 @endforeach
                                             </select>
 

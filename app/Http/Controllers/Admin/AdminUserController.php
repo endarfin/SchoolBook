@@ -26,7 +26,7 @@ class AdminUserController extends Controller
                 $query->whereId($request->type);
             });
         })
-            ->paginate(10);
+            ->paginate(10)->appends(request()->except('page'));
         return view('admin.users.index', compact('users'));
     }
 
@@ -39,9 +39,9 @@ class AdminUserController extends Controller
     {
         $types = Type::all();
         $groups = Groups::all();
+        $subjects = Subject::all()->pluck('name', 'id');
+        return view('admin.users.create', compact('types','groups', 'subjects'));
 
-        return view('admin.users.create',
-            compact('types','groups'));
     }
 
     /**
@@ -52,8 +52,8 @@ class AdminUserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        $data = $request->input();
-        $user = (new User())->create($data);
+        $user = User::create($request->all());
+        $user->subjects()->sync($request->input('subjects', []));
 
         if ($user) {
             return redirect()
