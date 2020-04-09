@@ -1,7 +1,6 @@
 @extends('admin.template')
 @section('content')
-    <form action="{{ route('admin.subjects.update', $subject->id) }}" method="post">
-        @method('PATCH')
+    <form action="{{ route('admin.types.store') }}" method="post">
         @csrf
         <br>
         <div class="container">
@@ -40,22 +39,21 @@
                                     </li>
                                 </ul>
                                 <br>
-                                <div class="float-right">ID: {{ $subject->id }}</div>
                                 <div class="tab-content">
                                     <div class="form-group">
                                         <div class="form-group">
                                             <label for="title">Название</label>
-                                            <input name="name" value="{{ $subject->name }}"
+                                            <input name="name"
                                             id="name"
                                             type="text"
                                             class="form-control"
-                                            minlength="2"
                                             required>
                                         </div>
                                         <div class="float-right">
-                                            <a class="btn btn-primary" href="{{ route('admin.subjects.index') }}">Back</a>
-                                            <button type="submit" class="btn btn-primary">Save</button>
+                                            <a class="btn btn-primary" href="{{ route('admin.types.index') }}" >Back</a>
+                                            <button type="submit" class="btn btn-primary" >Save</button>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -65,4 +63,5 @@
             </div>
         </div>
     </form>
+
 @endsection

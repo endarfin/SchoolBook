@@ -20,13 +20,14 @@
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-haspopup="true" aria-expanded="false">Управление</a>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" href="admin/user">Пользователи</a>
+                  <a class="dropdown-item" href="{route('admin.users.index')}}">Пользователи</a>
                   <a class="dropdown-item" href="{{route('admin.lessons.store')}}">Расписание</a>
                   <a class="dropdown-item" href="admin/rank">Успеваемость</a>
                   <a class="dropdown-item" href="{{route('admin.groups.index')}}">Группы</a>
-                  <a class="dropdown-item" href="admin/course">Курсы</a>
+                  <a class="dropdown-item" href="{{ route('admin.courses.index') }}">Курсы</a>
                   <a class="dropdown-item" href="{{ route('admin.subjects.index') }}">Предметы</a>
-                  <a class="dropdown-item" href="admin/room">Аудитории</a>
+                  <a class="dropdown-item" href="{{ route('admin.rooms.index') }}">Аудитории</a>
+
                 </div>
               </li>
               <li class="nav-item">
@@ -45,9 +46,8 @@
 
       <div>@yield('content')</div>
   </article>
-  <footer id="footer" class="footer navbar-fixed-bottom">
-    © 2020 Copyright: <a class="copy" href=""> LEXA & PETROV
-  <footer>
+    <footer id="footer" class="footer navbar-fixed-bottom">© 2020 Copyright: <a class="copy" href=""> LEXA & PETROV</a>
+  </footer>
 
 
   </body>

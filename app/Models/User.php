@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'login', 'name', 'surname', 'phone', 'type_user_id', 'email', 'password',
+        'login', 'name', 'surname', 'phone', 'type_user_id', 'email', 'password', 'group_id',
     ];
 
     /**
@@ -36,4 +36,26 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function setIdGroupAttribute($value){
+        $this->attributes['group_id'] = $value;
+
+    }
+
+
+
+    public function type()
+    {
+        return $this->belongsTo(Type::Class, 'type_user_id');
+    }
+    public function group()
+    {
+       return $this->belongsTo(Groups::Class, 'group_id')->withDefault();
+    }
+    public function subjects()
+    {
+       return $this->belongsToMany(Subject::Class, 'teacher_subject', 'user_id', 'subject_id');
+    }
+
+
 }

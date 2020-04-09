@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\SubjectRequest;
-use App\Models\Subject;
 use App\Http\Controllers\Controller;
+use App\Models\Type;
+use App\Http\Requests\TypeUserRequest;
 
-class AdminSubjectController extends Controller
+class AdminTypeUserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,9 @@ class AdminSubjectController extends Controller
      */
     public function index()
     {
-        $subjects = Subject::paginate(10);
-        return view('admin.subjects.index', compact('subjects'));
+        $types= Type::all();
+        return view('admin.users.types.index', compact('types'));
+
     }
 
     /**
@@ -26,7 +27,7 @@ class AdminSubjectController extends Controller
      */
     public function create()
     {
-        return view('admin.subjects.create');
+        return view('admin.users.types.create');
     }
 
     /**
@@ -35,57 +36,56 @@ class AdminSubjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SubjectRequest $request)
+    public function store(TypeUserRequest $request)
     {
         $data = $request->input();
-        $subject = (new Subject())->create($data);
+        $type = (new Type())->create($data);
 
-        if ($subject) {
+        if ($type) {
             return redirect()
-                ->route('admin.subjects.create')
+                ->route('admin.types.create')
                 ->with(['success' => 'Успешно добавлено']);
         } else {
-            return Redirect::back()->withInput()
-                ->withErrors(['msg' => 'Ошибка сохранения']);
-
+            return back()
+                ->withErrors(['msg' => 'Ошибка сохранения'])
+                ->withInput();
         }
-
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param
+     * @param  \App\Models\Type
      * @return \Illuminate\Http\Response
      */
-    public function edit(Subject $subject)
+    public function edit(Type $type)
     {
-        if (!$subject) { abort (404); }
+       if (!$type) { abort (404); }
 
-        return view('admin.subjects.edit', compact('subject'));
+        return view('admin.users.types.edit', compact('type'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param
+     * @param  \App\Models\Type  $typeUser
      * @return \Illuminate\Http\Response
      */
-    public function update(SubjectRequest $request, Subject $subject)
+    public function update(TypeUserRequest $request, Type $type)
     {
-       if (empty($subject)) {
+        if (empty($type)) {
             return back()
-                ->withErrors(['msg' => "Запись id = [$subject->id] не найдена"])
+                ->withErrors(['msg' => "Запись id = [$type->id] не найдена"])
                 ->withInput();
         }
 
         $data = $request->all();
-        $result = $subject->update($data);
+        $result = $type->update($data);
 
         if ($result) {
             return redirect()
-                ->route('admin.subjects.edit', $subject->id)
+                ->route('admin.types.edit', $type->id)
                 ->with(['success' => 'Успешно сохранено']);
         } else {
             return back()
@@ -97,16 +97,17 @@ class AdminSubjectController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param
+     * @param  \App\Models\Type  $type
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Subject $subject)
+    public function destroy(Type $type)
     {
-        $subject->delete();
+        /** @var TYPE_NAME $type */
+        $type->delete();
 
-        if ($subject) {
+        if ($type) {
             return redirect()
-                ->route('admin.subjects.index')
+                ->route('admin.types.index')
                 ->with(['success' => 'Успешно удалено']);
         } else {
             return back()

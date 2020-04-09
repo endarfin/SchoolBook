@@ -1,10 +1,10 @@
 @extends('admin.template')
 @section('content')
-    <h1 align="center">Группы</h1>
     <div class="row align-items-center ">
         <div class="container">
             <div class="row">
                 <div class="col-8">
+                    <h1 align="center">Группы</h1>
                     @if($errors->any())
                         <div class="row justify-content-center">
                             <div class="col-md-8">
@@ -55,6 +55,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    <div class="float-right"><a class="btn btn-primary" href="{{route('admin.groups.create')}}">Add</a></div>
                     @if($groups->total() > $groups->count())
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">

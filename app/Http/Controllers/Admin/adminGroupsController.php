@@ -111,10 +111,10 @@ class adminGroupsController extends Controller
         {
             return redirect()
                 ->route('admin.groups.edit', $ed_group->id)
-                ->with(['success' => 'Успешно измененно']);
+                ->with(['success' => 'Успешно изменено']);
         }else {
             return back()
-                ->withErrors(['msg' => 'Ошибка соханения'])
+                ->withErrors(['msg' => 'Ошибка сохранения'])
                 ->withInput();
         }
     }
@@ -134,7 +134,7 @@ class adminGroupsController extends Controller
         {
             return redirect()
                 ->route('admin.groups.index')
-                ->with(['success' => 'Успешно удалина']);
+                ->with(['success' => 'Успешно удалено']);
         }
     }
 }

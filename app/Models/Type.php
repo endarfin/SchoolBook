@@ -4,14 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-
-class Subject extends Model
+class Type extends Model
 {
     public $timestamps = false;
     protected $fillable = ['name',];
+    protected $table = 'type_users';
 
     public function users()
     {
-        return $this->belongsToMany(User::Class, 'teacher_subject', 'subject_id', 'user_id');
+        return $this->hasMany(User::Class);
     }
+
 }

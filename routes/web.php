@@ -16,23 +16,26 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'SiteController@index');
 Route::get('/timetable', 'SiteController@timetable');
 Route::get('/rank', 'SiteController@rank');
-Auth::routes();
+
+//отлючил регистрацию и включил редирект на админку
+Route::redirect('/', 'admin');
+Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-//правило: все урл админ лежат в группе админ, чтобы не писать префикс и все урл подчиняются одним правилам
-//
-//Route::prefix('admin')->group(function(){
-//Route::get('/','admin\IndexController@index');
-//
-//});
+Route::group(['namespace' => 'Admin', 'prefix' =>'admin/users',],function ()
+{
+    Route::resource('types', 'AdminTypeUserController')->names('admin.types');
+});
 
-
-//Так будет красивей
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
-    Route::get('/', 'IndexController@index');
+Route::group(['namespace' => 'Admin', 'prefix' =>'admin'],function ()
+{
+    Route::get('/','IndexController@index');
     Route::resource('groups', 'adminGroupsController')->except("show")->names('admin.groups');
     Route::resource('subjects', 'AdminSubjectController')->names('admin.subjects');
+    Route::resource('users', 'AdminUserController')->names('admin.users');
+    Route::resource('rooms', 'AdminRoomController')->names('admin.rooms');
+    Route::resource('courses', 'AdminCourseController')->names('admin.courses');
     Route::resource('Lessons', 'AdminLessonsController')->except("show")->names('admin.lessons');
     Route::get('timetable/{name}/{id}', 'AdminTimetable@showTimetable')->name('admin.showTimetable');
 });

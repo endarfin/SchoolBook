@@ -23,15 +23,17 @@ class CreateUsers extends Migration
                 $table->string('surname');
                 $table->string('phone')->unique();
                 $table->integer('type_user_id')->unsigned();
-                $table->foreign('type_user_id')->references('id')->on('type_users')->onDelete('cascade');
+                $table->foreign('type_user_id')->references('id')->on('type_users');
                 $table->integer('group_id')->unsigned()->nullable();
-                $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
+                $table->foreign('group_id')->references('id')->on('groups');
                 $table->rememberToken();
                 $table->timestamps();
 
+
             });
 
-                
+        DB::statement('ALTER TABLE users ADD CONSTRAINT chk_id_group CHECK ((type_user_id = 1 and  group_id is not null) or (type_user_id != 1 and  group_id is null))');
+
 
     }
 

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\SubjectRequest;
-use App\Models\Subject;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Http\Requests\CourseRequest;
+use App\Models\Courses;
 
-class AdminSubjectController extends Controller
+class AdminCourseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +16,8 @@ class AdminSubjectController extends Controller
      */
     public function index()
     {
-        $subjects = Subject::paginate(10);
-        return view('admin.subjects.index', compact('subjects'));
+        $courses= Courses::paginate(10);
+        return view('admin.courses.index', compact('courses'));
     }
 
     /**
@@ -26,7 +27,7 @@ class AdminSubjectController extends Controller
      */
     public function create()
     {
-        return view('admin.subjects.create');
+        return view('admin.courses.create');
     }
 
     /**
@@ -35,57 +36,58 @@ class AdminSubjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SubjectRequest $request)
+    public function store(CourseRequest $request)
     {
         $data = $request->input();
-        $subject = (new Subject())->create($data);
+        $course = (new Courses())->create($data);
 
-        if ($subject) {
+        if ($course) {
             return redirect()
-                ->route('admin.subjects.create')
+                ->route('admin.courses.create')
                 ->with(['success' => 'Успешно добавлено']);
         } else {
-            return Redirect::back()->withInput()
-                ->withErrors(['msg' => 'Ошибка сохранения']);
-
+            return back()
+                ->withErrors(['msg' => 'Ошибка сохранения'])
+                ->withInput();
         }
-
     }
+
+
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Subject $subject)
+    public function edit(Courses $course)
     {
-        if (!$subject) { abort (404); }
+        if (!$course) { abort (404); }
 
-        return view('admin.subjects.edit', compact('subject'));
+        return view('admin.courses.edit', compact('course'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(SubjectRequest $request, Subject $subject)
+    public function update(CourseRequest $request, Courses $course)
     {
-       if (empty($subject)) {
+        if (empty($course)) {
             return back()
-                ->withErrors(['msg' => "Запись id = [$subject->id] не найдена"])
+                ->withErrors(['msg' => "Запись id = [$course->id] не найдена"])
                 ->withInput();
         }
 
         $data = $request->all();
-        $result = $subject->update($data);
+        $result = $course->update($data);
 
         if ($result) {
             return redirect()
-                ->route('admin.subjects.edit', $subject->id)
+                ->route('admin.courses.edit', $course->id)
                 ->with(['success' => 'Успешно сохранено']);
         } else {
             return back()
@@ -97,16 +99,16 @@ class AdminSubjectController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param
+     * @param  int
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Subject $subject)
+    public function destroy(Courses $course)
     {
-        $subject->delete();
+        $course->delete();
 
-        if ($subject) {
+        if ($course) {
             return redirect()
-                ->route('admin.subjects.index')
+                ->route('admin.courses.index')
                 ->with(['success' => 'Успешно удалено']);
         } else {
             return back()

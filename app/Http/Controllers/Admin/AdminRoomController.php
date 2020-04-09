@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\SubjectRequest;
-use App\Models\Subject;
 use App\Http\Controllers\Controller;
+use App\Models\Room;
+use App\Http\Requests\RoomRequest;
 
-class AdminSubjectController extends Controller
+class AdminRoomController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,9 @@ class AdminSubjectController extends Controller
      */
     public function index()
     {
-        $subjects = Subject::paginate(10);
-        return view('admin.subjects.index', compact('subjects'));
+        $rooms= Room::paginate(10);
+        return view('admin.rooms.index', compact('rooms'));
+
     }
 
     /**
@@ -26,7 +27,7 @@ class AdminSubjectController extends Controller
      */
     public function create()
     {
-        return view('admin.subjects.create');
+        return view('admin.rooms.create');
     }
 
     /**
@@ -35,57 +36,56 @@ class AdminSubjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SubjectRequest $request)
+    public function store(RoomRequest $request)
     {
         $data = $request->input();
-        $subject = (new Subject())->create($data);
+        $room = (new Room())->create($data);
 
-        if ($subject) {
+        if ($room) {
             return redirect()
-                ->route('admin.subjects.create')
+                ->route('admin.rooms.create')
                 ->with(['success' => 'Успешно добавлено']);
         } else {
-            return Redirect::back()->withInput()
-                ->withErrors(['msg' => 'Ошибка сохранения']);
-
+            return back()
+                ->withErrors(['msg' => 'Ошибка сохранения'])
+                ->withInput();
         }
-
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param
+     * @param  \App\Models\Room
      * @return \Illuminate\Http\Response
      */
-    public function edit(Subject $subject)
+    public function edit(Room $room)
     {
-        if (!$subject) { abort (404); }
+        if (!$room) { abort (404); }
 
-        return view('admin.subjects.edit', compact('subject'));
+        return view('admin.rooms.edit', compact('room'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param
+     * @param  \App\Models\Room $room
      * @return \Illuminate\Http\Response
      */
-    public function update(SubjectRequest $request, Subject $subject)
+    public function update(RoomRequest $request, Room $room)
     {
-       if (empty($subject)) {
+        if (empty($room)) {
             return back()
-                ->withErrors(['msg' => "Запись id = [$subject->id] не найдена"])
+                ->withErrors(['msg' => "Запись id = [$room->id] не найдена"])
                 ->withInput();
         }
 
         $data = $request->all();
-        $result = $subject->update($data);
+        $result = $room->update($data);
 
         if ($result) {
             return redirect()
-                ->route('admin.subjects.edit', $subject->id)
+                ->route('admin.rooms.edit', $room->id)
                 ->with(['success' => 'Успешно сохранено']);
         } else {
             return back()
@@ -97,16 +97,16 @@ class AdminSubjectController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param
+     * @param  \App\Models\Room $room
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Subject $subject)
+    public function destroy(Room $room)
     {
-        $subject->delete();
+        $room->delete();
 
-        if ($subject) {
+        if ($room) {
             return redirect()
-                ->route('admin.subjects.index')
+                ->route('admin.rooms.index')
                 ->with(['success' => 'Успешно удалено']);
         } else {
             return back()
