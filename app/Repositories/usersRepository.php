@@ -30,4 +30,9 @@ class  usersRepository extends CoreRepository
     {
         return Model::class;
     }
+
+    public function getEdit($id)
+    {
+        return $this->startConditions()->find($id);
+    }
 }

@@ -14,6 +14,19 @@ class LessonsRepository extends CoreRepository
      * @param int $id
      * @return Model
      */
+//    public function checkSame($date)
+//    {
+//        //dd($date->group_id);
+//        return $this->startConditions()
+//            ->where(
+//                ['group_id', '=', "$date->group_id"],
+//                ['subject_id', '=', "$date->subject_id"],
+//                ['user_id', '=', "$date->user_id"],
+//                ['class_room_id', '=', "$date->class_room_id"],
+//                ['date_event', '=', "strtotime($date->date_event)"]
+//                )->get();
+//    }
+
     public function getEdit($id)
     {
         return $this->startConditions()->find($id);
@@ -36,16 +49,15 @@ class LessonsRepository extends CoreRepository
     public function ShowTable($table, $id)
     {
 
-        $columns = ['id', 'date_event', $table];
+        $columns = ['id', 'date_event', 'class_room_id', 'subject_id', 'group_id', 'user_id'];
         $result = $this
             ->startConditions()
             ->select($columns)
             ->where($table, $id)
-            //->orderBy('id', 'DESC')
             ->toBase()
             ->get();
 
-        //dd($table, $id, $result);
+        // dd($table, $id, $result);
         return $result;
     }
 
@@ -81,7 +93,7 @@ class LessonsRepository extends CoreRepository
         $request['date_event'] = strtotime($request['date_event']);
         $lesson = $request->input();
 
-       // dd($request, $lesson);
+        // dd($request, $lesson);
         $result = $this->startConditions()
             ->create($lesson);
         return $result;

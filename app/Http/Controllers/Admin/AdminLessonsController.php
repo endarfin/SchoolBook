@@ -34,6 +34,7 @@ class AdminLessonsController extends Controller
         $this->groupSubjectRepository = app(groupSubjectRepository::class);
         $this->teacherSubjectRepository = app(teacherSubjectRepository::class);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -41,7 +42,7 @@ class AdminLessonsController extends Controller
      */
     public function index()
     {
-        $lessons =  $this->lessonsRepository->getAllWithPaginate(10);
+        $lessons = $this->lessonsRepository->getAllWithPaginate(10);
         return view('admin.lessons.lessons', compact('lessons'));
     }
 
@@ -52,42 +53,41 @@ class AdminLessonsController extends Controller
      */
     public function create()
     {
-        $groups =  $this->groupsRepository->getForComboBox();
-        $subjects =  $this->subjectRepository->getForComboBox();
-        $teachers =  $this->usersRepository->getForComboBox();
-        $classRooms =  $this->classRoomRepository->getForComboBox();
-        return view('admin.lessons.createLessons', compact( 'groups', 'subjects', 'teachers', 'classRooms'));
+        $groups = $this->groupsRepository->getForComboBox();
+        $subjects = $this->subjectRepository->getForComboBox();
+        $teachers = $this->usersRepository->getForComboBox();
+        $classRooms = $this->classRoomRepository->getForComboBox();
+        return view('admin.lessons.createLessons', compact('groups', 'subjects', 'teachers', 'classRooms'));
 
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(AdminLessonsRequest $request)
     {
         $lessons = $request;
-        $groupSubjects =  $this->groupSubjectRepository->getAllWhere($lessons->group_id);
-        $teacherSubjects =  $this->teacherSubjectRepository->getAllWhere($lessons->user_id);
+        $groupSubjects = $this->groupSubjectRepository->getAllWhere($lessons->group_id);
+        $teacherSubjects = $this->teacherSubjectRepository->getAllWhere($lessons->user_id);
 
         $result = false;
-        foreach ($groupSubjects as $groupSubject)
-        {
-            foreach ($teacherSubjects as $teacherSubject)
-            {
-                if($lessons->subject_id == $groupSubject->subject_id)
-                    if ($teacherSubject->subject_id == $lessons->subject_id)
-                    $result = $this->lessonsRepository->lessonCreated($request);
+        foreach ($groupSubjects as $groupSubject) {
+            foreach ($teacherSubjects as $teacherSubject) {
+                if ($lessons->subject_id == $groupSubject->subject_id) {
+                    if ($teacherSubject->subject_id == $lessons->subject_id){
+                        $result = $this->lessonsRepository->lessonCreated($request);
+                    }
+                }
             }
         }
-        if ($result)
-        {
+        if ($result) {
             return redirect()
                 ->route('admin.lessons.edit', $result->id)
                 ->with(['success' => 'Успешно создано']);
-        }else {
+        } else {
             return back()
                 ->withErrors(['msg' => 'Ошибка соханения'])
                 ->withInput();
@@ -97,7 +97,7 @@ class AdminLessonsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -108,57 +108,53 @@ class AdminLessonsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $lesson =  $this->lessonsRepository->GetEdit($id);
-        $groups =  $this->groupsRepository->getForComboBox();
-        $subjects =  $this->subjectRepository->getForComboBox();
-        $teachers =  $this->usersRepository->getForComboBox();
-        $classRooms =  $this->classRoomRepository->getForComboBox();
+        $lesson = $this->lessonsRepository->GetEdit($id);
+        $groups = $this->groupsRepository->getForComboBox();
+        $subjects = $this->subjectRepository->getForComboBox();
+        $teachers = $this->usersRepository->getForComboBox();
+        $classRooms = $this->classRoomRepository->getForComboBox();
         return view('admin.lessons.editLessons', compact('lesson', 'groups', 'subjects', 'teachers', 'classRooms'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(AdminLessonsRequest $request, $id)
     {
         $ed_lesson = $this->lessonsRepository->getEdit($id);
         $ed_request = $request;
-        if (empty($ed_lesson))
-        {
+        if (empty($ed_lesson)) {
             return back()
                 ->withErrors(['msg' => "Запись id={$id} не найдена"])
                 ->withInput();
         }
-        $groupSubjects =  $this->groupSubjectRepository->getAllWhere($ed_request->group_id);
-        $teacherSubjects =  $this->teacherSubjectRepository->getAllWhere($ed_request->user_id);
+        $groupSubjects = $this->groupSubjectRepository->getAllWhere($ed_request->group_id);
+        $teacherSubjects = $this->teacherSubjectRepository->getAllWhere($ed_request->user_id);
 
         $result = false;
-        foreach ($groupSubjects as $groupSubject)
-        {
-            foreach ($teacherSubjects as $teacherSubject)
-            {
-                if($ed_request->subject_id == $groupSubject->subject_id)
+        foreach ($groupSubjects as $groupSubject) {
+            foreach ($teacherSubjects as $teacherSubject) {
+                if ($ed_request->subject_id == $groupSubject->subject_id)
                     if ($teacherSubject->subject_id == $ed_request->subject_id)
                         $result = $this->lessonsRepository->upDate($ed_lesson, $request);
             }
         }
 
 
-        if ($result)
-        {
+        if ($result) {
             return redirect()
                 ->route('admin.lessons.edit', $ed_lesson->id)
                 ->with(['success' => 'Успешно измененно']);
-        }else {
+        } else {
             return back()
                 ->withErrors(['msg' => 'Ошибка соханения'])
                 ->withInput();
@@ -169,15 +165,14 @@ class AdminLessonsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $softDelete = $this->lessonsRepository->softDelete($id);
 
-        if ($softDelete)
-        {
+        if ($softDelete) {
             return redirect()
                 ->route('admin.lessons.index')
                 ->with(['success' => 'Успешно удалина']);
