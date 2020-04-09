@@ -32,6 +32,7 @@ class CreateUsers extends Migration
 
             });
 
+        DB::statement('ALTER TABLE users ADD CONSTRAINT chk_id_group CHECK ((type_user_id = 1 and  group_id is not null) or (type_user_id != 1 and  group_id is null))');
 
 
     }

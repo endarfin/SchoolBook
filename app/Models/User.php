@@ -37,6 +37,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function setIdGroupAttribute($value){
+        $this->attributes['group_id'] = $value;
+
+    }
+
+
+
     public function type()
     {
         return $this->belongsTo(Type::Class, 'type_user_id');

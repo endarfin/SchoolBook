@@ -88,8 +88,8 @@
                                     <tr>
                                         <th>Subject</th>
                                         <td>
-                                            <select class="form-control" name="subjects[]" multiple type="text" required>
-                                                <option value=""></option>
+                                            <select class="form-control" name="subjects[]" multiple type="text">
+{{--                                                <option value=""></option>--}}
                                                 @foreach($subjects as $id => $subjects)
                                                     <option
                                                         value="{{ $id }}" {{ (in_array($id, old('$subjects', []))) ? 'selected' : '' }}>{{ $subjects }}</option>
@@ -102,7 +102,6 @@
                                         <td>
                                             <select class="form-control" name="group_id" type="text" required>
                                                 <option value="" disabled selected hidden>Группа</option>
-                                                <option value="">no</option>
                                                 @foreach($groups as $group)
                                                     <option value="{{$group->id}}">{{$group->name}}</option>
                                                 @endforeach
