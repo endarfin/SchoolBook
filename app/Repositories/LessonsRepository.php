@@ -92,6 +92,7 @@ class LessonsRepository extends CoreRepository
     {
         $request['date_event'] = strtotime($request['date_event']);
         $lesson = $request->input();
+        //dd($lesson);
 
         // dd($request, $lesson);
         $result = $this->startConditions()

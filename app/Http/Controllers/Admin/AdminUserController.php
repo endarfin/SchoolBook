@@ -22,6 +22,7 @@ class AdminUserController extends Controller
      */
     public function index(Request $request)
     {
+        //dd(__METHOD__,$request);
         $users = User::when($request->type, function ($query) use ($request) {
             $query->whereHas('type', function ($query) use ($request) {
                 $query->whereId($request->type);

@@ -20,7 +20,7 @@
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-haspopup="true" aria-expanded="false">Управление</a>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" href="{route('admin.users.index')}}">Пользователи</a>
+                  <a class="dropdown-item" href="{{route('admin.users.index')}}">Пользователи</a>
                   <a class="dropdown-item" href="{{route('admin.lessons.store')}}">Расписание</a>
                   <a class="dropdown-item" href="admin/rank">Успеваемость</a>
                   <a class="dropdown-item" href="{{route('admin.groups.index')}}">Группы</a>

@@ -20,11 +20,13 @@ class teacherSubjectRepository extends CoreRepository
 
     public function getAllWhere($id)
     {
-        return $this->startConditions()
+        //dd($this->startConditions(), $id);
+        $result = $this->startConditions()
             ->select('user_id', 'subject_id')
             ->where('user_id', $id)
             ->toBase()
             ->get();
+        return  $result;
     }
 
 }

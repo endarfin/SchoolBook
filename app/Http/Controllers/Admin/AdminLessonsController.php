@@ -70,14 +70,17 @@ class AdminLessonsController extends Controller
     public function store(AdminLessonsRequest $request)
     {
         $lessons = $request;
+
         $groupSubjects = $this->groupSubjectRepository->getAllWhere($lessons->group_id);
-        $teacherSubjects = $this->teacherSubjectRepository->getAllWhere($lessons->user_id);
+
+        $teacherSubject = $this->teacherSubjectRepository->getAllWhere($lessons->user_id);
 
         $result = false;
+
         foreach ($groupSubjects as $groupSubject) {
-            foreach ($teacherSubjects as $teacherSubject) {
+            foreach ($teacherSubject as $Subject) {
                 if ($lessons->subject_id == $groupSubject->subject_id) {
-                    if ($teacherSubject->subject_id == $lessons->subject_id){
+                    if ($Subject->subject_id == $lessons->subject_id){
                         $result = $this->lessonsRepository->lessonCreated($request);
                     }
                 }
