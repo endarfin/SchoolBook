@@ -8,7 +8,8 @@ use App\Models\Type;
 use App\Models\User;
 use App\Models\Subject;
 use Illuminate\Http\Request;
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\StoreUserRequest;
 
 
 
@@ -50,7 +51,7 @@ class AdminUserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(StoreUserRequest $request)
     {
         $user = User::create($request->all());
         $user->subjects()->sync($request->input('subjects', []));
@@ -93,7 +94,7 @@ class AdminUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
         if (empty($user)) {
             return back()
