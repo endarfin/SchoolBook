@@ -22,8 +22,6 @@ class CreateTeacherSubject extends Migration
             $table->primary(array('user_id', 'subject_id'));
         });
 
-        DB::statement('ALTER TABLE teacher_subject ADD CONSTRAINT chk_user_id CHECK (user_id = 2)');
-
     }
 
     /**

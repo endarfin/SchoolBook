@@ -30,6 +30,9 @@ class StoreUserRequest extends FormRequest
             'email'  =>  'required|email|unique:users',
             'login'  =>  'required|string|min:3|max:20|unique:users',
             'password'  =>  'required|string|min:8',
+            'type_user_id' => 'required|integer',
+            'group_id' => 'sometimes|required',
+
         ];
     }
 }
