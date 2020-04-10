@@ -13,7 +13,7 @@ class CreateGroupSubject extends Migration
      */
     public function up()
     {
-        Schema::create('group_subjects', function (Blueprint $table) {
+        Schema::create('group_subject', function (Blueprint $table) {
 
             $table->integer('group_id')->unsigned();
             $table->foreign('group_id')->references('id')->on('groups');

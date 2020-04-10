@@ -13,7 +13,7 @@ class CreateTeacherSubject extends Migration
      */
     public function up()
     {
-        Schema::create('teacher_subjects', function (Blueprint $table) {
+        Schema::create('teacher_subject', function (Blueprint $table) {
 
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

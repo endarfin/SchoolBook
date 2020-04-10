@@ -12,7 +12,7 @@ class GroupSubjectSeeder extends Seeder
      */
     public function run()
     {
-    	DB::table('group_subjects')->insert([
+    	DB::table('group_subject')->insert([
 
     									['group_id' => 1, 'subject_id' =>1 ],
     									['group_id' => 1, 'subject_id' =>2 ],
