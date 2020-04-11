@@ -91,7 +91,7 @@
                                         <th>Subject</th>
                                         <td>
                                             <select class="form-control" name="subjects[]"  multiple type="text">
-                                                {{--                                                <option value=""></option>--}}
+                                                <option value="" selected>---no---</option>
                                                 @foreach($subjects as $id => $subjects)
                                                     <option name='subject'
                                                             value="{{ $id }}" {{ (in_array($id, old('$subjects', []))) ? 'selected' : '' }}>{{ $subjects }}</option>
@@ -103,7 +103,7 @@
                                         <th>Group</th>
                                         <td>
                                             <select class="form-control" name="group_id" type="text">
-                                                <option value="" disabled selected hidden>Select group</option>
+                                                <option value="" selected>Select group</option>
                                                 @foreach($groups as $group)
                                                     <option value="{{$group->id}}">{{$group->name}}</option>
                                                 @endforeach
@@ -126,27 +126,5 @@
     </form>
     <script src = "https://code.jquery.com/jquery-3.4.1.min.js"  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
             crossorigin = "anonymous"></script>
-    <script>
-        $(document).ready(function () {
-
-            $('#type').change(function() {
-                if($(this).val() === "2")
-                {
-                    $("tr#subj").show();
-                    $("tr#group").hide();
-                }
-                if($(this).val() === "1")
-                {
-                    $("tr#group").show();
-                    $("tr#subj").hide();
-                }
-                if($(this).val() === "3")
-                {
-                    $("tr#group").hide();
-                    $("tr#subj").hide();
-                }
-
-            });
-        });
-    </script>
+    <script src = "{{ asset('/js/admin/invisibleId.js')}}"></script>
 @endsection

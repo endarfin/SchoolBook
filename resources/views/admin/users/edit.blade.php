@@ -40,7 +40,7 @@
                             <div class="card-title">
                                 <ul class="nav nav-tabs" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active" data-toggle="tab" href="#maindata" role="tab">Основные данные</a>
+                                        <a class="nav-link active" data-toggle="tab" href="#maindata" role="tab">Main</a>
                                     </li>
                                 </ul>
                                 <br>
@@ -48,25 +48,30 @@
                                     <tbody>
                                     <tr>
                                         <th>Name</th>
-                                        <td> <input name="name" type="text" class="form-control" value="{{  $user->name }}" required></td>
+                                        <td><input name="name" type="text" class="form-control"
+                                                   value="{{  $user->name }}" required></td>
                                     </tr>
                                     <tr>
                                         <th>Surname</th>
-                                        <td><input name="surname" value="{{  $user->surname }}" type="text" class="form-control"  required></td>
+                                        <td><input name="surname" value="{{  $user->surname }}" type="text"
+                                                   class="form-control" required></td>
                                     </tr>
                                     <tr>
                                         <th>Phone</th>
-                                        <td><input name="phone" value="{{ $user->phone }}"  type="text" class="form-control" required></td>
+                                        <td><input name="phone" value="{{ $user->phone }}" type="text"
+                                                   class="form-control" required></td>
                                     </tr>
                                     <tr>
                                         <th>Email</th>
-                                        <td><input name="email" value="{{  $user->email }}" type="text" class="form-control" required></td>
+                                        <td><input name="email" value="{{  $user->email }}" type="text"
+                                                   class="form-control" required></td>
                                     </tr>
                                     <tr>
                                         <th>Type</th>
                                         <td>
-                                            <select class="form-control" name="type_user_id" type="text" required>
-                                                <option value="{{$user->type->id}}" hidden>{{$user->type->name}}</option>
+                                            <select class="form-control" name="type_user_id" id="type" type="text" required>
+                                                <option value="{{$user->type->id}}"
+                                                        hidden>{{$user->type->name}}</option>
                                                 @foreach($types as $type)
                                                     <option value="{{$type->id}}">{{$type->name}}</option>
                                                 @endforeach
@@ -76,9 +81,11 @@
                                     <tr>
                                         <th>Subject</th>
                                         <td>
-                                            <select class="form-control" name="subjects[]" multiple type="text" >
+                                            <select class="form-control" name="subjects[]" multiple type="text">
+                                                <option value="">---no---</option>
                                                 @foreach($subjects as $id => $subjects)
-                                                    <option value="{{ $id }}" {{ (in_array($id, old('$subjects', [])) || $user->subjects->contains($id)) ? 'selected' : '' }}>{{ $subjects }}</option>
+                                                    <option
+                                                        value="{{ $id }}" {{ (in_array($id, old('$subjects', [])) || $user->subjects->contains($id)) ? 'selected' : '' }}>{{ $subjects }}</option>
                                                 @endforeach
                                             </select>
                                         </td>
@@ -86,9 +93,9 @@
                                     <tr>
                                         <th>Group</th>
                                         <td>
-                                            <select class="form-control" name="group_id" type="text" required>
-                                                <option>{{$user->group->name}}</option>
-                                                <option value="">no</option>
+                                            <select class="form-control" name="group_id" type="text" >
+                                                <option value="{{$user->group->id}}" selected>{{$user->group->name}}</option>
+                                                <option value="">---no---</option>
                                                 @foreach($groups as $group)
                                                     <option value="{{$group->id}}">{{$group->name}}</option>
                                                 @endforeach
@@ -98,15 +105,16 @@
                                     </tr>
                                     </tbody>
                                 </table>
-                                    <div class="float-right">
-                                        <a class="btn btn-outline-info btn-sm" href="{{ route('admin.users.index') }}" >Back</a>
-                                        <button type="submit" class="btn btn-outline-info btn-sm" >Save</button>
-                                    </div>
+                                <div class="float-right">
+                                    <a class="btn btn-outline-info btn-sm"
+                                       href="{{ route('admin.users.index') }}">Back</a>
+                                    <button type="submit" class="btn btn-outline-info btn-sm">Save</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
     </form>
 @endsection
