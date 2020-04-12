@@ -50,7 +50,18 @@ class GroupsRepository extends CoreRepository
 
         $result = $this->startConditions()
             ->select($columns)
-            ->toBase()
+            ->with('subjects')
+            ->get();
+
+        return $result;
+    }
+    public function getAll()
+    {
+        $columns = ['id', 'name', 'course_id'];
+
+        $result = $this->startConditions()
+            ->select($columns)
+            ->with(['courses:id,name'])
             ->get();
 
         return $result;

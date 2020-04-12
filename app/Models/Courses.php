@@ -10,4 +10,8 @@ class Courses extends Model
     protected $fillable = ['name',];
     protected $table = 'courses';
 
+    public function groups()
+    {
+        return $this->hasMany(Groups::class,'course_id','id');
+    }
 }

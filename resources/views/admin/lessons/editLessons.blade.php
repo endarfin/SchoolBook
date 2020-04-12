@@ -39,6 +39,10 @@
                                         <option value="{{$group->id}}"
                                                 @if(old('group_id', $lesson->group_id) == $group->id) selected @endif>
                                             {{$group->name}}
+                                            ( @foreach( $group->subjects as $subjec)
+                                                {{$subjec->name}}
+                                            @endforeach
+                                            )
                                         </option>
                                     @endforeach
                                 </select><br>
@@ -61,6 +65,10 @@
                                         <option value="{{$teacher->id}}"
                                                 @if(old('user_id', $lesson->user_id) == $teacher->id) selected @endif>
                                             {{$teacher->surname}}
+                                            ( @foreach( $teacher->subjects as $subjec)
+                                                {{$subjec->name}}
+                                            @endforeach
+                                            )
                                         </option>
                                     @endforeach
                                 </select><br>

@@ -55,7 +55,7 @@ class AdminLessonsController extends Controller
     {
         $groups = $this->groupsRepository->getForComboBox();
         $subjects = $this->subjectRepository->getForComboBox();
-        $teachers = $this->usersRepository->getForComboBox();
+        $teachers = $this->usersRepository->getTeacherForComboBox();
         $classRooms = $this->classRoomRepository->getForComboBox();
         return view('admin.lessons.createLessons', compact('groups', 'subjects', 'teachers', 'classRooms'));
 
@@ -71,21 +71,27 @@ class AdminLessonsController extends Controller
     {
         $lessons = $request;
 
-        $groupSubjects = $this->groupSubjectRepository->getAllWhere($lessons->group_id);
+        $groupSubjects = $this->groupSubjectRepository->find($lessons);
 
-        $teacherSubject = $this->teacherSubjectRepository->getAllWhere($lessons->user_id);
+        $teacherSubject = $this->teacherSubjectRepository->find($lessons);
 
+        $exist = $this->lessonsRepository->checkSame($request);
+        //dd( $lessons, $groupSubjects,$teacherSubject);
         $result = false;
+        if ($groupSubjects) {
+            if ($teacherSubject){
+                if (!$exist){
+                    $result = $this->lessonsRepository->lessonCreated($request);
+                    }else{return back()
+                        ->withErrors(['msg' => 'Такой урок уже есть'])
+                        ->withInput();}
+                }else{return back()
+                    ->withErrors(['msg' => 'Учитель не проподает такой придмет'])
+                    ->withInput();}
+            }else{return back()
+            ->withErrors(['msg' =>'У группы нет такого предмета'])
+            ->withInput();}
 
-        foreach ($groupSubjects as $groupSubject) {
-            foreach ($teacherSubject as $Subject) {
-                if ($lessons->subject_id == $groupSubject->subject_id) {
-                    if ($Subject->subject_id == $lessons->subject_id){
-                        $result = $this->lessonsRepository->lessonCreated($request);
-                    }
-                }
-            }
-        }
         if ($result) {
             return redirect()
                 ->route('admin.lessons.edit', $result->id)
@@ -119,7 +125,7 @@ class AdminLessonsController extends Controller
         $lesson = $this->lessonsRepository->GetEdit($id);
         $groups = $this->groupsRepository->getForComboBox();
         $subjects = $this->subjectRepository->getForComboBox();
-        $teachers = $this->usersRepository->getForComboBox();
+        $teachers = $this->usersRepository->getTeacherForComboBox();
         $classRooms = $this->classRoomRepository->getForComboBox();
         return view('admin.lessons.editLessons', compact('lesson', 'groups', 'subjects', 'teachers', 'classRooms'));
     }
@@ -140,17 +146,20 @@ class AdminLessonsController extends Controller
                 ->withErrors(['msg' => "Запись id={$id} не найдена"])
                 ->withInput();
         }
-        $groupSubjects = $this->groupSubjectRepository->getAllWhere($ed_request->group_id);
-        $teacherSubjects = $this->teacherSubjectRepository->getAllWhere($ed_request->user_id);
+
+        $groupSubjects = $this->groupSubjectRepository->find($ed_request);
+        $teacherSubjects = $this->teacherSubjectRepository->find($ed_request);
 
         $result = false;
-        foreach ($groupSubjects as $groupSubject) {
-            foreach ($teacherSubjects as $teacherSubject) {
-                if ($ed_request->subject_id == $groupSubject->subject_id)
-                    if ($teacherSubject->subject_id == $ed_request->subject_id)
-                        $result = $this->lessonsRepository->upDate($ed_lesson, $request);
-            }
-        }
+        if ($groupSubjects) {
+            if ($teacherSubjects){
+                    $result = $this->lessonsRepository->lessonCreated($request);
+            }else{return back()
+                ->withErrors(['msg' => 'Учитель не проподает такой придмет'])
+                ->withInput();}
+        }else{return back()
+            ->withErrors(['msg' =>'У группы нет такого предмета'])
+            ->withInput();}
 
 
         if ($result) {

@@ -14,18 +14,17 @@ class LessonsRepository extends CoreRepository
      * @param int $id
      * @return Model
      */
-//    public function checkSame($date)
-//    {
-//        //dd($date->group_id);
-//        return $this->startConditions()
-//            ->where(
-//                ['group_id', '=', "$date->group_id"],
-//                ['subject_id', '=', "$date->subject_id"],
-//                ['user_id', '=', "$date->user_id"],
-//                ['class_room_id', '=', "$date->class_room_id"],
-//                ['date_event', '=', "strtotime($date->date_event)"]
-//                )->get();
-//    }
+    public function checkSame($date)
+    {
+        //dd($date->group_id);
+        return $this->startConditions()
+            ->where('group_id', $date->group_id)
+            ->where('subject_id', $date->subject_id)
+            ->where('user_id', $date->user_id)
+            ->where('class_room_id', $date->class_room_id)
+            ->where('date_event', strtotime($date['date_event']))
+            ->exists();
+    }
 
     public function getEdit($id)
     {
@@ -39,7 +38,7 @@ class LessonsRepository extends CoreRepository
             ->startConditions()
             ->select($columns)
             ->orderBy('id', 'DESC')
-            ->with(['Subject:id,name', 'Users:id,surname', 'ClassRooms:id,name', 'Groups:id,name'])
+            ->with(['Subject:id,name', 'User:id,surname', 'ClassRooms:id,name', 'Groups:id,name'])
             ->paginate($perPage);
 
 

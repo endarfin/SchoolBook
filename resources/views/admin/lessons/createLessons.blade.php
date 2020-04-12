@@ -36,7 +36,12 @@
                                 <select class="form-control" name="group_id" required>
                                     <option value="" selected></option>
                                     @foreach($groups as $group)
-                                        <option value={{$group->id}} {{ old('group_id') == $group->id ? 'selected' : '' }}>{{$group->name}}</option>
+                                        <option value={{$group->id}} {{ old('group_id') == $group->id ? 'selected' : '' }}> {{$group->name}}
+                                          ( @foreach( $group->subjects as $subjec)
+                                                {{$subjec->name}}
+                                            @endforeach
+                                            )
+                                        </option>
                                     @endforeach
                                 </select><br>
                             </div>
@@ -45,7 +50,7 @@
                                 <select class="form-control" name="subject_id" required>
                                     <option value="" selected></option>
                                     @foreach($subjects as $subject)
-                                        <option value="{{$subject->id}}" {{ old('subject_id') == $subject->id ? 'selected' : '' }}>{{$subject->name}}</option>
+                                        <option value="{{$subject->id}}" {{ old('subject_id') == $subject->id ? 'selected' : '' }}> {{$subject->name}}</option>
                                     @endforeach
                                 </select><br>
                             </div>
@@ -54,7 +59,12 @@
                                 <select class="form-control" name="user_id" required>
                                     <option value="" selected></option>
                                     @foreach($teachers as $teacher)
-                                        <option value="{{$teacher->id}}" {{ old('user_id') == $teacher->id ? 'selected' : '' }}>{{$teacher->surname}}</option>
+                                        <option value="{{$teacher->id}}" {{ old('user_id') == $teacher->id ? 'selected' : '' }}> {{$teacher->surname}}
+                                            ( @foreach( $teacher->subjects as $subjec)
+                                                {{$subjec->name}}
+                                            @endforeach
+                                            )
+                                        </option>
                                     @endforeach
                                 </select><br>
                             </div>
@@ -63,7 +73,7 @@
                                 <select class="form-control" name="class_room_id" required>
                                     <option value="" selected></option>
                                     @foreach($classRooms as $classRoom)
-                                        <option value="{{$classRoom->id}}" {{ old('class_room_id') == $classRoom->id ? 'selected' : '' }}>{{$classRoom->name}}</option>
+                                        <option value="{{$classRoom->id}}" {{ old('class_room_id') == $classRoom->id ? 'selected' : '' }}> {{$classRoom->name}}</option>
                                     @endforeach
                                 </select><br>
                             </div>

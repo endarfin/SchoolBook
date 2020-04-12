@@ -10,6 +10,7 @@ class Groups extends Model
     use SoftDeletes;
 
     protected $fillable = [
+        'id',
         'name',
         'course_id',
     ];
@@ -21,7 +22,13 @@ class Groups extends Model
 
     public function users()
     {
-        return $this->hasMany(User::class, 'group_id')->withDefault();;
+        return $this->hasMany(User::class, 'group_id')->withDefault();
+    }
+
+    public function subjects()
+    {
+        return $this->belongsToMany(Subject::Class, 'group_subject', 'group_id',
+            'subject_id');
     }
 
 }

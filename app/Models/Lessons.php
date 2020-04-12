@@ -27,9 +27,9 @@ class Lessons extends Model
         return $this->belongsTo(Subject::class, 'subject_id');
     }
 
-    public function Users()
+    public function User()
     {
-        return $this->belongsTo(Users::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function ClassRooms()

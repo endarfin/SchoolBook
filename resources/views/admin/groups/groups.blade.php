@@ -66,15 +66,8 @@
                     </nav>
                      @endif
                 </div>
-                <div class="col-4">
-                    <div class="card">
 
-                        <nav class="nav nav-pills nav-justified">
-                            <a class="nav-item nav-link active" href="{{route('admin.groups.create')}} ">Дбавить группу</a>
-                        </nav>
-                </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection

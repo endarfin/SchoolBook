@@ -22,11 +22,17 @@ class teacherSubjectRepository extends CoreRepository
     {
         //dd($this->startConditions(), $id);
         $result = $this->startConditions()
-            ->select('user_id', 'subject_id')
             ->where('user_id', $id)
             ->toBase()
             ->get();
         return  $result;
+    }
+    public function find($date)
+    {
+        return $this->startConditions()
+            ->where('user_id', $date->user_id)
+            ->where('subject_id', $date->subject_id)
+            ->exists();
     }
 
 }

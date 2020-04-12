@@ -46,17 +46,26 @@
                         @foreach($lessons as $lesson )
                             <tr>
                                 <th scope="row">{{$lesson->id}}</th>
-                                <td><a href="{{route('admin.showTimetable',['name'=>'group_id','id'=>$lesson->group_id])}}">{{$lesson->Groups->name}}</a></td>
+                                <td>
+                                    <a href="{{route('showTimetable',['name'=>'group_id','id'=>$lesson->group_id])}}">{{$lesson->Groups->name}}</a>
+                                </td>
                                 <td>{{$lesson->Subject->name}}</td>
-                                <td><a href="{{route('admin.showTimetable',['name'=>'user_id','id'=>$lesson->user_id])}}">{{$lesson->Users->surname}}</a></td>
-                                <td><a href="{{route('admin.showTimetable',['name'=>'class_room_id','id'=>$lesson->class_room_id])}}">{{$lesson->ClassRooms->name}}</a></td>
+                                <td>
+                                    <a href="{{route('showTimetable',['name'=>'user_id','id'=>$lesson->user_id])}}">{{$lesson->User->surname}}</a>
+                                </td>
+                                <td>
+                                    <a href="{{route('showTimetable',['name'=>'class_room_id','id'=>$lesson->class_room_id])}}">{{$lesson->ClassRooms->name}}</a>
+                                </td>
                                 <td>{{date( "d-m-Y H:i" , $lesson->date_event)}}</td>
-                                <td><a class="btn btn-primary" href="{{ route('admin.lessons.edit', $lesson->id) }}" role="button">Edit</a></td>
-                                <td><form action="{{ route('admin.lessons.destroy', $lesson->id) }}" method="POST">
+                                <td><a class="btn btn-primary" href="{{ route('admin.lessons.edit', $lesson->id) }}"
+                                       role="button">Edit</a></td>
+                                <td>
+                                    <form action="{{ route('admin.lessons.destroy', $lesson->id) }}" method="POST">
                                         @method('DELETE')
                                         @csrf
                                         <button class="btn btn-primary" type="submit">Delete</button>
-                                    </form></td>
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -64,9 +73,7 @@
                     @if($lessons->total() > $lessons->count())
                         <nav aria-label="Page navigation example">
                             <ul class="pagination">
-
                                 {{$lessons->links()}}
-
                             </ul>
                         </nav>
                     @endif
@@ -75,7 +82,8 @@
                     <div class="card">
 
                         <nav class="nav nav-pills nav-justified">
-                            <a class="nav-item nav-link active" href="{{route('admin.lessons.create')}} ">Дбавить урок</a>
+                            <a class="nav-item nav-link active" href="{{route('admin.lessons.create')}} ">Дбавить
+                                урок</a>
                         </nav>
                     </div>
                 </div>

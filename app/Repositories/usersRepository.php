@@ -1,7 +1,7 @@
 <?php
 namespace App\Repositories;
 
-use App\Models\users as Model;
+use App\Models\User as Model;
 
 /**
  * Class CoursesRepository
@@ -11,18 +11,19 @@ class  usersRepository extends CoreRepository
 {
 
 
-    public function getForComboBox()
+    public function getTeacherForComboBox()
     {
         $columns = ['id', 'surname'];
 
         $result = $this->startConditions()
             ->select($columns)
             ->where('type_user_id','2')
-            ->toBase()
+            ->with('subjects')
             ->get();
 
         return $result;
     }
+
     /**
      * @return string
      */
@@ -31,8 +32,21 @@ class  usersRepository extends CoreRepository
         return Model::class;
     }
 
-    public function getEdit($id)
+    public function find($id)
     {
         return $this->startConditions()->find($id);
+    }
+
+    public function getAllTeacher()
+    {
+        $columns = ['id', 'surname', 'name'];
+
+        $result = $this->startConditions()
+            ->select($columns)
+            ->where('type_user_id','2')
+            ->get();
+
+        return $result;
+
     }
 }

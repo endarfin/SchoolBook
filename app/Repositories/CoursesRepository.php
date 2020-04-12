@@ -29,4 +29,17 @@ class CoursesRepository extends CoreRepository
     {
         return Model::class;
     }
+
+    public function getAll()
+    {
+        $columns = ['id', 'name'];
+
+        $result = $this->startConditions()
+            ->select($columns)
+            ->with('groups')
+            ->get();
+
+        return $result;
+
+    }
 }
