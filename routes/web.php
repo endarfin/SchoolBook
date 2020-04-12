@@ -14,12 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'SiteController@index');
-Route::get('/timetable', 'SiteController@timetable');
-Route::get('/rank', 'SiteController@rank');
+Route::get('timetable', 'SiteController@timetable');
+Route::get('rank', 'SiteController@rank');
 
-//отлючил регистрацию и включил редирект на админку
-Route::redirect('/', 'admin');
-Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -40,5 +37,5 @@ Route::group(['namespace' => 'Admin', 'prefix' =>'admin'],function ()
     Route::get('timetable/{name}/{id}', 'AdminTimetable@showTimetable')->name('admin.showTimetable');
 });
 
-
-
+//Текущий урок на фронте
+Route::get('schedule', 'ScheduleController@index');
