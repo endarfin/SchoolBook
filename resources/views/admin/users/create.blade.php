@@ -38,8 +38,8 @@
                             <div class="card-title">
                                 <ul class="nav nav-tabs" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active" data-toggle="tab" href="#maindata" role="tab">Основные
-                                            данные</a>
+                                        <a class="nav-link active" data-toggle="tab" href="#maindata"
+                                           role="tab">Main</a>
                                     </li>
                                 </ul>
                                 <br>
@@ -67,17 +67,19 @@
                                     </tr>
                                     <tr>
                                         <th>Login</th>
-                                        <td><input name="login" type="text" class="form-control" required></td>
+                                        <td><input name="login" value="{{ old('login') }}" type="text"
+                                                   class="form-control" required></td>
                                     </tr>
                                     <tr>
                                         <th>Password</th>
-                                        <td><input name="password" type="password" class="form-control" required></td>
+                                        <td><input name="password" value="{{ old('password') }}" type="password"
+                                                   class="form-control" required></td>
                                     </tr>
                                     <tr>
                                         <th>Type</th>
                                         <td>
-
-                                            <select class="form-control" name="type_user_id" type="text" required>
+                                            <select class="form-control" name="type_user_id" id="type" type="text"
+                                                    required>
                                                 <option value="" disabled selected hidden>User's type</option>
                                                 @foreach($types as $type)
                                                     <option value="{{$type->id}}">{{$type->name}}</option>
@@ -85,28 +87,27 @@
                                             </select>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr class="hidden" id="subj">
                                         <th>Subject</th>
                                         <td>
-                                            <select class="form-control" name="subjects[]" multiple type="text">
-{{--                                                <option value=""></option>--}}
+                                            <select class="form-control" name="subjects[]"  multiple type="text">
+                                                <option value="" selected>---no---</option>
                                                 @foreach($subjects as $id => $subjects)
-                                                    <option
-                                                        value="{{ $id }}" {{ (in_array($id, old('$subjects', []))) ? 'selected' : '' }}>{{ $subjects }}</option>
+                                                    <option name='subject'
+                                                            value="{{ $id }}" {{ (in_array($id, old('$subjects', []))) ? 'selected' : '' }}>{{ $subjects }}</option>
                                                 @endforeach
                                             </select>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr class="hidden" id="group">
                                         <th>Group</th>
                                         <td>
-                                            <select class="form-control" name="group_id" type="text" required>
-                                                <option value="" disabled selected hidden>Группа</option>
+                                            <select class="form-control" name="group_id" type="text">
+                                                <option value="" selected>Select group</option>
                                                 @foreach($groups as $group)
                                                     <option value="{{$group->id}}">{{$group->name}}</option>
                                                 @endforeach
                                             </select>
-
                                         </td>
                                     </tr>
                                     </tbody>
@@ -123,4 +124,7 @@
             </div>
         </div>
     </form>
+    <script src = "https://code.jquery.com/jquery-3.4.1.min.js"  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin = "anonymous"></script>
+    <script src = "{{ asset('/js/admin/invisibleId.js')}}"></script>
 @endsection

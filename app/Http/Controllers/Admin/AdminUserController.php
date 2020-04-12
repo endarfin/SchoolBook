@@ -55,7 +55,9 @@ class AdminUserController extends Controller
     public function store(StoreUserRequest $request)
     {
         $user = User::create($request->all());
-        $user->subjects()->sync($request->input('subjects', []));
+        if(!empty($request->subjects[0])) {
+            $user->subjects()->sync($request->input('subjects', []));
+        }
 
         if ($user) {
             return redirect()
@@ -105,8 +107,9 @@ class AdminUserController extends Controller
 
         $data = $request->all();
         $result = $user->update($data);
-        $user->subjects()->sync($request->input('subjects', []));
-
+        if(!empty($request->subjects[0])) {
+            $user->subjects()->sync($request->input('subjects', []));
+        }
         if ($result) {
             return redirect()
                 ->route('admin.users.edit', $user->id)
