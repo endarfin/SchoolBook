@@ -1,7 +1,6 @@
 @extends('template')
 @section('content')
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+
             <div class="card">
                 <div class="card-header">
                     <div class="float-rigth">
@@ -12,16 +11,15 @@
                     <div class="card-title">
                         <div>Subject:</div>
                         <div>Group:</div>
-                        <div>Teacher:</div>
                     </div>
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr>
                             <th rowspan="2">Students</th>
-                            <th>Data</th>
+                            <th>...</th>
                         </tr>
                         <tr>
-                            <th>Оценки</th>
+                            <th>....</th>
                         </tr>
 
                         </thead>
@@ -45,6 +43,5 @@
                    href="{{ route('admin.users.index') }}">Back</a>
                 <button type="submit" class="btn btn-outline-info btn-sm">Save</button>
             </div>
-        </div>
-    </div>
+
 @endsection

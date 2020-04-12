@@ -20,7 +20,7 @@
           <div class="float-left">
             <nav class="nav">
               <a class="nav-link" href="/" disabled>AcademyBook</a>
-              <a class="nav-link" href="timetable">Расписание</a>
+              <a class="nav-link" href="{{route('front.journals.index')}}">Электронный журнал</a>
               <a class="nav-link" href="rank">Оценки</a>
               <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle " data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="       false">Наша Академия</a>

@@ -37,5 +37,5 @@ Route::group(['namespace' => 'Admin', 'prefix' =>'admin'],function ()
     Route::get('timetable/{name}/{id}', 'AdminTimetable@showTimetable')->name('admin.showTimetable');
 });
 
-//Текущий урок на фронте
-Route::get('schedule', 'ScheduleController@index');
+//Журнал на фронте
+Route::resource('journals', 'JournalController')->names('front.journals');
