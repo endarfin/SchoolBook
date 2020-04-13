@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="float-rigth">
-                        <div>Schedule</div>
+                        <div>Journal</div>
                     </div>
                 </div>
                 <div class="card-body">
@@ -15,23 +15,29 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th rowspan="2">Students</th>
-                            <th>...</th>
+                            <th>Id</th>
+                            <th>Data</th>
+                            <th>Mark</th>
+                            <th>Students</th>
+                            <th>Groups</th>
+                            <th>Subjects</th>
+
                         </tr>
-                        <tr>
-                            <th>....</th>
-                        </tr>
+
 
                         </thead>
                         <tbody>
+                        @foreach($journals as $journal)
                             <tr>
-                                <td></td>
-                                <td></td>
+                                <th scope="row">{{ $journal->id }}</th>
+                                <td>{{ $journal->date }}</td>
+                                <td>{{ $journal->mark }}</td>
+                                <td>{{ $journal->NameStudent }}</td>
+                                <td>{{ $journal->NameGroup }}</td>
+                                <td>{{ $journal->subjects}}</td>
+
                             </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
