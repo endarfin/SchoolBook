@@ -14,23 +14,24 @@
                     $www .= '<th scope="col">' . date('d-m-y', strtotime("$j $dayWeek[$i]")) . '</th>';
                 }
                 echo $www .= "</tr></thead>";
-                $uniqTime = $collectionTimeTable->where('day', $dayWeek[$i])
-                    ->unique('time')
-                    ->sortBy('time');
-                foreach ($uniqTime as $time) {
+                $uniqlessons = $collectionTimeTable->where('day', $dayWeek[$i])
+                    ->unique('lesson')
+                    ->sortBy('lesson');
+                foreach ($uniqlessons as $lesson) {
+                    $lessontime = $timeLessonsCollect->where('id', $lesson->lesson)->first();
                     $www = '';
-                    $www .= '<tbody><tr><th scope="row">' . $time->time . '</th>';
+                    $www .= '<tbody><tr><th scope="row">№' . $lesson->lesson .' - '.$lessontime->time . '</th>';
                     for ($j = 1; $j < 10; $j++) {
                         $uniqueDay = $collectionTimeTable->where('day', $dayWeek[$i])->values();
-                        $uniqueDay = $collectionTimeTable->where('date', date('d-m-Y', strtotime("$j $dayWeek[$i]")))->values();
-                        $uniqueDayTami = $uniqueDay->where('time', $time->time);
-                        if ($uniqueDayTami->isEmpty()){
+                        $uniquelesson = $uniqueDay->where('lesson', $lesson->lesson);
+                        $uniqueDaylesson = $uniquelesson->where('date', date('Y-m-d', strtotime("$j $dayWeek[$i]")));
+                        //dd($uniqueDay,$uniquelesson,$uniqueDaylesson,$lesson->lesson,date('Y-d-m', strtotime("$j $dayWeek[$i]")));
+                        if ($uniqueDaylesson->isEmpty()){
                             $www .= '<td></td>';
-                        }else{
-                            foreach ($uniqueDayTami as $day) {
+                        }else{foreach ($uniqueDaylesson as $day) {
                                 $room = $classRoomCollect->where('id', "$day->class_room_id")->first();
                                 $subject = $subjectsCollect->where('id',"$day->subject_id" )->first();
-                                $www .= "<td>" .$subject->name."<br>(". $room->name . ")</td>";
+                                $www .= "<td>" .$subject->name."<br>". $room->name . "</td>";
                             }
                         }
                     }

@@ -14,7 +14,7 @@ class LessonsRepository extends CoreRepository
      * @param int $id
      * @return Model
      */
-    public function checkSame($date)
+    public function exist($date)
     {
         //dd($date->group_id);
         return $this->startConditions()
@@ -26,6 +26,38 @@ class LessonsRepository extends CoreRepository
             ->exists();
     }
 
+    public function freeTeacherTime($date)
+    {
+        $result = $this->startConditions()
+            ->where('user_id', $date->user_id)
+            ->where('lesson', $date->lesson)
+            ->where('date_event', $date->date_event)
+            ->exists();
+
+        return $result;
+    }
+
+    public function freeGroupTime($date)
+    {
+        $result = $this->startConditions()
+            ->where('group_id', $date->group_id)
+            ->where('lesson', $date->lesson)
+            ->where('date_event', $date->date_event)
+            ->exists();
+
+        return $result;
+    }
+    public function freeClassRoomTime($date)
+    {
+        $result = $this->startConditions()
+            ->where('class_room_id', $date->class_room_id)
+            ->where('lesson', $date->lesson)
+            ->where('date_event', $date->date_event)
+            ->exists();
+
+        return $result;
+    }
+
     public function getEdit($id)
     {
         return $this->startConditions()->find($id);
@@ -33,12 +65,12 @@ class LessonsRepository extends CoreRepository
 
     public function getAllWithPaginate($perPage)
     {
-        $columns = ['id', 'date_event', 'group_id', 'subject_id', 'user_id', 'class_room_id'];
+        $columns = ['id', 'date_event', 'group_id', 'subject_id', 'user_id', 'class_room_id', 'lesson'];
         $result = $this
             ->startConditions()
             ->select($columns)
             ->orderBy('id', 'DESC')
-            ->with(['Subject:id,name', 'User:id,surname', 'ClassRooms:id,name', 'Groups:id,name'])
+            ->with(['Subject:id,name', 'User:id,surname', 'ClassRooms:id,name', 'Groups:id,name', 'TimeLessons:id,time'])
             ->paginate($perPage);
 
 
@@ -48,13 +80,14 @@ class LessonsRepository extends CoreRepository
     public function ShowTable($table, $id)
     {
 
-        $columns = ['id', 'date_event', 'class_room_id', 'subject_id', 'group_id', 'user_id'];
+        $columns = ['id', 'date_event', 'class_room_id', 'subject_id', 'group_id', 'user_id', 'lesson'];
         $result = $this
             ->startConditions()
             ->select($columns)
             ->where($table, $id)
             ->toBase()
             ->get();
+
 
         // dd($table, $id, $result);
         return $result;
@@ -80,7 +113,6 @@ class LessonsRepository extends CoreRepository
     public function upDate($ed_lesson, $request)
     {
         $date = $request->all();
-        $date['date_event'] = strtotime($request['date_event']);
         $result = $ed_lesson
             ->fill($date)
             ->save();
@@ -89,11 +121,7 @@ class LessonsRepository extends CoreRepository
 
     public function lessonCreated($request)
     {
-        $request['date_event'] = strtotime($request['date_event']);
         $lesson = $request->input();
-        //dd($lesson);
-
-        // dd($request, $lesson);
         $result = $this->startConditions()
             ->create($lesson);
         return $result;

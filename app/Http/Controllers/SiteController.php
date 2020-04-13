@@ -8,6 +8,7 @@ use App\Repositories\CoursesRepository;
 use App\Repositories\GroupsRepository;
 use App\Repositories\LessonsRepository;
 use App\Repositories\SubjectRepository;
+use App\Repositories\TimeLessonsRepository;
 use App\Repositories\usersRepository;
 use Illuminate\Http\Request;
 
@@ -19,6 +20,7 @@ class SiteController extends Controller
     private $subjectRepository;
     private $usersRepository;
     private $coursesRepository;
+    private $timeLessonsRepository;
 
 
     public function __construct()
@@ -29,6 +31,7 @@ class SiteController extends Controller
         $this->subjectRepository = app(subjectRepository::class);
         $this->usersRepository = app(usersRepository::class);
         $this->coursesRepository = app(coursesRepository::class);
+        $this->timeLessonsRepository = app(TimeLessonsRepository::class);
     }
 
     public function index()
@@ -41,7 +44,6 @@ class SiteController extends Controller
     {
         $courses = $this->coursesRepository->getAll();
         $teachers = $this->usersRepository->getAllTeacher();
-
        // dd(__METHOD__,$courses,$teachers);
 
     	return view('timetable',compact('courses', 'teachers'));
@@ -57,9 +59,11 @@ class SiteController extends Controller
     public function showTimetable($name, $id)
     {
         $groupsName = $this->groupsRepository->getEdit($id);
-
         $teacherName = $this->usersRepository->find($id);
 
+        $timeLessons = $this->timeLessonsRepository->getAll();
+        $timeLessonsCollect = Collect($timeLessons);
+        //dd($timeLessonsCollect);
         $classRoom = $this->classRoomRepository->getForComboBox();
         $classRoomCollect = Collect($classRoom);
 
@@ -70,15 +74,16 @@ class SiteController extends Controller
         $collectionTimeTable = Collect($timeTable);
         $collectionTimeTable->transform(function ($item) {
             $newItem = new \StdClass();
-            $newItem->date = date("d-m-Y", $item->date_event);
-            $newItem->time = date("H:i", $item->date_event);
+            $newItem->date = substr($item->date_event,0,-9);
             $newItem->group_id = $item->group_id;
+            $newItem->lesson = $item->lesson;
             $newItem->class_room_id = $item->class_room_id;
             $newItem->subject_id = $item->subject_id;
             $newItem->user_id = $item->user_id;
-            $newItem->day = date('l', $item->date_event);
+            $newItem->day = date('l', strtotime($item->date_event));
             return $newItem;
         });
+        //dd($timeTable,$collectionTimeTable);
         $dayWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
         $dayWeekRu =['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
         switch ($name) {
@@ -96,6 +101,6 @@ class SiteController extends Controller
         $dayStart = strtotime('13-05-2020');
         return view('showTimetable',compact('dayWeek',
             'dayStart','collectionTimeTable',
-            'subjectsCollect','classRoomCollect','nameTable', 'dayWeekRu'));
+            'subjectsCollect','classRoomCollect','nameTable', 'dayWeekRu', 'timeLessonsCollect'));
     }
 }

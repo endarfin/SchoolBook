@@ -38,6 +38,7 @@
                             <th scope="col">Учитель</th>
                             <th scope="col">Аудетория</th>
                             <th scope="col">Дата</th>
+                            <th scope="col">Пара</th>
                             <th scope="col">Изменить</th>
                             <th scope="col">Удалить</th>
                         </tr>
@@ -56,7 +57,8 @@
                                 <td>
                                     <a href="{{route('showTimetable',['name'=>'class_room_id','id'=>$lesson->class_room_id])}}">{{$lesson->ClassRooms->name}}</a>
                                 </td>
-                                <td>{{date( "d-m-Y H:i" , $lesson->date_event)}}</td>
+                                <td>{{substr( $lesson->date_event,0,-9)}}</td>
+                                <td>#{{$lesson->lesson}} ({{$lesson->TimeLessons->time}})</td>
                                 <td><a class="btn btn-primary" href="{{ route('admin.lessons.edit', $lesson->id) }}"
                                        role="button">Edit</a></td>
                                 <td>

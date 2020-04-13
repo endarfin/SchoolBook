@@ -15,12 +15,14 @@ class CreateLessons extends Migration
     {
         Schema::create('lessons', function (Blueprint $table) {
             $table->increments('id');
-            //$table->timestamp('date_event');
-            $table->integer('date_event');
+            $table->timestamp('date_event');
+            //$table->integer('date_event');
+            $table->integer('lesson')->unsigned();
             $table->integer('group_id')->unsigned();
             $table->integer('subject_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->integer("class_room_id")->unsigned();
+            $table->foreign('lesson')->references('id')->on('time_lessons')->onDelete('cascade');
             $table->foreign("class_room_id")->references('id')->on('class_rooms');
             $table->foreign(array('group_id', 'subject_id'))->references(array('group_id', 'subject_id'))->on('group_subject')->onDelete('cascade');
             $table->foreign(array('user_id', 'subject_id'))->references(array('user_id', 'subject_id'))->on('teacher_subject')->onDelete('cascade');

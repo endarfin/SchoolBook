@@ -30,6 +30,7 @@ class AdminLessonsRequest extends FormRequest
             'user_id' => 'required|integer|exists:users,id',
             'class_room_id' => 'required|integer|exists:class_rooms,id',
             'date_event' => 'required|date',
+            'lesson' => 'required|integer|exists:time_lessons,id',
         ];
     }
 }

@@ -85,9 +85,20 @@
                                 </select><br>
                             </div>
                             <div class="form-group">
+                                <label for="formGroupExampleInput2">Пара</label>
+                                <select class="form-control" name="lesson" required>
+                                    @foreach($timeLessons as $timeLesson)
+                                        <option value="{{$timeLesson->id}}"
+                                                @if(old('lesson', $lesson->lesson) == $timeLesson->id) selected @endif>
+                                            #{{$timeLesson->id}} ({{$timeLesson->time}})
+                                        </option>
+                                    @endforeach
+                                </select><br>
+                            </div>
+                            <div class="form-group">
                                 <label >Дата</label>
-                                <input type="datetime-local" name="date_event" max="3000-12-31"
-                                       min="1000-01-01" class="form-control" value={{date('Y-m-d', $lesson->date_event )}}T{{date('H:i', $lesson->date_event )}} >
+                                <input type="date" name="date_event"
+                                       class="form-control" value={{$lesson->date_event}}>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary mb-2">Изменить</button>

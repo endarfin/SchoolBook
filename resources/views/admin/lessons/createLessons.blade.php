@@ -73,14 +73,27 @@
                                 <select class="form-control" name="class_room_id" required>
                                     <option value="" selected></option>
                                     @foreach($classRooms as $classRoom)
-                                        <option value="{{$classRoom->id}}" {{ old('class_room_id') == $classRoom->id ? 'selected' : '' }}> {{$classRoom->name}}</option>
+                                        <option value="{{$classRoom->id}}" {{ old('class_room_id') == $classRoom->id ? 'selected' : '' }}>
+                                            {{$classRoom->name}}
+                                        </option>
+                                    @endforeach
+                                </select><br>
+                            </div>
+                            <div class="form-group">
+                                <label for="formGroupExampleInput2">Пара</label>
+                                <select class="form-control" name="lesson" required>
+                                    <option value="" selected></option>
+                                    @foreach($timeLessons as $timeLesson)
+                                        <option value="{{$timeLesson->id}}" {{ old('lesson') == $timeLesson->id ? 'selected' : '' }}>
+                                            #{{$timeLesson->id}} ({{$timeLesson->time}})
+                                        </option>
                                     @endforeach
                                 </select><br>
                             </div>
                             <div class="form-group">
                                 <label >Дата</label>
-                                <input type="datetime-local" name="date_event" max="3000-12-31"
-                                       min="1000-01-01" class="form-control" value="{{old('date_event')}}">
+                                <input type="date" name="date_event"
+                                       class="form-control" value="{{old('date_event')}}">
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary mb-2">Добавить</button>
