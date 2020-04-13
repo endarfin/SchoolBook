@@ -15,12 +15,11 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>Id</th>
                             <th>Data</th>
-                            <th>Mark</th>
-                            <th>Students</th>
                             <th>Groups</th>
-                            <th>Subjects</th>
+                            <th>StudentsName</th>
+                            <th>StudentsSurename</th>
+                            <th>Mark</th>
 
                         </tr>
 
@@ -29,12 +28,11 @@
                         <tbody>
                         @foreach($journals as $journal)
                             <tr>
-                                <th scope="row">{{ $journal->id }}</th>
-                                <td>{{ $journal->date }}</td>
-                                <td>{{ $journal->mark }}</td>
-                                <td>{{ $journal->NameStudent }}</td>
-                                <td>{{ $journal->NameGroup }}</td>
-                                <td>{{ $journal->subjects}}</td>
+                                <th scope="row">{{ $journal->date }}</th>
+                                <td>{{ $journal->group }}</td>
+                                <td>{{ $journal->studentName }}</td>
+                                <td>{{ $journal->studentSurename }}</td>
+                                <td>{{ $journal->mark}}</td>
 
                             </tr>
                         @endforeach

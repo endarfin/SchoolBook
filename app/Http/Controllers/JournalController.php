@@ -15,14 +15,15 @@ class JournalController extends Controller
      */
     public function index()
     {
-        $journals = \DB::table('journals')
-            ->join('lessons', 'journals.lesson_id','=','lessons.id')
-            ->join('users as a','journals.student_id', '=', 'a.id')
-            ->join('users as b', 'lessons.group_id', '=', 'b.id')
-            ->join('subjects', 'lessons.subject_id', '=', 'subjects.id')
-            ->select('journals.id', DB::raw('DATE_FORMAT(FROM_UNIXTIME(lessons.date_event), "%Y-%m-%d %h:%i:%s") as date'), 'journals.mark', 'a.name as NameStudent', 'b.name as NameGroup', 'subjects.name as subjects')
-            ->orderBy('subjects', 'asc')
-            ->orderBy('lessons.date_event')
+        $journals = \DB::table('lessons')
+            ->join('groups', 'lessons.group_id', '=', 'groups.id')
+            ->join('users', 'users.group_id', '=', 'groups.id')
+            ->leftJoin('journals', function ($join){
+                $join->on('lessons.id', '=', 'journals.lesson_id');
+                $join->on('journals.student_id', '=', 'users.id');
+            })
+            ->select(\DB::raw('DATE_FORMAT(FROM_UNIXTIME(lessons.date_event), "%Y-%m-%d %h:%i:%s") as date'), 'groups.name as group', 'users.name as studentName', 'users.surname as studentSurename', 'journals.mark')
+            ->where('lessons.id', '=' ,'1')
             ->get();
 //        dd($journals);
         return view('front.journals.index', compact('journals'));
@@ -41,7 +42,7 @@ class JournalController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -52,7 +53,7 @@ class JournalController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Journal  $journal
+     * @param \App\Models\Journal $journal
      * @return \Illuminate\Http\Response
      */
     public function show(Journal $journal)
@@ -63,7 +64,7 @@ class JournalController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Journal  $journal
+     * @param \App\Models\Journal $journal
      * @return \Illuminate\Http\Response
      */
     public function edit(Journal $journal)
@@ -74,8 +75,8 @@ class JournalController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Journal  $journal
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Journal $journal
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Journal $journal)
@@ -86,7 +87,7 @@ class JournalController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Journal  $journal
+     * @param \App\Models\Journal $journal
      * @return \Illuminate\Http\Response
      */
     public function destroy(Journal $journal)
