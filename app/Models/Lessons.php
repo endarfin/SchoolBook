@@ -36,5 +36,9 @@ class Lessons extends Model
     {
         return $this->belongsTo(ClassRooms::class, 'class_room_id');
     }
+    public function journal()
+    {
+        return $this->hasMany(Journal::Class);
+    }
 
 }

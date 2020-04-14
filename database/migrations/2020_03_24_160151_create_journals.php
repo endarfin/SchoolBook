@@ -15,8 +15,8 @@ class CreateJournals extends Migration
     {
         Schema::create('journals', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('lesson_id')->unsigned();
-            $table->foreign('lesson_id')->references('id')->on('lessons');
+            $table->integer('lessons_id')->unsigned();
+            $table->foreign('lessons_id')->references('id')->on('lessons');
             $table->integer('student_id')->unsigned();
             $table->foreign('student_id')->references('id')->on('users');
             $table->enum('exist', ['y', 'n','l']);

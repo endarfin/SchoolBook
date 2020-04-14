@@ -31,7 +31,7 @@ class JournalController extends Controller
 //            ->where('lessons.subject_id', '=', '2')
 //            ->get();
 
-        $lessons = Lessons::with('groups', 'subjects')->where([['group_id', 1],['subject_id',2]])->get();
+        $lessons = Lessons::with('groups', 'subject', 'user', 'journal')->where([['group_id', 1],['subject_id',2]])->get();
 
 
 //        $journal = [];
