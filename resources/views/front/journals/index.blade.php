@@ -9,29 +9,26 @@
                 </div>
                 <div class="card-body">
                     <div class="card-title">
-                        <div>Subject:</div>
-                        <div>Group:</div>
+                        <div>Subject: {{$lesson->subject->name}}</div>
+                        <div>Group: {{$lesson->groups->name}}</div>
                     </div>
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>Data</th>
-                            <th>Groups</th>
-                            <th>StudentsName</th>
-                            <th>StudentsSurename</th>
-                            <th>Mark</th>
-
+                            <th rowspan="2">Student's List</th>
+                            <th colspan="2">{{date("Y-m-d H:i", $lesson->date_event)}}</th>
                         </tr>
-
+                        <tr>
+                            <th>Attend</th>
+                            <th>Marks</th>
+                        </tr>
 
                         </thead>
                         <tbody>
                         @foreach($journals as $journal)
                             <tr>
-                                <th scope="row">{{ $journal->date }}</th>
-                                <td>{{ $journal->group }}</td>
-                                <td>{{ $journal->studentName }}</td>
-                                <td>{{ $journal->studentSurename }}</td>
+                                <th scope="row">{{$journal->studentSurname }} {{ $journal->studentName}}</th>
+                                <td>{{ $journal->exist}}</td>
                                 <td>{{ $journal->mark}}</td>
 
                             </tr>
