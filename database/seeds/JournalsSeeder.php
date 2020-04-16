@@ -13,12 +13,12 @@ class JournalsSeeder extends Seeder
     {
         DB::table('journals')->insert([
 
-            ['lessons_id' => 1, 'student_id' =>7, 'exist' => 'y', 'mark' =>3 ],
-            ['lessons_id' => 1, 'student_id' =>8, 'exist' => 'y', 'mark' =>3 ],
-            ['lessons_id' => 1, 'student_id' =>9, 'exist' => 'l', 'mark' =>null ],
-            ['lessons_id' => 2, 'student_id' =>10, 'exist' => 'y', 'mark' =>4 ],
-            ['lessons_id' => 2, 'student_id' =>11, 'exist' => 'y', 'mark' =>5 ],
-            ['lessons_id' => 2, 'student_id' =>12, 'exist' => 'n', 'mark' =>null ]
+            ['lessons_id' => 1, 'student_id' =>7, 'mark' =>3 ],
+            ['lessons_id' => 1, 'student_id' =>8, 'mark' =>3 ],
+            ['lessons_id' => 1, 'student_id' =>9, 'mark' =>null ],
+            ['lessons_id' => 2, 'student_id' =>10, 'mark' =>'n' ],
+            ['lessons_id' => 2, 'student_id' =>11, 'mark' =>5 ],
+            ['lessons_id' => 2, 'student_id' =>12, 'mark' =>null ]
 
         ]);
     }

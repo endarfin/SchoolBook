@@ -19,8 +19,8 @@ class CreateJournals extends Migration
             $table->foreign('lessons_id')->references('id')->on('lessons');
             $table->integer('student_id')->unsigned();
             $table->foreign('student_id')->references('id')->on('users');
-            $table->enum('exist', ['y', 'n','l']);
-            $table->enum('mark', ['5','4','3','2','1'])->nullable();
+//            $table->enum('exist', ['y', 'n','l']);
+            $table->enum('mark', ['n','5','4','3','2','1'])->nullable();
         });
     }
 

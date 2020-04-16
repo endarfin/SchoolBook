@@ -3,30 +3,50 @@
 
     <div class="card">
         <div class="card-header">
-            <div class="float-rigth">
+            <div class="float-left">
                 <div>Journal</div>
+            </div>
+            <div class="float-right">
+                <div>TODAY: {{ date('d-m-Y') }}</div>
             </div>
         </div>
         <div class="card-body">
             <div class="card-title">
-                {{--                        <div>Subject: {{$lesson->subject->name}}</div>--}}
-                {{--                        <div>Group: {{$lesson->groups->name}}</div>--}}
             </div>
+
+                <form action="{{ route('front.journals.index') }}" >
+                    <div class="form-row">
+                    <div class="col">
+
+                    <select name="group_id" id="groups" class="custom-select" required>
+                        <option value="" selected>{{ __('Select group') }}</option>
+                        @foreach ($groups as $group)
+                            <option value="{{$group->id}}">{{$group->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col">
+                    <select name="subject_id" id="subjects" class="custom-select" required>
+                        <option value="" selected>{{ __('Select subject') }}</option>
+                        @foreach ($subjects as $subject)
+                            <option value="{{$subject->id}}">{{$subject->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col">
+                    <button  type="submit" class="btn btn-outline-info">Select
+                    </button>
+
+                    <br>
+                </div>
+                    </div>
+                </form>
+            <br>
+
+            @if(!empty($_GET))
+                <div>Subject: {{$subject->name}}</div>
+                <div>Group: {{$group->name}}</div>
             <table class="table table-bordered table-hover">
-
-                {{--                <tr>--}}
-                {{--                    <th rowspan="2">Student's List</th>--}}
-                {{--                    @foreach($date as $date)--}}
-                {{--                        <th colspan="2" class="text-center">{{$date->date}}</th>--}}
-                {{--                    @endforeach--}}
-                {{--                </tr>--}}
-
-
-                {{--                @foreach($students as $student)--}}
-                {{--                    <tr>--}}
-                {{--                        <th>{{$student->surname }} {{ $student->name}}</th>--}}
-                {{--                    </tr>--}}
-                {{--                @endforeach--}}
                 @php
                     echo '<thead>';
                         echo '<tr>';
@@ -37,11 +57,7 @@
                         echo '</tr>';
                     echo '</thead>';
                         echo '<tbody>';
-                        //foreach ($students as $student) {
-                         //   echo '<td>'.$student->surname.$student->name.'</td>';
-                       // }
                             foreach ($schedule as $key => $value) {
-
                                 echo '<td>'.$user[$key].'</td>';
                                 for ($i = 0; $i < $days; $i++) {
                                     if (empty($value[$day[$i]])) {
@@ -61,7 +77,6 @@
     <div class="float-right">
         <a class="btn btn-outline-info btn-sm"
            href="{{ route('admin.users.index') }}">Back</a>
-        <button type="submit" class="btn btn-outline-info btn-sm">Save</button>
     </div>
-
+    @endif
 @endsection
