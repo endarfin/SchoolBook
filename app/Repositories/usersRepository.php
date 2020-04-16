@@ -4,7 +4,7 @@ namespace App\Repositories;
 use App\Models\User as Model;
 
 /**
- * Class CoursesRepository
+ * Class usersRepository
  * @package App\Repositories
  */
 class  usersRepository extends CoreRepository

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AdminLessonsRequest;
+use App\Http\Requests\LessonsRequest;
 use App\Repositories\classRoomRepository;
 use App\Repositories\GroupsRepository;
 use App\Repositories\groupSubjectRepository;
@@ -72,7 +72,7 @@ class AdminLessonsController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AdminLessonsRequest $request)
+    public function store(LessonsRequest $request)
     {
         $lessons = $request;
         $groupSubjects = $this->groupSubjectRepository->find($lessons);
@@ -139,7 +139,7 @@ class AdminLessonsController extends Controller
      */
     public function edit($id)
     {
-        $lesson = $this->lessonsRepository->GetEdit($id);
+        $lesson = $this->lessonsRepository->getEdit($id);
         $groups = $this->groupsRepository->getForComboBox();
         $subjects = $this->subjectRepository->getForComboBox();
         $teachers = $this->usersRepository->getTeacherForComboBox();
@@ -156,10 +156,9 @@ class AdminLessonsController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(AdminLessonsRequest $request, $id)
+    public function update(LessonsRequest $request, $id)
     {
         $ed_lesson = $this->lessonsRepository->getEdit($id);
-        $ed_request = $request;
         if (empty($ed_lesson)) {
             return back()
                 ->withErrors(['msg' => "Запись id={$id} не найдена"])

@@ -1,16 +1,11 @@
 @extends('admin.template')
 @section('content')
     <div class="row align-items-center">
-        <div class="container">
-            @if(session('success'))
-               <br> <div class="alert alert-success" role="alert">
-                    <button types="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">x</span>
-                    </button>
-                    {{ session()->get('success') }}
-                </div>
-            @endif
 
+    </div>
+    <div class="row align-items-center">
+        <div class="container">
+            @include('alert')
             <br><div class="card">
                 <div class="card-header">
                     <div class="float-left">User List</div>

@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\TimeLessons as Model;
 
 /**
- * Class CoursesRepository
+ * Class TimeLessonsRepository
  * @package App\Repositories
  */
 class  TimeLessonsRepository extends CoreRepository

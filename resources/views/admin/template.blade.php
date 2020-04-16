@@ -31,7 +31,7 @@
                 </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/">Опубликовать новость</a>
+                <a class="nav-link" href="{{route('admin.news.index')}}">Опубликовать новость</a>
               </li>
               <li class="nav-item">
               <a class="nav-link" href="/">На сайт</a>

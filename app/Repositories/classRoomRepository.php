@@ -4,7 +4,7 @@ namespace App\Repositories;
 use App\Models\ClassRooms as Model;
 
 /**
- * Class CoursesRepository
+ * Class classRoomRepository
  * @package App\Repositories
  */
 class classRoomRepository extends CoreRepository

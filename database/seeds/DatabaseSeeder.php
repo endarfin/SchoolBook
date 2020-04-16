@@ -23,5 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TeacherSubjectSeeder::class);
         $this->call(LessonsSeeder::class);
         $this->call(JournalsSeeder::class);
+        $this->call(NewsCategoriesSeeder::class);
+        factory(\App\Models\News::class, 100)->create();
     }
 }

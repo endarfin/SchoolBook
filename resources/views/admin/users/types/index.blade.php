@@ -5,15 +5,7 @@
             <div class="row">
                 <div class="col-8">
                     <h1 align="center">Тип пользователей на сайте</h1>
-                    @if(session('success'))
-
-                        <div class="alert alert-success" role="alert">
-                            <button types="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">x</span>
-                            </button>
-                            {{ session()->get('success') }}
-                        </div>
-                    @endif
+                    @include('alert')
                     <table class="table table-striped ">
                         <thead>
                             <tr>

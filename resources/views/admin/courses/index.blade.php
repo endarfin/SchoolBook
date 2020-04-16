@@ -4,6 +4,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-6">
+                    @include('alert')
                     <h1 align="center">Перечень курсов</h1>
                     @if(session('success'))
 

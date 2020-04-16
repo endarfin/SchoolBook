@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\Lessons as Model;
 
 /**
- * Class GroupsRepository
+ * Class LessonsRepository
  * @package App\Repositories
  */
 class LessonsRepository extends CoreRepository
@@ -22,7 +22,8 @@ class LessonsRepository extends CoreRepository
             ->where('subject_id', $date->subject_id)
             ->where('user_id', $date->user_id)
             ->where('class_room_id', $date->class_room_id)
-            ->where('date_event', strtotime($date['date_event']))
+            ->where('date_event', $date['date_event'])
+            ->where('lesson', $date['lesson'])
             ->exists();
     }
 
@@ -110,7 +111,7 @@ class LessonsRepository extends CoreRepository
         return $result;
     }
 
-    public function upDate($ed_lesson, $request)
+public function upDate($ed_lesson, $request)
     {
         $date = $request->all();
         $result = $ed_lesson

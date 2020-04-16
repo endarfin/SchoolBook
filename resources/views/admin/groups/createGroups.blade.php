@@ -1,11 +1,12 @@
 
 @extends('admin.template')
 @section('content')
-    <h1 align="center">Добавить группу</h1>
+    <br>
     <div class="row align-items-center ">
         <div class="container">
-            <div class="row">
+            <div class="row justify-content-center">
                 <div class="col-4">
+                    @include('alert')
                     <form method="post" action="{{route('admin.groups.store')}}">
                         @csrf
                         <div class="form-group">

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTimelessons extends Migration
+class CreateNewsCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateTimelessons extends Migration
      */
     public function up()
     {
-        Schema::create('time_lessons', function (Blueprint $table) {
+        Schema::create('news_categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('number');
-            $table->string('time');
+            $table->integer('parent_id')->unsigned()->default(1);
+            $table->string('slug')->unique();
+            $table->string('name');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -29,6 +30,6 @@ class CreateTimelessons extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('time_lessons');
+        Schema::dropIfExists('news_categories');
     }
 }

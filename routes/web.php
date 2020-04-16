@@ -13,9 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'SiteController@index');
+Route::get('/', 'SiteController@index')->name('index');
 Route::get('/timetable', 'SiteController@timetable')->name('Timetable');;
 Route::get('/timetable/{name}/{id}', 'SiteController@showTimetable')->name('showTimetable');
+Route::get('/news/{slug}', 'SiteController@news')->name('news');
 Route::get('/rank', 'SiteController@rank');
 //отлючил регистрацию и включил редирект на админку
 //Route::redirect('/', 'admin');
@@ -37,4 +38,5 @@ Route::group(['namespace' => 'Admin', 'prefix' =>'admin'],function ()
     Route::resource('rooms', 'AdminRoomController')->names('admin.rooms');
     Route::resource('courses', 'AdminCourseController')->names('admin.courses');
     Route::resource('Lessons', 'AdminLessonsController')->except("show")->names('admin.lessons');
+    Route::resource('News', 'AdminNewsController')->except("show")->names('admin.news');
 });

@@ -4,8 +4,10 @@ namespace App\Repositories;
 
 use App\Models\groupSubject as Model;
 /**
- * Class SubjectRepository.
+ * Class groupSubjectRepository
+ * @package App\Repositories
  */
+
 class groupSubjectRepository extends CoreRepository
 {
     /**

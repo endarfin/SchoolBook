@@ -1,36 +1,14 @@
 
 @extends('admin.template')
 @section('content')
-    <h1 align="center">Изменить группу</h1>
     <div class="row align-items-center ">
         <div class="container">
-            @if($errors->any())
-                <div class="col-4">
-                    <div class="alert alert-danger" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">x</span>
-                        </button>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </div>
-                </div>
-            @endif
-            @if(session('success'))
-                <div class="col-4">
-                    <div class="alert alert-success" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">x</span>
-                        </button>
-                        {{ session()->get('success') }}
-                    </div>
-                </div>
-            @endif
             <form action="{{route('admin.lessons.update', $lesson->id)}}" method="post">
                 @method('PATCH')
                 @csrf
-                <div class="row">
+                <div class="row justify-content-center">
                     <div class="col-4">
+                        @include('alert')
                         <div class="form-group">
                             <div class="form-group">
                                 <label for="formGroupExampleInput2">Группы</label>

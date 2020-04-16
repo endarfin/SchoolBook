@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Courses;
 use App\Repositories\classRoomRepository;
 use App\Repositories\CoursesRepository;
 use App\Repositories\GroupsRepository;
 use App\Repositories\LessonsRepository;
+use App\Repositories\NewsRepository;
 use App\Repositories\SubjectRepository;
 use App\Repositories\TimeLessonsRepository;
 use App\Repositories\usersRepository;
-use Illuminate\Http\Request;
 
 class SiteController extends Controller
 {
@@ -21,6 +20,7 @@ class SiteController extends Controller
     private $usersRepository;
     private $coursesRepository;
     private $timeLessonsRepository;
+    private $newsRepository;
 
 
     public function __construct()
@@ -32,12 +32,22 @@ class SiteController extends Controller
         $this->usersRepository = app(usersRepository::class);
         $this->coursesRepository = app(coursesRepository::class);
         $this->timeLessonsRepository = app(TimeLessonsRepository::class);
-    }
+        $this->newsRepository = app(NewsRepository::class);
+}
 
     public function index()
     {
-        //dd(__METHOD__);
-    	return view('index');
+        $allNews = $this->newsRepository->getAllWithPaginateIndex(9);
+        //dd(__METHOD__, $allNews);
+    	return view('index', compact('allNews'));
+    }
+
+    public function news($slug)
+    {
+        $news = $this->newsRepository->findNews($slug);
+        $bracingNews = $this->newsRepository->bracingNews();
+
+        return view('news', compact('news', 'bracingNews'));
     }
 
     public function timetable()
