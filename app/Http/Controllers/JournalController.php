@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Groups;
 use App\Models\Journal;
 use App\Models\Lessons;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Stmt\Foreach_;
 
 class JournalController extends Controller
 {
@@ -16,32 +19,43 @@ class JournalController extends Controller
      */
     public function index()
     {
-//        $journals = \DB::table('lessons')
-//            ->join('groups', 'lessons.group_id', '=', 'groups.id')
-//            ->join('users', 'users.group_id', '=', 'groups.id')
-//            ->join('subjects', 'lessons.subject_id', '=', 'subjects.id')
-//            ->leftJoin('journals', function ($join) {
-//                $join->on('lessons.id', '=', 'journals.lesson_id');
-//                $join->on('journals.student_id', '=', 'users.id');
-//            })
-//            ->select(\DB::raw('DATE_FORMAT(FROM_UNIXTIME(lessons.date_event), "%Y-%m-%d %h:%i:%s") as date'),
-//                'subjects.name as subject', 'groups.name as group', 'users.name as studentName', 'users.surname as studentSurname',
-//                'journals.exist', 'journals.mark')
-//            ->where('lessons.group_id', '=', '1')
-//            ->where('lessons.subject_id', '=', '2')
-//            ->get();
+        $students = \DB::table('users')
+            ->select('name', 'surname', 'login')
+            ->where('group_id','=','1')
+            ->get();
 
-        $lessons = Lessons::with('groups', 'subject', 'user', 'journal')->where([['group_id', 1],['subject_id',2]])->get();
+        $date = \DB::table('lessons')
+            ->select('lessons.date_event as date')
+            ->where([['group_id','=','1'],['subject_id','=','2']])
+            ->get();
 
+        $marks = \DB::table('lessons')
+            ->join('groups', 'lessons.group_id', '=', 'groups.id')
+            ->join('users', 'users.group_id', '=', 'groups.id')
+            ->join('subjects', 'lessons.subject_id', '=', 'subjects.id')
+            ->leftJoin('journals', function ($join) {
+                $join->on('lessons.id', '=', 'journals.lessons_id');
+                $join->on('journals.student_id', '=', 'users.id');
+            })
+            ->select('lessons.date_event as date', 'users.login as user', 'journals.mark as mark')
+            ->where([['lessons.group_id', '=', '1'],['lessons.subject_id', '=', '2']])
+            ->get();
 
-//        $journal = [];
-//        foreach ($journals as $row) {
-//            $journal[$row->subject][$row->date][$row->group][$row->studentSurname] = $row->mark;
-//        }
-       dd($lessons);
-//        dd($journal);
-//
-        return view('front.journals.index', compact( 'lessons'));
+        foreach ($marks as $mark) {
+            $schedule[$mark->user][$mark->date]= $mark->mark;
+        }
+        foreach ($date as $date) {
+            $day[] = $date->date;
+        }
+        $days = count($day);
+
+        foreach ($students as $student) {
+            $user[$student->login]= $student->surname.' '.$student->name;
+        }
+
+//        dd($abc);
+
+        return view('front.journals.index', compact( 'user', 'date', 'schedule', 'day', 'days'));
     }
 
     /**
