@@ -1,6 +1,17 @@
 @extends('template')
 @section('content')
-
+    @if($errors->any())
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">x</span>
+                    </button>
+                    {!! $errors->first() !!}
+                </div>
+            </div>
+        </div>
+    @endif
     <div class="card">
         <div class="card-header">
             <div class="float-left">
@@ -13,12 +24,11 @@
         <div class="card-body">
             <div class="card-title">
             </div>
-
                 <form action="{{ route('front.journals.index') }}" >
                     <div class="form-row">
                     <div class="col">
 
-                    <select name="group_id" id="groups" class="custom-select" required>
+                    <select name="group_id" id="groups" class="custom-select" method ="post" required >
                         <option value="" selected>{{ __('Select group') }}</option>
                         @foreach ($groups as $group)
                             <option value="{{$group->id}}">{{$group->name}}</option>
@@ -26,7 +36,7 @@
                     </select>
                 </div>
                 <div class="col">
-                    <select name="subject_id" id="subjects" class="custom-select" required>
+                    <select name="subject_id" id="subjects" class="custom-select" required >
                         <option value="" selected>{{ __('Select subject') }}</option>
                         @foreach ($subjects as $subject)
                             <option value="{{$subject->id}}">{{$subject->name}}</option>
@@ -36,7 +46,6 @@
                 <div class="col">
                     <button  type="submit" class="btn btn-outline-info">Select
                     </button>
-
                     <br>
                 </div>
                     </div>
@@ -44,8 +53,9 @@
             <br>
 
             @if(!empty($_GET))
-                <div>Subject: {{$subject->name}}</div>
-                <div>Group: {{$group->name}}</div>
+                <div>Group: {{$groupName}}</div>
+                <div>Subject: {{$subjectName}}</div>
+
             <table class="table table-bordered table-hover">
                 @php
                     echo '<thead>';

@@ -37,4 +37,4 @@ Route::group(['namespace' => 'Admin', 'prefix' =>'admin'],function ()
 });
 
 //Журнал на фронте
-Route::resource('journals', 'JournalController')->names('front.journals');
+Route::get('journals', 'JournalController@index')->name('front.journals.index');
