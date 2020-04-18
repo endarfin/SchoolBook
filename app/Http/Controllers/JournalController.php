@@ -31,11 +31,17 @@ class JournalController extends Controller
         $groups = $this->groupsRepository->getForComboBox();
         $subjects = $this->subjectRepository->getForComboBox();
 
+//            $foo = $request->get("delta");
+
             $group_id = $request->get('group_id');
             $subject_id = $request->get('subject_id');
             $periodBegin = $request->get('periodBegin');
             $periodEnd = $request->get('periodEnd');
-
+//        if ($foo) {
+//            $periodBegin = $periodBegin - strtotime("- $foo day");
+//            $periodEnd = $periodEnd  - strtotime("- $foo day");
+//
+//        }
         if (($group_id)&&($subject_id)) {
 
             $students = $this->usersRepository->getStudents($group_id);
@@ -49,12 +55,12 @@ class JournalController extends Controller
                 $day[] = $date->date_event;
             }
 
-            if (empty($day)) {
-                return back()
-                    ->withErrors(['msg' => "The subject was not found in the journal for this group"]);
-            }
+//            if (empty($day)) {
+//                return back()
+//                    ->withErrors(['msg' => "The subject was not found in the journal for this group"]);
+//            }
             $days = count($day);
-//            dd($days);
+            dd($schedule);
             foreach ($students as $student) {
                 $users[$student->login] = $student->surname . ' ' . $student->name;
             }
@@ -67,6 +73,7 @@ class JournalController extends Controller
     }
 
     public function post(Request $request) {
-        $foo = $request->get('group_id');
+        $foo = $request->get("delta");
+
     }
 }

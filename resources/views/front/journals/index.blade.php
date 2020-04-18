@@ -23,8 +23,8 @@
                         <div>
                             <form action="{{ route('front.journals.post') }}" method="post">
                                 @csrf
-                                <button type="submit" name ='delta1' value="{{5}}" class="btn btn-outline-dark btn-sm"><<<</button>
-                                <button type="submit" name ='delta2' value="{{5}}" class="btn btn-outline-dark btn-sm" >>>></button>
+                                <button type="submit" class="btn btn-outline-dark btn-sm"><<<</button>
+                                <input type="hidden" name="delta" value="7">
                             </form>
                         </div>
                     </div>
