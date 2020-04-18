@@ -4,7 +4,7 @@
         <div class="row justify-content-center">
             <div class="col-md-10">
                 <div class="alert alert-danger" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <button type="submit" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">x</span>
                     </button>
                     {!! $errors->first() !!}
@@ -21,8 +21,11 @@
                     </div>
                     <div class="float-right">
                         <div>
-                            <a class="btn btn-outline-danger btn-sm"
-                               href="{{ route('admin.users.index') }}">Back</a>
+                            <form action="{{ route('front.journals.post') }}" method="post">
+                                @csrf
+                                <button type="submit" name ='delta1' value="{{5}}" class="btn btn-outline-dark btn-sm"><<<</button>
+                                <button type="submit" name ='delta2' value="{{5}}" class="btn btn-outline-dark btn-sm" >>>></button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -37,12 +40,7 @@
                                     <option value="" selected>{{ __('Select group') }}</option>
                                     @foreach ($groups as $group)
                                         <option value="{{$group->id}}"
-                                                @if((isset($_GET['group_id'])) && ($group->id == $_GET['group_id']))
-                                                        selected @endif>{{$group->name}}
-                                                                                        / @foreach( $group->subjects as $subject)
-                                                                                            {{$subject->name}}
-                                                                                        @endforeach /
-
+                                                @if((!empty($group_id)) && ($group->id == $group_id)) selected @endif>{{$group->name}}
                                         </option>
                                     @endforeach
                                 </select>
@@ -53,20 +51,21 @@
                                     @foreach ($subjects as $subject)
                                         <option
                                             value="{{$subject->id}}"
-                                            @if((isset($_GET['subject_id'])) && ($subject->id == $_GET['subject_id']))
-                                                    selected @endif>{{$subject->name}} </option>
+                                            @if((!empty($subject_id)) && ($subject->id == $subject_id)) selected @endif>{{$subject->name}} </option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col">
                                 <input type="date" name="periodBegin" max="2120-12-31"
                                        min="2020-01-01" class="form-control"
-                                       value="{{ date('Y-m-d', strtotime("-7 day")) }}" required>
+                                       @if(!empty($periodBegin)) value="{{$periodBegin}}" @else value="{{ date('Y-m-d', strtotime("-7 day")) }}" @endif required>
+
                             </div>
                             <div class="col">
                                 <input type="date" name="periodEnd" max="2120-12-31"
                                        min="2020-01-01" class="form-control"
-                                       value="{{ date('Y-m-d',(time()+3*60*60)) }}" required>
+                                       @if(!empty($periodEnd)) value="{{$periodEnd}}" @else value="{{ date('Y-m-d',(time()+3*60*60)) }}" @endif required>
+
                             </div>
                             <div class="col">
                                 <button type="submit" class="btn btn-outline-info">Select
@@ -76,20 +75,21 @@
                         </div>
                     </form>
                     <br>
-                    @if(!empty($_GET))
+                    @if(!empty($days)&&!empty($day)&&!empty($schedule)&&!empty($users))
                         <table class="table table-bordered table-hover table-responsive">
                             @php
                                 echo '<thead>';
                                     echo '<tr>';
                                     echo '<th>Student</th>';
                                     for ($i = 0; $i < $days; $i++) {
-                                        echo '<th>'.date("Y-m-d H:i:s", $day[$i]).'</th>';
+
+                                        echo '<th>'.date_create($day[$i])->Format('d.m').'</th>';
                                     }
                                     echo '</tr>';
                                 echo '</thead>';
                                     echo '<tbody>';
                                         foreach ($schedule as $key => $value) {
-                                            echo '<td>'.$user[$key].'</td>';
+                                            echo '<td>'.$users[$key].'</td>';
                                             for ($i = 0; $i < $days; $i++) {
                                                 if (empty($value[$day[$i]])) {
                                                     echo '<td> </td>';

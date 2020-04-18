@@ -38,5 +38,6 @@ Route::group(['namespace' => 'Admin', 'prefix' =>'admin'],function ()
     Route::resource('News', 'AdminNewsController')->except("show")->names('admin.news');
 });
 
-//Журнал на фронте
-Route::get('journals', 'JournalController@index')->name('front.journals.index');
+//Journal
+Route::get('/journals', 'JournalController@index')->name('front.journals.index');
+Route::post('/journals/next-week', 'JournalController@post')->name('front.journals.post');

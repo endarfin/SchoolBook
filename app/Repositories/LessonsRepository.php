@@ -128,5 +128,32 @@ public function upDate($ed_lesson, $request)
         return $result;
 
     }
+
+    public function getPeriod($group_id, $subject_id, $periodBegin, $periodEnd)
+    {
+        $result = \DB::table('lessons')
+            ->select('date_event')
+            ->where([['group_id', '=', $group_id], ['subject_id', '=', $subject_id]])
+            ->whereBetween('date_event', [$periodBegin, $periodEnd])
+            ->get();
+        return $result;
+    }
+
+    public function getStudentsDateMarks($group_id, $subject_id)
+    {
+        $result = \DB::table('lessons')
+            ->join('groups', 'lessons.group_id', '=', 'groups.id')
+            ->join('users', 'users.group_id', '=', 'groups.id')
+            ->join('subjects', 'lessons.subject_id', '=', 'subjects.id')
+            ->leftJoin('journals', function ($join) {
+                $join->on('lessons.id', '=', 'journals.lessons_id');
+                $join->on('journals.student_id', '=', 'users.id');
+            })
+            ->select('lessons.date_event as date', 'users.login as user', 'journals.mark as mark')
+            ->where([['lessons.group_id', '=', $group_id], ['lessons.subject_id', '=', $subject_id]])
+            ->get();
+        return $result;
+    }
+
 }
 

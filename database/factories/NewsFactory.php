@@ -10,7 +10,7 @@ $factory->define(\App\Models\News::class, function (Faker $faker) {
     $title = $faker->sentence(rand(3, 8), true);
     $txt = $faker->realText(rand(1000, 4000));
     $isPublished = rand(1, 5) > 1;
-    $img = rand(1, 3) > 1 ? 'uploads/D19jsw7mM9fkGcvtc8O4oygPi5Px8xcbfRNxEHfr.jpeg' : null;
+    $img = rand(1, 3) > 1 ? 'uploads/55WTUR53v205yLlIxN2m3rBKsBexZTEcUsGguraM.jpeg' : null;
 
     $data = [
         'categories_id' =>rand(1, 10),

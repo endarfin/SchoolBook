@@ -49,4 +49,19 @@ class  usersRepository extends CoreRepository
         return $result;
 
     }
+
+    public function getStudents($group_id)
+    {
+        $columns = ['login', 'surname', 'name'];
+
+        $result = \DB::table('users')
+            ->select($columns)
+            ->where('group_id', '=', $group_id)
+            ->get();
+
+        return $result;
+
+    }
+
+
 }
