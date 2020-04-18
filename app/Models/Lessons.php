@@ -15,7 +15,6 @@ class Lessons extends Model
         'subject_id',
         'user_id',
         'class_room_id',
-        'lesson',
     ];
 
     public function Groups()
@@ -36,6 +35,10 @@ class Lessons extends Model
     public function ClassRooms()
     {
         return $this->belongsTo(ClassRooms::class, 'class_room_id');
+    }
+    public function journal()
+    {
+        return $this->hasMany(Journal::Class);
     }
     public function TimeLessons()
     {

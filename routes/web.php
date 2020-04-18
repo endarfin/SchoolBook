@@ -18,9 +18,6 @@ Route::get('/timetable', 'SiteController@timetable')->name('Timetable');;
 Route::get('/timetable/{name}/{id}', 'SiteController@showTimetable')->name('showTimetable');
 Route::get('/news/{slug}', 'SiteController@news')->name('news');
 Route::get('/rank', 'SiteController@rank');
-//отлючил регистрацию и включил редирект на админку
-//Route::redirect('/', 'admin');
-Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -40,3 +37,6 @@ Route::group(['namespace' => 'Admin', 'prefix' =>'admin'],function ()
     Route::resource('Lessons', 'AdminLessonsController')->except("show")->names('admin.lessons');
     Route::resource('News', 'AdminNewsController')->except("show")->names('admin.news');
 });
+
+//Журнал на фронте
+Route::get('journals', 'JournalController@index')->name('front.journals.index');

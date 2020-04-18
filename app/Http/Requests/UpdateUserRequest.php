@@ -42,7 +42,7 @@ class UpdateUserRequest extends FormRequest
             if ((empty($this->group_id)) && ($type == 1))  {
                 $validator->errors()->add('group', 'Group must be filled out for Students');
             }
-            if ((!empty($this->group_id)) && ($type > 1))  {
+            elseif ((!empty($this->group_id)) && ($type > 1))  {
                 $validator->errors()->add('group', 'Group must be empty for Teachers and Admins');
             }
         });
@@ -51,7 +51,7 @@ class UpdateUserRequest extends FormRequest
             if((!empty($this->subjects[0])) && ($type != 2))  {
                 $validator->errors()->add('subject', 'Admins and Students dont have subjects');
             }
-            if((empty($this->subjects[0])) && ($type == 2))  {
+            elseif((empty($this->subjects[0])) && ($type == 2))  {
                 $validator->errors()->add('subject', 'Teachers must have subjects');
             }
 
