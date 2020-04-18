@@ -39,9 +39,9 @@
                                         <option value="{{$group->id}}"
                                                 @if((isset($_GET['group_id'])) && ($group->id == $_GET['group_id']))
                                                         selected @endif>{{$group->name}}
-                                            {{--                                            / @foreach( $group->subjects as $subject)--}}
-                                            {{--                                                {{$subject->name}}--}}
-                                            {{--                                            @endforeach /--}}
+                                                                                        / @foreach( $group->subjects as $subject)
+                                                                                            {{$subject->name}}
+                                                                                        @endforeach /
 
                                         </option>
                                     @endforeach
@@ -76,7 +76,7 @@
                         </div>
                     </form>
                     <br>
-                    @if(isset($_GET))
+                    @if(!empty($_GET))
                         <table class="table table-bordered table-hover table-responsive">
                             @php
                                 echo '<thead>';
