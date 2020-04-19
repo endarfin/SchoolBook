@@ -10,7 +10,7 @@ use App\Repositories\GroupsRepository;
 use App\Repositories\usersRepository;
 use App\Repositories\LessonsRepository;
 use App\Repositories\TimeLessonsRepository;
-
+use DateTime;
 class JournalController extends Controller
 {
     private $subjectRepository;
@@ -69,6 +69,20 @@ class JournalController extends Controller
     }
 
     public function post(Request $request) {
-        return view('front.journals.index');
+        $groups = $this->groupsRepository->getForComboBox();
+        $subjects = $this->subjectRepository->getForComboBox();
+
+        $group_id = $request->get('group_id');
+        $subject_id = $request->get('subject_id');
+//if button...
+
+        $periodBegin = new DateTime($request->get('periodBegin'));
+        $periodBegin = $periodBegin->modify('+7 day')->format('Y-m-d');
+
+        $periodEnd = new DateTime($request->get('periodEnd'));
+        $periodEnd = $periodEnd->modify('+7 day')->format('Y-m-d');
+        
+        return view('front.journals.index', compact('groups', 'subjects', 'group_id', 'subject_id', 'periodBegin', 'periodEnd' ));
+
     }
 }
