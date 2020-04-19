@@ -19,15 +19,6 @@
                     <div class="float-left">
                         <div>Journal</div>
                     </div>
-                    <div class="float-right">
-                        <div>
-                            <form action="{{ route('front.journals.post') }}" method="post">
-                                @csrf
-                                <button type="submit" class="btn btn-outline-dark btn-sm"><<<</button>
-                                <input type="hidden" name="delta" value="7">
-                            </form>
-                        </div>
-                    </div>
                 </div>
                 <div class="card-body">
                     <div class="card-title">
@@ -75,7 +66,16 @@
                         </div>
                     </form>
                     <br>
-                    @if(!empty($days)&&!empty($schedule)&&!empty($users))
+                    @if(!empty($dates)&&!empty($schedule)&&!empty($users)&&!empty($period))
+{{--                        <div class="float-left">--}}
+{{--                                                    <div>--}}
+{{--                                                        <form action="{{ route('front.journals.post', $groups) }}" method="post">--}}
+{{--                                                            @csrf--}}
+{{--                                                            <button type="submit" class="btn btn-outline-dark btn-sm"><<<</button>--}}
+{{--                                                            <input type="hidden" name="delta" value="7">--}}
+{{--                                                        </form>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
                         <table class="table table-bordered table-hover table-responsive">
                             @php
                                 echo '<thead>';
@@ -90,7 +90,7 @@
                                         foreach ($schedule as $key => $value) {
                                             echo '<td>'.$users[$key].'</td>';
                                             foreach ($value as $key1 =>$value1) {
-                                                    for ($i = 0; $i < $periods; $i++) {
+                                                    for ($i = 0; $i < count($period); $i++) {
                                                       if ((array_key_exists($period[$i],$value1)) && (!empty($value1[$period[$i]]))) {
                                                             echo '<td>'.$value1[$period[$i]].'('.$period[$i].')'.'</td>';
                                                         }

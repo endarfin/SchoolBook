@@ -32,17 +32,11 @@ class JournalController extends Controller
         $groups = $this->groupsRepository->getForComboBox();
         $subjects = $this->subjectRepository->getForComboBox();
 
-//            $foo = $request->get("delta");
-
             $group_id = $request->get('group_id');
             $subject_id = $request->get('subject_id');
             $periodBegin = $request->get('periodBegin');
             $periodEnd = $request->get('periodEnd');
-//        if ($foo) {
-//            $periodBegin = $periodBegin - strtotime("- $foo day");
-//            $periodEnd = $periodEnd  - strtotime("- $foo day");
-//
-//        }
+
         if (($group_id)&&($subject_id)) {
 
             $students = $this->usersRepository->getStudents($group_id);
@@ -57,21 +51,17 @@ class JournalController extends Controller
             foreach ($lessons as $lesson) {
                 $period[] = $lesson->number;
             }
-//            dd($dates);
-//            dd($day);
-//            if (empty($day)) {
-//                return back()
-//                    ->withErrors(['msg' => "The subject was not found in the journal for this group"]);
-//            }
-            $days = count($dates);
-//            dd($dates);
 
-            $periods = count($period);
+            if (empty($schedule)) {
+                return back()
+                    ->withErrors(['msg' => "The subject was not found in the journal for this group"]);
+            }
+            $days = count($dates);
+
             foreach ($students as $student) {
                 $users[$student->login] = $student->surname . ' ' . $student->name;
             }
-//            dd($days);
-            return view('front.journals.index', compact('groups', 'periods','period','periodBegin', 'periodEnd', 'subjects','group_id', 'subject_id', 'users', 'schedule', 'dates', 'days'));
+            return view('front.journals.index', compact('groups','subjects', 'periodBegin', 'periodEnd','group_id', 'subject_id', 'users', 'schedule', 'dates', 'period'));
 
         } else {
             return view('front.journals.index', compact('groups', 'subjects'));
@@ -79,8 +69,6 @@ class JournalController extends Controller
     }
 
     public function post(Request $request) {
-        $foo = $request->get("delta");
-        dd($foo);
-
+        return view('front.journals.index');
     }
 }
