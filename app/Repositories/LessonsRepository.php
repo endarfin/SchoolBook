@@ -132,9 +132,11 @@ public function upDate($ed_lesson, $request)
     public function getPeriod($group_id, $subject_id, $periodBegin, $periodEnd)
     {
         $result = \DB::table('lessons')
-            ->select('date_event')
+            ->select('date_event', 'lesson')
             ->where([['group_id', '=', $group_id], ['subject_id', '=', $subject_id]])
             ->whereBetween('date_event', [$periodBegin, $periodEnd])
+            ->orderBy('date_event')
+            ->orderBy('lesson')
             ->get();
         return $result;
     }

@@ -75,15 +75,14 @@
                         </div>
                     </form>
                     <br>
-                    @if(!empty($days)&&!empty($day)&&!empty($schedule)&&!empty($users))
+                    @if(!empty($days)&&!empty($schedule)&&!empty($users))
                         <table class="table table-bordered table-hover table-responsive">
                             @php
                                 echo '<thead>';
                                     echo '<tr>';
                                     echo '<th>Student</th>';
-                                    for ($i = 0; $i < $days; $i++) {
-                                        $b = $i;
-                                        echo '<th>'.date_create($day[$i])->Format('d.m').'</th>';
+                                    foreach ($dates as $date) {
+                                        echo '<th>'.date_create($date->date_event)->Format('d.m').' №'.$date->lesson.'</th>';
                                     }
                                     echo '</tr>';
                                 echo '</thead>';

@@ -53,24 +53,25 @@ class JournalController extends Controller
             foreach ($marks as $mark) {
                 $schedule[$mark->user][$mark->date][$mark->lesson] = $mark->mark;
             }
-            foreach ($dates as $date) {
-                $day[] = $date->date_event;
-            }
+
             foreach ($lessons as $lesson) {
                 $period[] = $lesson->number;
             }
-
+//            dd($dates);
+//            dd($day);
 //            if (empty($day)) {
 //                return back()
 //                    ->withErrors(['msg' => "The subject was not found in the journal for this group"]);
 //            }
-            $days = count($day);
+            $days = count($dates);
+//            dd($dates);
+
             $periods = count($period);
             foreach ($students as $student) {
                 $users[$student->login] = $student->surname . ' ' . $student->name;
             }
-
-            return view('front.journals.index', compact('groups', 'periods','period','periodBegin', 'periodEnd', 'subjects','group_id', 'subject_id', 'users', 'schedule', 'day', 'days'));
+//            dd($days);
+            return view('front.journals.index', compact('groups', 'periods','period','periodBegin', 'periodEnd', 'subjects','group_id', 'subject_id', 'users', 'schedule', 'dates', 'days'));
 
         } else {
             return view('front.journals.index', compact('groups', 'subjects'));
@@ -79,6 +80,7 @@ class JournalController extends Controller
 
     public function post(Request $request) {
         $foo = $request->get("delta");
+        dd($foo);
 
     }
 }
