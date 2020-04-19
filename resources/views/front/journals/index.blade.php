@@ -82,7 +82,7 @@
                                     echo '<tr>';
                                     echo '<th>Student</th>';
                                     for ($i = 0; $i < $days; $i++) {
-
+                                        $b = $i;
                                         echo '<th>'.date_create($day[$i])->Format('d.m').'</th>';
                                     }
                                     echo '</tr>';
@@ -90,12 +90,21 @@
                                     echo '<tbody>';
                                         foreach ($schedule as $key => $value) {
                                             echo '<td>'.$users[$key].'</td>';
-                                            for ($i = 0; $i < $days; $i++) {
-                                                if (empty($value[$day[$i]])) {
-                                                    echo '<td> </td>';
-                                                } else echo '<td>'.$value[$day[$i]].'</td>';
+                                            foreach ($value as $key1 =>$value1) {
+                                                    for ($i = 0; $i < $periods; $i++) {
+                                                      if ((array_key_exists($period[$i],$value1)) && (!empty($value1[$period[$i]]))) {
+                                                            echo '<td>'.$value1[$period[$i]].'('.$period[$i].')'.'</td>';
+                                                        }
+                                                      elseif ((array_key_exists($period[$i],$value1)) && (empty($value1[$period[$i]]))) {
+                                                            echo '<td></td>';
+                                                        }
+                                                      elseif (!(array_key_exists($period[$i],$value1))) {
+                                                          continue;
+                                                      }
+                                                    }
+
                                             }
-                                            echo "</tr>";
+                                              echo "</tr>";
                                         }
                                         echo '</tbody>';
                             @endphp

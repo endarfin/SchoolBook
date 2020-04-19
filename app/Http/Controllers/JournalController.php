@@ -3,20 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-//use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Stmt\Foreach_;
 use App\Repositories\SubjectRepository;
 use App\Repositories\GroupsRepository;
 use App\Repositories\usersRepository;
 use App\Repositories\LessonsRepository;
+use App\Repositories\TimeLessonsRepository;
 
 class JournalController extends Controller
 {
     private $subjectRepository;
     private $groupsRepository;
     private $usersRepository;
-    private $LessonsRepository;
+    private $TimeLessonsRepository;
 
     public function __construct()
     {
@@ -24,6 +24,7 @@ class JournalController extends Controller
         $this->groupsRepository = app(GroupsRepository::class);
         $this->usersRepository = app(usersRepository::class);
         $this->LessonsRepository = app(LessonsRepository::class);
+        $this->TimeLessonsRepository = app(TimeLessonsRepository::class);
     }
 
     public function index(Request $request)
@@ -46,13 +47,17 @@ class JournalController extends Controller
 
             $students = $this->usersRepository->getStudents($group_id);
             $dates = $this->LessonsRepository->getPeriod($group_id, $subject_id, $periodBegin, $periodEnd);
-            $marks = $this->LessonsRepository->getStudentsDateMarks($group_id, $subject_id);
+            $marks = $this->LessonsRepository->getStudentsDateMarks($group_id, $subject_id, $periodBegin, $periodEnd);
+            $lessons = $this->TimeLessonsRepository->getAll();
 
             foreach ($marks as $mark) {
-                $schedule[$mark->user][$mark->date] = $mark->mark;
+                $schedule[$mark->user][$mark->date][$mark->lesson] = $mark->mark;
             }
             foreach ($dates as $date) {
                 $day[] = $date->date_event;
+            }
+            foreach ($lessons as $lesson) {
+                $period[] = $lesson->number;
             }
 
 //            if (empty($day)) {
@@ -60,12 +65,12 @@ class JournalController extends Controller
 //                    ->withErrors(['msg' => "The subject was not found in the journal for this group"]);
 //            }
             $days = count($day);
-            dd($schedule);
+            $periods = count($period);
             foreach ($students as $student) {
                 $users[$student->login] = $student->surname . ' ' . $student->name;
             }
 
-            return view('front.journals.index', compact('groups', 'periodBegin', 'periodEnd', 'subjects','group_id', 'subject_id', 'users', 'schedule', 'day', 'days'));
+            return view('front.journals.index', compact('groups', 'periods','period','periodBegin', 'periodEnd', 'subjects','group_id', 'subject_id', 'users', 'schedule', 'day', 'days'));
 
         } else {
             return view('front.journals.index', compact('groups', 'subjects'));
