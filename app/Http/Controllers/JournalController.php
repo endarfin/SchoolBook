@@ -69,20 +69,24 @@ class JournalController extends Controller
     }
 
     public function post(Request $request) {
-        $groups = $this->groupsRepository->getForComboBox();
-        $subjects = $this->subjectRepository->getForComboBox();
 
         $group_id = $request->get('group_id');
         $subject_id = $request->get('subject_id');
-//if button...
 
         $periodBegin = new DateTime($request->get('periodBegin'));
-        $periodBegin = $periodBegin->modify('+7 day')->format('Y-m-d');
-
         $periodEnd = new DateTime($request->get('periodEnd'));
-        $periodEnd = $periodEnd->modify('+7 day')->format('Y-m-d');
-        
-        return view('front.journals.index', compact('groups', 'subjects', 'group_id', 'subject_id', 'periodBegin', 'periodEnd' ));
 
+        switch(request('submit_key')) {
+            case 'forward':
+                $periodBegin = $periodBegin->modify('+7 day')->format('Y-m-d');
+                $periodEnd = $periodEnd->modify('+7 day')->format('Y-m-d');
+                break;
+            case 'back':
+                $periodBegin = $periodBegin->modify('-7 day')->format('Y-m-d');
+                $periodEnd = $periodEnd->modify('-7 day')->format('Y-m-d');
+                break;
+        }
+        return redirect()
+            ->route('front.journals.index',compact( 'group_id', 'subject_id', 'periodBegin', 'periodEnd' ));
     }
 }

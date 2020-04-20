@@ -54,14 +54,14 @@
 
                             <button type="submit" class="btn btn-outline-info">Select</button>
                         </form>
-
+                        @if(!empty($dates)&&!empty($schedule)&&!empty($users)&&!empty($period))
                         <div class="col">
                             <div class="float-right">
                                 <form action="{{ route('front.journals.post') }}" method="post">
                                     @csrf
-                                    <button type="submit" name="begin" class="btn btn-danger btn-sm"><<<
+                                    <button type="submit" name="submit_key" value="back" class="btn btn-danger btn-sm"><<<
                                     </button>
-                                    <button type="submit" name="end" class="btn btn-danger btn-sm">>>>
+                                    <button type="submit" name="submit_key" value="forward" class="btn btn-danger btn-sm">>>>
                                     </button>
                                     <input type="hidden" name="group_id" value="{{ $group_id }}">
                                     <input type="hidden" name="subject_id" value="{{ $subject_id }}">
@@ -77,7 +77,7 @@
                     </div>
                 </div>
 
-                @if(!empty($dates)&&!empty($schedule)&&!empty($users)&&!empty($period))
+
                     <table class="table table-bordered table-hover table-responsive">
                         @php
                             echo '<thead>';
