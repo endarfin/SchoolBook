@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use PhpParser\Node\Stmt\Foreach_;
 use App\Repositories\SubjectRepository;
 use App\Repositories\GroupsRepository;
 use App\Repositories\usersRepository;
@@ -89,4 +87,19 @@ class JournalController extends Controller
         return redirect()
             ->route('front.journals.index',compact( 'group_id', 'subject_id', 'periodBegin', 'periodEnd' ));
     }
+
+    public function showCurrentLesson(Request $request) {
+        $groups = $this->groupsRepository->getForComboBox();
+        $subjects = $this->subjectRepository->getForComboBox();
+        $lessons = $this->TimeLessonsRepository->getAll();
+        $date = date('d-m-y');
+
+        if ($request) {
+            $lesson = $this->LessonsRepository->getLesson($request, $date);
+            dd($lesson);
+        }
+            return view('front.lesson.index', compact('groups', 'subjects', 'lessons', 'lesson'));
+
+    }
+
 }

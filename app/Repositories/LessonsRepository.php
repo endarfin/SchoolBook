@@ -158,5 +158,17 @@ public function upDate($ed_lesson, $request)
         return $result;
     }
 
+    public function getLesson($data, $date)
+    {
+       $result = $this->startConditions()
+            ->select()
+            ->where('group_id', $data->group_id)
+            ->where('subject_id', $data->subject_id)
+            ->where('lesson', $data['number'])
+            ->where('date_event', $date)
+            ->get();
+        return $result;
+    }
+
 }
 

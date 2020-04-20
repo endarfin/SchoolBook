@@ -41,3 +41,7 @@ Route::group(['namespace' => 'Admin', 'prefix' =>'admin'],function ()
 //Journal
 Route::get('/journals', 'JournalController@index')->name('front.journals.index');
 Route::post('/journals/next-week', 'JournalController@post')->name('front.journals.post');
+
+//CurrentLesson
+Route::get('/current-lesson', 'JournalController@showCurrentLesson')->name('showCurrentLesson');
+
