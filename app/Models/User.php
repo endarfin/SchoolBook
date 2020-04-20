@@ -59,4 +59,29 @@ class User extends Authenticatable
     }
 
 
+
+    public function isAdministrator()
+    {
+        return $this->type()->where('id', '3')->exists();
+    }
+
+    public function isTeacher()
+    {
+        $teacher = $this->type()->where('id', '2')->exists();
+        if ($teacher) return "Teacher";
+    }
+
+    public function isStudent()
+    {
+        $student = $this->type()->where('id', '1')->exists();
+        if ($student) return "Student";
+    }
+
+    public function isVisitor()
+    {
+        $user = $this->type()->where('id', '')->exists();
+        if ($user) return "user";
+    }
+
+
 }

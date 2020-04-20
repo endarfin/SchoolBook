@@ -34,14 +34,61 @@
           </nav>
           </div>
           <div class="float-right ">
-            <nav class="nav">
-              <a class="nav-link" href="#">Личный кабинет</a>
-              <a class="nav-link" href="login">Login</a>
-              <a class="nav-link" href="register">Register</a>
-              @if(Auth::user() &&  Auth::user()->type_user_id == 3)
-              <a class="nav-link" href="/admin">Administrator</a>
+
+
+              @if (Route::has('login'))
+                  <div class="top-right links">
+                      @auth
+
+                          @if(Auth::user()->isStudent())
+                              <strong>  <a href="{{ url('/') }}" style="color: #0b3e6f; text-decoration: none">Главная</a></strong>
+                          @elseif(Auth::user()->isTeacher())
+                              <strong>  <a href="{{ url('/user/index') }}" style="color: #0b3e6f; text-decoration: none">Кабинет</a></strong>
+                              <strong>  <a href="{{ url('/') }}" style="color: #0b3e6f; text-decoration: none">Главная</a></strong>
+                          @elseif(Auth::user()->isVisitor())
+                              <strong>   <a href="{{ url('/') }}" style="color: #0b3e6f; text-decoration: none">Главная</a></strong>
+                          @elseif(Auth::user()->isAdministrator())
+                              <strong><a href="{{ url('/admin/index') }}" style="color: #0b3e6f; text-decoration: none; cursor: pointer">Панель Администратора</a></strong>
+                              <strong> <a href="{{ url('/') }}" style="color: #0b3e6f; text-decoration: none">Главная</a></strong>
+                          @endif
+
+                          <strong>
+                              <a class="dropdown-item" href="{{ route('logout') }}" style="color: #0b3e6f; text-decoration: none"
+                                 onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                                  Выйти
+                              </a>
+                          </strong>
+
+                          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                              @csrf
+                          </form>
+
+                      @else
+                          <strong>
+                              <a href="{{ route('login') }}" style="color: #0b3e6f; text-decoration: none">Войти</a>
+                          </strong>
+
+                          @if (Route::has('register'))
+                              <strong>
+                                  <a href="{{ route('register') }}" style="color: #0b3e6f; text-decoration: none">Регистрация</a>
+                              </strong>
+                          @endif
+                      @endauth
+
+
+                  </div>
               @endif
-        </nav>
+
+
+{{--            <nav class="nav">--}}
+{{--              <a class="nav-link" href="#">Личный кабинет</a>--}}
+{{--              <a class="nav-link" href="login">Login</a>--}}
+{{--              <a class="nav-link" href="register">Register</a>--}}
+{{--              @if(Auth::user() &&  Auth::user()->type_user_id == 3)--}}
+{{--              <a class="nav-link" href="/admin">Administrator</a>--}}
+{{--              @endif--}}
+{{--        </nav>--}}
         </div>
         </div>
       </div>

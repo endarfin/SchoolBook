@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Auth::routes();
 Route::get('/', 'SiteController@index')->name('index');
 Route::get('/timetable', 'SiteController@timetable')->name('Timetable');;
 Route::get('/timetable/{name}/{id}', 'SiteController@showTimetable')->name('showTimetable');
@@ -41,3 +41,16 @@ Route::group(['namespace' => 'Admin', 'prefix' =>'admin'],function ()
 //Journal
 Route::get('/journals', 'JournalController@index')->name('front.journals.index');
 Route::post('/journals/next-week', 'JournalController@post')->name('front.journals.post');
+
+/** Admin side */
+Route::group(['middleware' => ['status','auth']], function () {
+    $groupeData = [
+        'namespace' => 'Admin',
+        'prefix' => 'admin',
+    ];
+    Route::group($groupeData, function () {
+        Route::resource('index', 'IndexController')
+            ->names('admin.index');
+
+    });
+});
