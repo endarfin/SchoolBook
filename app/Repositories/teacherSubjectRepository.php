@@ -21,18 +21,16 @@ class teacherSubjectRepository extends CoreRepository
 
     public function getAllWhere($id)
     {
-        //dd($this->startConditions(), $id);
         $result = $this->startConditions()
-            ->where('user_id', $id)
-            ->toBase()
+            ->where('subject_id', $id)
+            ->with('User:id,name,surname')
             ->get();
         return  $result;
     }
     public function find($date)
     {
         return $this->startConditions()
-            ->where('user_id', $date->user_id)
-            ->where('subject_id', $date->subject_id)
+            ->where([['user_id', $date->user_id], ['subject_id', $date->subject_id]])
             ->exists();
     }
 

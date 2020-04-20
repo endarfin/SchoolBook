@@ -25,15 +25,14 @@ class groupSubjectRepository extends CoreRepository
         return $this->startConditions()
             ->select('group_id', 'subject_id')
             ->where('group_id', $id)
-            ->toBase()
+            ->with('Subject:id,name')
             ->get();
     }
     public function find($date)
     {
         return $this->startConditions()
             ->select('group_id', 'subject_id')
-            ->where('group_id', $date->group_id)
-            ->where('subject_id', $date->subject_id)
+            ->where([['group_id', $date->group_id], ['subject_id', $date->subject_id]])
             ->exists();
     }
 

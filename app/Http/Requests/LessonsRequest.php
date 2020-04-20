@@ -27,7 +27,7 @@ class LessonsRequest extends FormRequest
         return [
             'group_id' => 'required|integer|exists:groups,id',
             'subject_id' => 'required|integer|exists:subjects,id',
-            'user_id' => 'required|integer|exists:users,id',
+            'user_id' => 'required|integer|exists:teacher_subject,user_id',
             'class_room_id' => 'required|integer|exists:class_rooms,id',
             'date_event' => 'required|date',
             'lesson' => 'required|integer|exists:time_lessons,id',

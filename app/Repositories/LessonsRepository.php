@@ -17,51 +17,55 @@ class LessonsRepository extends CoreRepository
     public function exist($date)
     {
         //dd($date->group_id);
-        return $this->startConditions()
-            ->where('group_id', $date->group_id)
-            ->where('subject_id', $date->subject_id)
-            ->where('user_id', $date->user_id)
-            ->where('class_room_id', $date->class_room_id)
-            ->where('date_event', $date['date_event'])
-            ->where('lesson', $date['lesson'])
+        $result = $this->startConditions()
+            ->where([['group_id', $date->group_id], ['subject_id', $date->subject_id],
+                ['user_id', $date->user_id], ['class_room_id', $date->class_room_id],
+                ['date_event', $date['date_event']], ['lesson', $date['lesson']]])
             ->exists();
+        if ($result){
+            return false;
+        }else{return true;}
     }
 
     public function freeTeacherTime($date)
     {
         $result = $this->startConditions()
-            ->where('user_id', $date->user_id)
-            ->where('lesson', $date->lesson)
-            ->where('date_event', $date->date_event)
+            ->where([['user_id', $date->user_id], ['lesson', $date->lesson],
+                    ['date_event', $date->date_event]])
             ->exists();
 
-        return $result;
+        if ($result){
+            return false;
+        }else{return true;}
     }
 
     public function freeGroupTime($date)
     {
         $result = $this->startConditions()
-            ->where('group_id', $date->group_id)
-            ->where('lesson', $date->lesson)
-            ->where('date_event', $date->date_event)
+            ->where([['group_id', $date->group_id], ['lesson', $date->lesson],
+                ['date_event', $date->date_event]])
             ->exists();
-
-        return $result;
+        if ($result){
+            return false;
+        }else{return true;}
     }
     public function freeClassRoomTime($date)
     {
         $result = $this->startConditions()
-            ->where('class_room_id', $date->class_room_id)
-            ->where('lesson', $date->lesson)
-            ->where('date_event', $date->date_event)
+            ->where([['class_room_id', $date->class_room_id], ['lesson', $date->lesson],
+                ['date_event', $date->date_event]])
             ->exists();
 
-        return $result;
+        if ($result){
+            return false;
+        }else{return true;}
     }
 
     public function getEdit($id)
     {
-        return $this->startConditions()->find($id);
+        return $this->startConditions()
+            ->with(['Subject:id,name', 'User:id,name,surname', 'ClassRooms:id,name', 'Groups:id,name', 'TimeLessons:id,time'])
+            ->find($id);
     }
 
     public function getAllWithPaginate($perPage)

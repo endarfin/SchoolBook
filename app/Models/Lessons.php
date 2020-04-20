@@ -15,6 +15,7 @@ class Lessons extends Model
         'subject_id',
         'user_id',
         'class_room_id',
+        'lesson'
     ];
 
     public function Groups()

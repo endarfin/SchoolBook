@@ -14,6 +14,7 @@ use App\Repositories\TimeLessonsRepository;
 use App\Repositories\usersRepository;
 
 
+
 class AdminLessonsController extends Controller
 {
 
@@ -46,7 +47,7 @@ class AdminLessonsController extends Controller
     public function index()
     {
         $lessons = $this->lessonsRepository->getAllWithPaginate(10);
-        //dd($lessons);
+
         return view('admin.lessons.lessons', compact('lessons'));
     }
 
@@ -57,12 +58,11 @@ class AdminLessonsController extends Controller
      */
     public function create()
     {
+
         $groups = $this->groupsRepository->getForComboBox();
-        $subjects = $this->subjectRepository->getForComboBox();
-        $teachers = $this->usersRepository->getTeacherForComboBox();
         $classRooms = $this->classRoomRepository->getForComboBox();
         $timeLessons = $this->timeLessonsRepository->getAll();
-        return view('admin.lessons.createLessons', compact('groups', 'subjects', 'teachers', 'classRooms', 'timeLessons'));
+        return view('admin.lessons.createLessons', compact('groups','classRooms', 'timeLessons'));
 
     }
 
@@ -85,38 +85,38 @@ class AdminLessonsController extends Controller
         $result = false;
         if ($groupSubjects) {
             if ($teacherSubject){
-                if (!$exist){
-                    if (!$freeTeacherTime){
-                        if (!$freeGroupTime){
-                            if (!$freeClassRoomTime){
+                if ($exist){
+                    if ($freeTeacherTime){
+                        if ($freeGroupTime){
+                            if ($freeClassRoomTime){
                                 $result = $this->lessonsRepository->lessonCreated($lessons);
-                                }else{return back()
-                                ->withErrors(['msg' => 'Кабинет в это времязанят'])
-                                ->withInput();}
-                            }else{return back()
-                                ->withErrors(['msg' => 'У группы уже запланирован урок в это время'])
-                                ->withInput();}
-                        }else{return back()
-                            ->withErrors(['msg' => 'У преподавателя уже запланирован урок в это время'])
-                            ->withInput();}
-                }else{return back()
-                    ->withErrors(['msg' => 'Такой урок уже есть'])
-                    ->withInput();}
-                }else{return back()
-                    ->withErrors(['msg' => 'Преподаватель не проподает такой придмет'])
-                    ->withInput();}
-            }else{return back()
-                ->withErrors(['msg' =>'У группы нет такого предмета'])
-                ->withInput();}
+                                }else{return response()->json([
+                                        'status' => 'false',
+                                        'msg' => 'Кабинет в это времязанят']);}
+                            }else{return response()->json([
+                                        'status' => 'false',
+                                        'msg' => 'У группы уже запланирован урок в это время']);}
+                        }else{return response()->json([
+                                    'status' => 'false',
+                                    'msg' => 'У преподавателя уже запланирован урок в это время']);}
+                }else{return response()->json([
+                            'status' => 'false',
+                            'msg' => 'Такой урок уже есть']);}
+                }else{return response()->json([
+                        'status' => 'false',
+                        'msg' => 'Преподаватель не проподает такой придмет']);}
+            }else{ return response()->json([
+                    'status' => 'false',
+                    'msg' => 'У группы нет такого предмета']);}
 
         if ($result) {
-            return redirect()
-                ->route('admin.lessons.edit', $result->id)
-                ->with(['success' => 'Успешно создано']);
+            return response()->json([
+                'status' => 'true',
+                'msg' => 'Успешно создано']);
         } else {
-            return back()
-                ->withErrors(['msg' => 'Ошибка соханения'])
-                ->withInput();
+            return response()->json([
+                'status' => 'false',
+                'msg' => 'Ошибка соханения']);
         }
     }
 
@@ -140,13 +140,12 @@ class AdminLessonsController extends Controller
     public function edit($id)
     {
         $lesson = $this->lessonsRepository->getEdit($id);
+        $subjects = $this->groupsRepository->getGroupsWhere($lesson->group_id);
         $groups = $this->groupsRepository->getForComboBox();
-        $subjects = $this->subjectRepository->getForComboBox();
-        $teachers = $this->usersRepository->getTeacherForComboBox();
+        $teachers = $this->teacherSubjectRepository->getAllWhere($lesson->subject_id);
         $classRooms = $this->classRoomRepository->getForComboBox();
         $timeLessons = $this->timeLessonsRepository->getAll();
-        //dd( $timeLessons);
-        return view('admin.lessons.editLessons', compact('lesson', 'groups', 'subjects', 'teachers', 'classRooms', 'timeLessons'));
+        return view('admin.lessons.editLessons', compact('lesson','groups', 'subjects', 'teachers', 'classRooms', 'timeLessons'));
     }
 
     /**
@@ -156,7 +155,7 @@ class AdminLessonsController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(LessonsRequest $request, $id)
+    public function update($id, LessonsRequest $request)
     {
         $ed_lesson = $this->lessonsRepository->getEdit($id);
         if (empty($ed_lesson)) {
@@ -164,50 +163,77 @@ class AdminLessonsController extends Controller
                 ->withErrors(['msg' => "Запись id={$id} не найдена"])
                 ->withInput();
         }
+        //dd($ed_lesson, $request);
+        $groupSubjects = true;
+        $teacherSubject = true;
+        $freeTeacherTime = true;
+        $freeGroupTime = true;
+        $freeClassRoomTime = true;
 
-        $groupSubjects = $this->groupSubjectRepository->find($request);
-        $teacherSubject = $this->teacherSubjectRepository->find($request);
-        $freeTeacherTime = $this->lessonsRepository->freeTeacherTime($request);
-        $freeGroupTime = $this->lessonsRepository->freeGroupTime($request);
-        $freeClassRoomTime = $this->lessonsRepository->freeClassRoomTime($request);
-        $exist = $this->lessonsRepository->exist($request);
+        if ($ed_lesson->subject_id != $request->subject_id){
+            $groupSubjects = $this->groupSubjectRepository->find($request);
+            $teacherSubject = $this->teacherSubjectRepository->find($request);
+        }
+        if ($ed_lesson->group_id != $request->group_id){
+            $freeGroupTime = $this->lessonsRepository->freeGroupTime($request);
+            $teacherSubject = $this->teacherSubjectRepository->find($request);
+            $groupSubjects = $this->groupSubjectRepository->find($request);
+        }
+
+        if ($ed_lesson->user_id != $request->user_id){
+            $freeTeacherTime = $this->lessonsRepository->freeTeacherTime($request);
+            $teacherSubject = $this->teacherSubjectRepository->find($request);
+        }
+
+        if ($ed_lesson->class_room_id != $request->class_room_id){
+            $freeClassRoomTime = $this->lessonsRepository->freeClassRoomTime($request);
+        }
+        if ($ed_lesson->lesson != $request->lesson){
+            $freeGroupTime = $this->lessonsRepository->freeGroupTime($request);
+            $freeTeacherTime = $this->lessonsRepository->freeTeacherTime($request);
+            $freeClassRoomTime = $this->lessonsRepository->freeClassRoomTime($request);
+        }
+
+
+
+       $exist = $this->lessonsRepository->exist($request);
 
         $result = false;
         if ($groupSubjects) {
             if ($teacherSubject){
-                if (!$exist){
-                    if (!$freeTeacherTime){
-                        if (!$freeGroupTime){
-                            if (!$freeClassRoomTime){
+                if ($exist){
+                    if ($freeTeacherTime  ){
+                        if ($freeGroupTime){
+                            if ($freeClassRoomTime){
                                 $result = $this->lessonsRepository->upDate($ed_lesson, $request);
-                            }else{return back()
-                                ->withErrors(['msg' => 'Кабинет в это времязанят'])
-                                ->withInput();}
-                        }else{return back()
-                            ->withErrors(['msg' => 'У группы уже запланирован урок в это время'])
-                            ->withInput();}
-                    }else{return back()
-                        ->withErrors(['msg' => 'У преподавателя уже запланирован урок в это время'])
-                        ->withInput();}
-                }else{return back()
-                    ->withErrors(['msg' => 'Такой урок уже есть'])
-                    ->withInput();}
-            }else{return back()
-                ->withErrors(['msg' => 'Преподаватель не проподает такой придмет'])
-                ->withInput();}
-        }else{return back()
-            ->withErrors(['msg' =>'У группы нет такого предмета'])
-            ->withInput();}
+                            }else{return response()->json([
+                                'status' => 'false',
+                                'msg' => 'Кабинет в это времязанят']);}
+                        }else{return response()->json([
+                            'status' => 'false',
+                            'msg' => 'У группы уже запланирован урок в это время']);}
+                    }else{return response()->json([
+                        'status' => 'false',
+                        'msg' => 'У преподавателя уже запланирован урок в это время']);}
+                }else{return response()->json([
+                    'status' => 'false',
+                    'msg' => 'Такой урок уже есть']);}
+            }else{return response()->json([
+                'status' => 'false',
+                'msg' => 'Преподаватель не проподает такой придмет']);}
+        }else{ return response()->json([
+            'status' => 'false',
+            'msg' => 'У группы нет такого предмета']);}
 
 
         if ($result) {
-            return redirect()
-                ->route('admin.lessons.edit', $ed_lesson->id)
-                ->with(['success' => 'Успешно измененно']);
+            return response()->json([
+                'status' => 'true',
+                'msg' => 'Успешно изменено']);
         } else {
-            return back()
-                ->withErrors(['msg' => 'Ошибка соханения'])
-                ->withInput();
+            return response()->json([
+                'status' => 'false',
+                'msg' => 'Ошибка соханения']);
         }
 
     }

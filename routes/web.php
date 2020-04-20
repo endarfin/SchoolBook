@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::post('ajaxGroupSubjects', 'Ajax\LessonsAjaxController@groupSubjects');
+Route::post('ajaxTeachersSubjects', 'Ajax\LessonsAjaxController@teachersSubjects');
+
 
 Route::get('/', 'SiteController@index')->name('index');
 Route::get('/timetable', 'SiteController@timetable')->name('Timetable');;

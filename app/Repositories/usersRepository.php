@@ -17,7 +17,7 @@ class  usersRepository extends CoreRepository
 
         $result = $this->startConditions()
             ->select($columns)
-            ->where('type_user_id','2')
+            ->where('type_user_id', '2')
             ->with('subjects')
             ->get();
 

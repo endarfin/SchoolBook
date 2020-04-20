@@ -55,6 +55,19 @@ class GroupsRepository extends CoreRepository
 
         return $result;
     }
+
+    public function getGroupsWhere($groupId)
+    {
+        $columns = ['id', 'name'];
+
+        $result = $this->startConditions()
+            ->select($columns)
+            ->where('id', $groupId)
+            ->with('subjects')
+            ->get();
+
+        return $result;
+    }
     public function getAll()
     {
         $columns = ['id', 'name', 'course_id'];
