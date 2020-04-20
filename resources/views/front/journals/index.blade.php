@@ -67,17 +67,11 @@
                                     <input type="hidden" name="subject_id" value="{{ $subject_id }}">
                                     <input type="hidden" name="periodBegin" value="{{ $periodBegin }}">
                                     <input type="hidden" name="periodEnd" value="{{ $periodEnd }}">
-                                    {{-- <input type="hidden" name="dates" value="{{ $dates }}">--}}
-                                    {{-- <input type="hidden" name="schedule" value="{{ json_encode($schedule,TRUE)}}">--}}
-                                    {{-- <input type="hidden" name="users" value="{{ json_encode($users,TRUE)}}">--}}
-                                    {{--<input type="hidden" name="period" value="{{ json_encode($period,TRUE)}}">--}}
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
                     <table class="table table-bordered table-hover table-responsive">
                         @php
                             echo '<thead>';
