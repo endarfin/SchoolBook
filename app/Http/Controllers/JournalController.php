@@ -2,76 +2,91 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Groups;
-use App\Models\Journal;
-use App\Models\Lessons;
-use App\Models\Subject;
-use App\Models\User;
-//use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Stmt\Foreach_;
-
+use App\Repositories\SubjectRepository;
+use App\Repositories\GroupsRepository;
+use App\Repositories\usersRepository;
+use App\Repositories\LessonsRepository;
+use App\Repositories\TimeLessonsRepository;
+use DateTime;
 class JournalController extends Controller
 {
+    private $subjectRepository;
+    private $groupsRepository;
+    private $usersRepository;
+    private $TimeLessonsRepository;
+
+    public function __construct()
+    {
+        $this->subjectRepository = app(subjectRepository::class);
+        $this->groupsRepository = app(GroupsRepository::class);
+        $this->usersRepository = app(usersRepository::class);
+        $this->LessonsRepository = app(LessonsRepository::class);
+        $this->TimeLessonsRepository = app(TimeLessonsRepository::class);
+    }
 
     public function index(Request $request)
     {
+        $groups = $this->groupsRepository->getForComboBox();
+        $subjects = $this->subjectRepository->getForComboBox();
 
-        $subjects = Subject::all();
-        $groups = Groups::all();
+            $group_id = $request->get('group_id');
+            $subject_id = $request->get('subject_id');
+            $periodBegin = $request->get('periodBegin');
+            $periodEnd = $request->get('periodEnd');
 
-        if (Request::has('group_id', 'subject_id')) {
-            $group_id = Request::input('group_id');
-            $subject_id = Request::input('subject_id');
+        if (($group_id)&&($subject_id)) {
 
-            $periodBegin = strtotime(Request::input('periodBegin'));
-            $periodEnd = strtotime(Request::input('periodEnd'));
-
-            $students = \DB::table('users')
-                ->select('name', 'surname', 'login')
-                ->where('group_id', '=', $group_id)
-                ->get();
-
-            $date = \DB::table('lessons')
-                ->select('lessons.date_event as date')
-                ->where([['group_id', '=', $group_id], ['subject_id', '=', $subject_id]])
-                ->whereBetween('date_event', [$periodBegin, $periodEnd])
-                ->get();
-//            dd($date);
-            $marks = \DB::table('lessons')
-                ->join('groups', 'lessons.group_id', '=', 'groups.id')
-                ->join('users', 'users.group_id', '=', 'groups.id')
-                ->join('subjects', 'lessons.subject_id', '=', 'subjects.id')
-                ->leftJoin('journals', function ($join) {
-                    $join->on('lessons.id', '=', 'journals.lessons_id');
-                    $join->on('journals.student_id', '=', 'users.id');
-                })
-                ->select('lessons.date_event as date', 'users.login as user', 'journals.mark as mark')
-                ->where([['lessons.group_id', '=', $group_id], ['lessons.subject_id', '=', $subject_id]])
-                ->get();
+            $students = $this->usersRepository->getStudents($group_id);
+            $dates = $this->LessonsRepository->getPeriod($group_id, $subject_id, $periodBegin, $periodEnd);
+            $marks = $this->LessonsRepository->getStudentsDateMarks($group_id, $subject_id, $periodBegin, $periodEnd);
+            $lessons = $this->TimeLessonsRepository->getAll();
 
             foreach ($marks as $mark) {
-                $schedule[$mark->user][$mark->date] = $mark->mark;
-            }
-            foreach ($date as $date) {
-                $day[] = $date->date;
+                $schedule[$mark->user][$mark->date][$mark->lesson] = $mark->mark;
             }
 
-            if (empty($day)) {
+            foreach ($lessons as $lesson) {
+                $period[] = $lesson->number;
+            }
+
+            if (empty($schedule)) {
                 return back()
                     ->withErrors(['msg' => "The subject was not found in the journal for this group"]);
-
             }
-            $days = count($day);
+            $days = count($dates);
+
             foreach ($students as $student) {
-                $user[$student->login] = $student->surname . ' ' . $student->name;
+                $users[$student->login] = $student->surname . ' ' . $student->name;
             }
-
-            return view('front.journals.index', compact('groups', 'subjects','user', 'date', 'schedule', 'day', 'days'));
+            return view('front.journals.index', compact('groups','subjects', 'periodBegin', 'periodEnd','group_id', 'subject_id', 'users', 'schedule', 'dates', 'period'));
 
         } else {
             return view('front.journals.index', compact('groups', 'subjects'));
         }
+    }
+
+    public function post(Request $request) {
+
+        $group_id = $request->get('group_id');
+        $subject_id = $request->get('subject_id');
+
+        $periodBegin = new DateTime($request->get('periodBegin'));
+        $periodEnd = new DateTime($request->get('periodEnd'));
+
+        switch(request('submit_key')) {
+            case 'forward':
+                $periodBegin = $periodBegin->modify('+7 day')->format('Y-m-d');
+                $periodEnd = $periodEnd->modify('+7 day')->format('Y-m-d');
+                break;
+            case 'back':
+                $periodBegin = $periodBegin->modify('-7 day')->format('Y-m-d');
+                $periodEnd = $periodEnd->modify('-7 day')->format('Y-m-d');
+                break;
+        }
+        return redirect()
+            ->route('front.journals.index',compact( 'group_id', 'subject_id', 'periodBegin', 'periodEnd' ));
     }
 }
