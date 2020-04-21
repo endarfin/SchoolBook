@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Journal;
 use Illuminate\Http\Request;
 use App\Repositories\SubjectRepository;
 use App\Repositories\GroupsRepository;
@@ -92,13 +92,46 @@ class JournalController extends Controller
         $groups = $this->groupsRepository->getForComboBox();
         $subjects = $this->subjectRepository->getForComboBox();
         $lessons = $this->TimeLessonsRepository->getAll();
-        $date = date('d-m-y');
+        $group_id = $request->get('group_id');
+        $subject_id = $request->get('subject_id');
+        $number = $request->get('number');
+        $date = date('y-m-d');
 
         if ($request) {
-            $lesson = $this->LessonsRepository->getLesson($request, $date);
-            dd($lesson);
+            $lesson_id = $this->LessonsRepository->getLessonId($request, $date);
+            $students = $this->usersRepository->getStudentsForJournal($request);
+
+
         }
-            return view('front.lesson.index', compact('groups', 'subjects', 'lessons', 'lesson'));
+            return view('front.lesson.index', compact('groups', 'subjects', 'group_id', 'subject_id', 'number', 'date', 'lessons', 'lesson_id', 'students'));
+
+    }
+
+    public function save(Request $request)
+    {
+//        $arr = $request->input('data');
+//        foreach ($arr as $key => $data1) {
+//           foreach ($data1 as $key1 => $value) {
+//               dd($key1);
+//            }
+//        }
+//        dd($arr);
+//
+//        dd($data);
+
+
+
+        $journal = (new Journal())->create($data);
+
+        if ($journal) {
+            return redirect()
+                ->route('showCurrentLesson')
+                ->with(['success' => 'Успешно добавлено']);
+        } else {
+            return Redirect::back()->withInput()
+                ->withErrors(['msg' => 'Ошибка сохранения']);
+
+        }
 
     }
 

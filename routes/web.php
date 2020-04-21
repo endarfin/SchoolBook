@@ -44,4 +44,5 @@ Route::post('/journals/next-week', 'JournalController@post')->name('front.journa
 
 //CurrentLesson
 Route::get('/current-lesson', 'JournalController@showCurrentLesson')->name('showCurrentLesson');
+Route::post('/current-lesson/save-data', 'JournalController@save')->name('saveCurrentLesson');
 

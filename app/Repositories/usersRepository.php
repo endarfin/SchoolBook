@@ -63,5 +63,16 @@ class  usersRepository extends CoreRepository
 
     }
 
+    public function getStudentsForJournal($data)
+    {
+        $columns = ['id', 'surname', 'name', 'login'];
+        $result = $this->startConditions()
+            ->select($columns)
+            ->where('group_id', $data->group_id)
+            ->get();
+        return $result;
+
+
+    }
 
 }
