@@ -109,19 +109,24 @@ class JournalController extends Controller
 
     public function save(Request $request)
     {
-//        $arr = $request->input('data');
-//        foreach ($arr as $key => $data1) {
-//           foreach ($data1 as $key1 => $value) {
-//               dd($key1);
-//            }
-//        }
-//        dd($arr);
+        $arr = $request->input('data');
+
+        foreach ($arr as $param => $arrayValue) {
+            for ($i=0;$i<count($arr);$i++) {
+                $arr1[$i][$param] = $arrayValue[$i];
+            }
+
+        }
+        dd($arr1);
+
+
+        dd($arr);
 //
 //        dd($data);
 
 
 
-        $journal = (new Journal())->create($data);
+        $journal = (new Journal())->create($arr);
 
         if ($journal) {
             return redirect()
