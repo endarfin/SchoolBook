@@ -7,10 +7,11 @@ html {
 
 body {
 
-    background-image: linear-gradient(90deg, transparent 81px, #ED82AD 81px, #ED82AD 84px, transparent 84px), linear-gradient(#bbb 1px, transparent 0px), linear-gradient(90deg, #bbb 1px, transparent 0px);
-    background-size: 100% 100%, 20px 20px, 20px 20px;
-    background-position: 0 0, -1px -1px, -1px 1px;
-  margin-bottom: 60px;// значение высоты #footer
+    /*background: linear-gradient( #bbb, transparent 1px), linear-gradient( 90deg, #bbb, transparent 1px);*/
+    /*background-size: 20px 20px;*/
+    /*background-position: center center;*/
+    background-color: rgba(28, 247, 104, 0.05);
+  margin-bottom: 60px;
 }
 #footer {
   position: absolute;

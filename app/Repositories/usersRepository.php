@@ -69,9 +69,9 @@ class  usersRepository extends CoreRepository
         $result = $this->startConditions()
             ->select($columns)
             ->where('group_id', $data->group_id)
+            ->whereNotNull('group_id')
             ->get();
         return $result;
-
 
     }
 

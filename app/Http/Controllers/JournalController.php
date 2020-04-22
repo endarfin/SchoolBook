@@ -1,20 +1,24 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Journal;
+
 use Illuminate\Http\Request;
+use App\Models\Journal;
 use App\Repositories\SubjectRepository;
 use App\Repositories\GroupsRepository;
 use App\Repositories\usersRepository;
 use App\Repositories\LessonsRepository;
 use App\Repositories\TimeLessonsRepository;
+use App\Repositories\journalsRepository;
 use DateTime;
+
 class JournalController extends Controller
 {
     private $subjectRepository;
     private $groupsRepository;
     private $usersRepository;
     private $TimeLessonsRepository;
+    private $journalsRepository;
 
     public function __construct()
     {
@@ -23,6 +27,7 @@ class JournalController extends Controller
         $this->usersRepository = app(usersRepository::class);
         $this->LessonsRepository = app(LessonsRepository::class);
         $this->TimeLessonsRepository = app(TimeLessonsRepository::class);
+        $this->journalsRepository = app(journalsRepository::class);
     }
 
     public function index(Request $request)
@@ -30,12 +35,12 @@ class JournalController extends Controller
         $groups = $this->groupsRepository->getForComboBox();
         $subjects = $this->subjectRepository->getForComboBox();
 
-            $group_id = $request->get('group_id');
-            $subject_id = $request->get('subject_id');
-            $periodBegin = $request->get('periodBegin');
-            $periodEnd = $request->get('periodEnd');
+        $group_id = $request->get('group_id');
+        $subject_id = $request->get('subject_id');
+        $periodBegin = $request->get('periodBegin');
+        $periodEnd = $request->get('periodEnd');
 
-        if (($group_id)&&($subject_id)) {
+        if (($group_id) && ($subject_id)) {
 
             $students = $this->usersRepository->getStudents($group_id);
             $dates = $this->LessonsRepository->getPeriod($group_id, $subject_id, $periodBegin, $periodEnd);
@@ -59,14 +64,15 @@ class JournalController extends Controller
             foreach ($students as $student) {
                 $users[$student->login] = $student->surname . ' ' . $student->name;
             }
-            return view('front.journals.index', compact('groups','subjects', 'periodBegin', 'periodEnd','group_id', 'subject_id', 'users', 'schedule', 'dates', 'period'));
+            return view('front.journals.index', compact('groups', 'subjects', 'periodBegin', 'periodEnd', 'group_id', 'subject_id', 'users', 'schedule', 'dates', 'period'));
 
         } else {
             return view('front.journals.index', compact('groups', 'subjects'));
         }
     }
 
-    public function post(Request $request) {
+    public function post(Request $request)
+    {
 
         $group_id = $request->get('group_id');
         $subject_id = $request->get('subject_id');
@@ -74,7 +80,7 @@ class JournalController extends Controller
         $periodBegin = new DateTime($request->get('periodBegin'));
         $periodEnd = new DateTime($request->get('periodEnd'));
 
-        switch(request('submit_key')) {
+        switch (request('submit_key')) {
             case 'forward':
                 $periodBegin = $periodBegin->modify('+7 day')->format('Y-m-d');
                 $periodEnd = $periodEnd->modify('+7 day')->format('Y-m-d');
@@ -85,59 +91,66 @@ class JournalController extends Controller
                 break;
         }
         return redirect()
-            ->route('front.journals.index',compact( 'group_id', 'subject_id', 'periodBegin', 'periodEnd' ));
+            ->route('front.journals.index', compact('group_id', 'subject_id', 'periodBegin', 'periodEnd'));
     }
 
-    public function showCurrentLesson(Request $request) {
+    public function showCurrentLesson(Request $request)
+    {
         $groups = $this->groupsRepository->getForComboBox();
         $subjects = $this->subjectRepository->getForComboBox();
         $lessons = $this->TimeLessonsRepository->getAll();
+        $date =  date('Y-m-d',(time()+3*60*60));
+
         $group_id = $request->get('group_id');
         $subject_id = $request->get('subject_id');
         $number = $request->get('number');
-        $date = date('y-m-d');
 
-        if ($request) {
-            $lesson_id = $this->LessonsRepository->getLessonId($request, $date);
-            $students = $this->usersRepository->getStudentsForJournal($request);
+        $lessons_id = $this->LessonsRepository->getLessonId($request, $date);
+        $students = $this->usersRepository->getStudentsForJournal($request);
 
-
+        if (empty($lessons_id) && ($group_id) && ($subject_id) && ($number)) {
+            return back()
+                ->withErrors(['msg' => "Journal not found. Please check your choice"])
+                ->withInput();
         }
-            return view('front.lesson.index', compact('groups', 'subjects', 'group_id', 'subject_id', 'number', 'date', 'lessons', 'lesson_id', 'students'));
+
+        return view('front.lesson.index', compact('groups', 'subjects', 'group_id', 'subject_id', 'number', 'date', 'lessons', 'lessons_id', 'students'));
 
     }
 
     public function save(Request $request)
     {
         $arr = $request->input('data');
-
         foreach ($arr as $param => $arrayValue) {
-            for ($i=0;$i<count($arr);$i++) {
+            for ($i = 0; $i < count($arr); $i++) {
                 $arr1[$i][$param] = $arrayValue[$i];
             }
-
         }
-        dd($arr1);
 
+        for ($i = 0; $i < count($arr1); $i++) {
 
-        dd($arr);
-//
-//        dd($data);
+            $class = $arr1[$i];
 
+            $existClass = $this->journalsRepository->getExist($class);
 
-
-        $journal = (new Journal())->create($arr);
+            if (!$existClass) {
+                $journal = (new Journal())->create($arr1[$i]);
+            } else {
+                $student = $this->usersRepository->find($class['student_id']);
+                return back()
+                    ->withErrors(['msg' => "The journal entry (about student - $student->name $student->surname) in this lesson is already present"])
+                    ->withInput();
+            }
+        }
 
         if ($journal) {
             return redirect()
-                ->route('showCurrentLesson')
-                ->with(['success' => 'Успешно добавлено']);
+                ->route('front.journals.index')
+                ->with(['success' => 'Successfully added']);
         } else {
-            return Redirect::back()->withInput()
-                ->withErrors(['msg' => 'Ошибка сохранения']);
-
+            return back()
+                ->withErrors(['msg' => 'Save error'])
+                ->withInput();
         }
-
     }
-
 }

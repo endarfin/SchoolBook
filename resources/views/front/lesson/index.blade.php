@@ -1,5 +1,6 @@
 @extends('template')
 @section('content')
+    @include('alert')
 
     <div class="container">
         <div class="row justify-content-center">
@@ -9,9 +10,12 @@
                         <div class="float-left">
                                 TODAY: {{$date}}
                         </div>
+                        <div class="float-right">
+                            <a class="btn btn-success"
+                               href="{{ route('front.journals.index') }}">Journal</a>
+                        </div>
                     </div>
                     <div class="card-body">
-
                         <div class="form-row">
                             <form action="{{ route('showCurrentLesson') }}" class="form-inline">
 
@@ -43,14 +47,15 @@
                                     @endforeach
                                 </select>&nbsp;
 
-                                <button type="submit" class="btn btn-info">Select</button>
+                                <button type="submit" class="btn btn-outline-info">Select</button>
                             </form>
                         </div>
 
                     </div>
-                    <form action="{{ route('saveCurrentLesson') }}" name = "datas" method="post">
-                        @csrf
+                    @if(!empty($students)&&!empty($lessons_id))
                     <table class="table table-bordered table-hover ">
+                        <form action="{{ route('saveCurrentLesson') }}"  method="post">
+                            @csrf
                         <thead>
                         <tr>
                             <th>Students</th>
@@ -73,17 +78,16 @@
                                         <option value="2">2</option>
                                         <option value="1">1</option>
                                     </select>
-                                    <input type="hidden" name=data[lessons_id][] value="{{ $lesson_id }}">
+                                    <input type="hidden" name=data[lessons_id][] value="{{ $lessons_id }}">
                                     <input type="hidden" name=data[student_id][] value="{{ $student->id }}">
-
 
                                 </td>
                             </tr>
                         @endforeach
                         </tbody>
-                    </table>
-
                     </form>
+                    </table>
+                        @endif
                 </div>
             </div>
         </div>

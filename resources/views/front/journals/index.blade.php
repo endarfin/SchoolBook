@@ -1,23 +1,16 @@
 @extends('template')
 @section('content')
-    @if($errors->any())
-        <div class="row justify-content-center">
-            <div class="col-md-10">
-                <div class="alert alert-danger" role="alert">
-                    <button type="submit" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">x</span>
-                    </button>
-                    {!! $errors->first() !!}
-                </div>
-            </div>
-        </div>
-    @endif
+    @include('alert')
     <div class="container-fluid">
         <div clas="row">
             <div class="card w-100">
                 <div class="card-header">
                     <div class="float-left">
                         <div>Journal</div>
+                    </div>
+                    <div class="float-right">
+                        <a class="btn btn-success"
+                           href="{{ route('showCurrentLesson') }}">Start lesson</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -59,9 +52,9 @@
                             <div class="float-right">
                                 <form action="{{ route('front.journals.post') }}" method="post">
                                     @csrf
-                                    <button type="submit" name="submit_key" value="back" class="btn btn-danger btn-sm"><<<
+                                    <button type="submit" name="submit_key" value="back" class="btn btn-outline-primary btn-sm"><<<
                                     </button>
-                                    <button type="submit" name="submit_key" value="forward" class="btn btn-danger btn-sm">>>>
+                                    <button type="submit" name="submit_key" value="forward" class="btn btn-outline-primary btn-sm">>>>
                                     </button>
                                     <input type="hidden" name="group_id" value="{{ $group_id }}">
                                     <input type="hidden" name="subject_id" value="{{ $subject_id }}">
