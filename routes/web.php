@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Auth::routes();
+Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::get('/', 'SiteController@index')->name('index');
 Route::get('/timetable', 'SiteController@timetable')->name('Timetable');;
 Route::get('/timetable/{name}/{id}', 'SiteController@showTimetable')->name('showTimetable');
@@ -28,21 +29,15 @@ Route::group(['namespace' => 'Admin', 'prefix' =>'admin/users',],function ()
 
 Route::group(['namespace' => 'Admin', 'prefix' =>'admin'],function ()
 {
-    Route::get('/','IndexController@index');
-    Route::resource('groups', 'adminGroupsController')->except("show")->names('admin.groups');
-    Route::resource('subjects', 'AdminSubjectController')->names('admin.subjects');
-    Route::resource('users', 'AdminUserController')->names('admin.users');
-    Route::resource('rooms', 'AdminRoomController')->names('admin.rooms');
-    Route::resource('courses', 'AdminCourseController')->names('admin.courses');
-    Route::resource('Lessons', 'AdminLessonsController')->except("show")->names('admin.lessons');
-    Route::resource('News', 'AdminNewsController')->except("show")->names('admin.news');
+
 });
 
 //Journal
 Route::get('/journals', 'JournalController@index')->name('front.journals.index');
 Route::post('/journals/next-week', 'JournalController@post')->name('front.journals.post');
 
-/** Admin side */
+    /** Admin side */
+
 Route::group(['middleware' => ['status','auth']], function () {
     $groupeData = [
         'namespace' => 'Admin',
@@ -52,5 +47,29 @@ Route::group(['middleware' => ['status','auth']], function () {
         Route::resource('index', 'IndexController')
             ->names('admin.index');
 
+
+        Route::get('/','IndexController@index');
+        Route::resource('groups', 'adminGroupsController')->except("show")->names('admin.groups');
+        Route::resource('subjects', 'AdminSubjectController')->names('admin.subjects');
+        Route::resource('users', 'AdminUserController')->names('admin.users');
+        Route::resource('rooms', 'AdminRoomController')->names('admin.rooms');
+        Route::resource('courses', 'AdminCourseController')->names('admin.courses');
+        Route::resource('Lessons', 'AdminLessonsController')->except("show")->names('admin.lessons');
+        Route::resource('News', 'AdminNewsController')->except("show")->names('admin.news');
     });
+
+    /** Teacher side */
+
+    $groupeData = [
+        'namespace' => 'Teacher',
+        'prefix' => 'teacher',
+    ];
+    Route::group($groupeData, function () {
+        Route::resource('index', 'IndexController')
+            ->names('teacher.index');
+
+        Route::get('/','IndexController@index');
+        Route::resource('subjects', 'AdminSubjectController')->names('admin.subjects');
+    });
+
 });
