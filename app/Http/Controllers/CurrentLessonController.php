@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Models\Journal;
 use App\Repositories\SubjectRepository;
@@ -93,17 +92,17 @@ class CurrentLessonController extends Controller
         $lesson = $this->LessonsRepository->getEdit($lesson_id);
         $journals = $this->journalsRepository->getEdit($lesson_id);
 
-        if (($journals) && ($lesson)) {
-            return view('front.lesson.edit', compact('journals', 'lesson'));
+        if ($journals->isEmpty()) {
+            return back()
+                ->withErrors(['msg' => 'The journal has not a record about this lesson. Start lesson please.']);
         } else {
-            return redirect()
-                ->route('showCurrentLesson')
-                ->withErrors(['msg' => 'The journal hasn\'t a record about this lesson. Start lesson please.'])
-                ->withInput();
+            return view('front.lesson.edit', compact('journals', 'lesson'));
         }
 
     }
     public function updateCurrentLesson(Request $request) {
+
+//dd($request);
 
         $arr = $request->input('data');
         foreach ($arr as $param => $arrayValue) {
