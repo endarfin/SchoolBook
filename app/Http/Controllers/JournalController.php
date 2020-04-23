@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Journal;
 use App\Repositories\SubjectRepository;
 use App\Repositories\GroupsRepository;
 use App\Repositories\usersRepository;
@@ -30,7 +29,7 @@ class JournalController extends Controller
         $this->journalsRepository = app(journalsRepository::class);
     }
 
-    public function index(Request $request)
+    public function showJournal(Request $request)
     {
         $groups = $this->groupsRepository->getForComboBox();
         $subjects = $this->subjectRepository->getForComboBox();
@@ -71,7 +70,7 @@ class JournalController extends Controller
         }
     }
 
-    public function post(Request $request)
+    public function showNextWeek(Request $request)
     {
 
         $group_id = $request->get('group_id');
@@ -91,66 +90,7 @@ class JournalController extends Controller
                 break;
         }
         return redirect()
-            ->route('front.journals.index', compact('group_id', 'subject_id', 'periodBegin', 'periodEnd'));
+            ->route('showJournal', compact('group_id', 'subject_id', 'periodBegin', 'periodEnd'));
     }
 
-    public function showCurrentLesson(Request $request)
-    {
-        $groups = $this->groupsRepository->getForComboBox();
-        $subjects = $this->subjectRepository->getForComboBox();
-        $lessons = $this->TimeLessonsRepository->getAll();
-        $date =  date('Y-m-d',(time()+3*60*60));
-
-        $group_id = $request->get('group_id');
-        $subject_id = $request->get('subject_id');
-        $number = $request->get('number');
-
-        $lessons_id = $this->LessonsRepository->getLessonId($request, $date);
-        $students = $this->usersRepository->getStudentsForJournal($request);
-
-        if (empty($lessons_id) && ($group_id) && ($subject_id) && ($number)) {
-            return back()
-                ->withErrors(['msg' => "Journal not found. Please check your choice"])
-                ->withInput();
-        }
-
-        return view('front.lesson.index', compact('groups', 'subjects', 'group_id', 'subject_id', 'number', 'date', 'lessons', 'lessons_id', 'students'));
-
-    }
-
-    public function save(Request $request)
-    {
-        $arr = $request->input('data');
-        foreach ($arr as $param => $arrayValue) {
-            for ($i = 0; $i < count($arr); $i++) {
-                $arr1[$i][$param] = $arrayValue[$i];
-            }
-        }
-
-        for ($i = 0; $i < count($arr1); $i++) {
-
-            $class = $arr1[$i];
-
-            $existClass = $this->journalsRepository->getExist($class);
-
-            if (!$existClass) {
-                $journal = (new Journal())->create($arr1[$i]);
-            } else {
-                $student = $this->usersRepository->find($class['student_id']);
-                return back()
-                    ->withErrors(['msg' => "The journal entry (about student - $student->name $student->surname) in this lesson is already present"])
-                    ->withInput();
-            }
-        }
-
-        if ($journal) {
-            return redirect()
-                ->route('front.journals.index')
-                ->with(['success' => 'Successfully added']);
-        } else {
-            return back()
-                ->withErrors(['msg' => 'Save error'])
-                ->withInput();
-        }
-    }
 }

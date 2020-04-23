@@ -15,7 +15,7 @@
                 </div>
                 <div class="card-body">
                     <div class="form-row">
-                        <form action="{{ route('front.journals.index') }}" class="form-inline">
+                        <form action="{{ route('showJournal') }}" class="form-inline">
 
                             <select name="group_id" id="group_id" class="form-control" required>
                                 <option value="" selected>{{ __('Select group') }}</option>
@@ -50,7 +50,7 @@
                         @if(!empty($dates)&&!empty($schedule)&&!empty($users)&&!empty($period))
                         <div class="col">
                             <div class="float-right">
-                                <form action="{{ route('front.journals.post') }}" method="post">
+                                <form action="{{ route('showNextWeek') }}" method="post">
                                     @csrf
                                     <button type="submit" name="submit_key" value="back" class="btn btn-outline-primary btn-sm"><<<
                                     </button>

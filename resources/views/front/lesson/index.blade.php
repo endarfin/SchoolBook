@@ -12,7 +12,7 @@
                         </div>
                         <div class="float-right">
                             <a class="btn btn-success"
-                               href="{{ route('front.journals.index') }}">Journal</a>
+                               href="{{ route('showJournal') }}">Journal</a>
                         </div>
                     </div>
                     <div class="card-body">

@@ -30,7 +30,7 @@
                     </div>
                 </li>
                 <a class="nav-link" href="{{route('Timetable')}}">Расписание</a>
-                <a class="nav-link" href="{{route('front.journals.index')}}">Электронный журнал</a>
+                <a class="nav-link" href="{{route('showJournal')}}">Электронный журнал</a>
                 <a class="nav-link" href="{{ route('showCurrentLesson') }}">Начать урок</a>
                 <!-- <a class="nav-link" href="group">Преподаватели</a> -->
             </nav>
