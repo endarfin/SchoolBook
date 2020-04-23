@@ -11,43 +11,38 @@
 <link rel="stylesheet" href="{{ asset('/css/admin/style.css')}}">
     <title>Administrator</title>
   </head>
+
   <body>
-    <header>
-          <ul class="nav nav-tabs">
-              <li class="nav-item">
-                <a class="nav-link active" href="/admin">Главная</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-haspopup="true" aria-expanded="false">Управление</a>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="{{route('admin.users.index')}}">Пользователи</a>
-                  <a class="dropdown-item" href="{{route('admin.lessons.store')}}">Расписание</a>
-                  <a class="dropdown-item" href="admin/rank">Успеваемость</a>
-                  <a class="dropdown-item" href="{{route('admin.groups.index')}}">Группы</a>
-                  <a class="dropdown-item" href="{{ route('admin.courses.index') }}">Курсы</a>
-                  <a class="dropdown-item" href="{{ route('admin.subjects.index') }}">Предметы</a>
-                  <a class="dropdown-item" href="{{ route('admin.rooms.index') }}">Аудитории</a>
 
-                </div>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{{route('admin.news.index')}}">Опубликовать новость</a>
-              </li>
-              <li class="nav-item">
-              <a class="nav-link" href="/">На сайт</a>
-              </li>
-              <li class="nav-item">
-              <a class="nav-link" href="/">Выйти</a>
-              </li>
-          </ul>
+  <ul class="menu">
+      <li><a href="#" class="menu-button home" onclick="$('.menu-bar').toggleClass('open');">menu</a></li>
+      <li><a href="#" class="search">search</a></li>
+      <li><a href="{{route('admin.news.index')}}" class="pencil">pencil</a></li>
+      <li><a href="/" class="active about">about</a></li>
 
-    </header>
+  </ul>
+
+  <ul class="menu-bar">
+      <li><a href="#" class="menu-button">Меню</a></li>
+      <li><a href="/admin">На главную</a></li>
+      <li><a href="{{route('admin.users.index')}}">Пользователи</a></li>
+      <li><a href="{{route('admin.lessons.store')}}">Расписание</a></li>
+      <li><a href="{{route('admin.groups.index')}}">Группы</a></li>
+      <li><a href="{{ route('admin.courses.index') }}">Курсы</a></li>
+      <li><a href="{{ route('admin.subjects.index') }}">Предметы</a></li>
+      <li><a href="{{ route('admin.rooms.index') }}">Аудитории</a></li>
+  </ul>
+
+  <script>
+      $(".menu-button").click(function(){
+          $(".menu-bar").toggleClass( "open" );
+      });
+  </script>
+
     <article>
 
       <div>@yield('content')</div>
   </article>
-    <footer id="footer" class="footer navbar-fixed-bottom">© 2020 Copyright: <a class="copy" href=""> LEXA & PETROV</a>
-  </footer>
 
 
   </body>

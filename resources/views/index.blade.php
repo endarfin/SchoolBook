@@ -12,7 +12,7 @@
                     <img src="{{ asset('/img/logo.jpg')}}" class="d-block w-100" alt="...">
                 </div>
                 <div class="carousel-item">
-                    <img src="{{ asset('/img/logo.jpg')}}" class="d-block w-100" alt="...">
+                    <img src="{{ asset('/img/logo1.jpg')}}" class="d-block w-100" alt="...">
                 </div>
                 <div class="carousel-item">
                     <img src="{{ asset('/img/logo.jpg')}}" class="d-block w-100" alt="...">
