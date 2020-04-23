@@ -28,7 +28,7 @@ class NewsRequest extends FormRequest
             'user_id' => 'required|integer|exists:users,id',
             'title' => 'required|string|min:3|max:50',
             'excerpt' => 'nullable|string|max:150',
-            'img' => 'nullable|image',
+            'img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'content' => 'required|string',
             'slug' => 'string|nullable',
             'categories_id' => 'required|integer|exists:news_categories,id',

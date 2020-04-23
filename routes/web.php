@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 Route::post('ajaxGroupSubjects', 'Ajax\LessonsAjaxController@groupSubjects');
 Route::post('ajaxTeachersSubjects', 'Ajax\LessonsAjaxController@teachersSubjects');
+Route::get('admin/ajaxSliderIndex', 'Ajax\SliderAjaxController@index');
+Route::get('admin/ajaxSliderProfile', 'Ajax\SliderAjaxController@profile');
 
 
 Route::get('/', 'SiteController@index')->name('index');
@@ -39,6 +41,7 @@ Route::group(['namespace' => 'Admin', 'prefix' =>'admin'],function ()
     Route::resource('courses', 'AdminCourseController')->names('admin.courses');
     Route::resource('Lessons', 'AdminLessonsController')->except("show")->names('admin.lessons');
     Route::resource('News', 'AdminNewsController')->except("show")->names('admin.news');
+    Route::resource('Slider', 'AdminSliderController')->names('admin.slider');
 });
 
 //Journal

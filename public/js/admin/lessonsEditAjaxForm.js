@@ -9,7 +9,6 @@ $(function() {
             class_room_id = $('#classRoom').val().trim(),
             lesson = $('#lesson').val().trim(),
             date_event = $('#date').val().trim();
-        console.log(url+'/admin/Lessons/'+id);
         $.ajax({
             url:url+'/admin/Lessons/'+id,
             type:'PATCH',
@@ -22,7 +21,6 @@ $(function() {
                 $('#button').prop('disable', true);
             },
             success: function (data) {
-                console.log(data);
                 $('#button').prop('disable', false);
                 if (data.status == 'true'){
                     $('#true').html('');
@@ -35,8 +33,6 @@ $(function() {
                     $('#false').show();
                     setTimeout(function() { $("#false").hide('slow'); }, 3000);
                     $('#false').append(data.msg);
-                    console.log(data);
-                    console.log(1);
                 }
             },
         });

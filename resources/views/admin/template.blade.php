@@ -28,6 +28,7 @@
                   <a class="dropdown-item" href="{{ route('admin.courses.index') }}">Курсы</a>
                   <a class="dropdown-item" href="{{ route('admin.subjects.index') }}">Предметы</a>
                   <a class="dropdown-item" href="{{ route('admin.rooms.index') }}">Аудитории</a>
+                  <a class="dropdown-item" href="{{ route('admin.slider.index') }}">Слайдер</a>
 
                 </div>
               </li>

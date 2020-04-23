@@ -25,14 +25,11 @@ $(function() {
                     $('#true').show();
                     setTimeout(function() { $("#true").hide('slow'); }, 3000);
                     $('#true').append(data.msg);
-                    console.log(data);
                 }else if(data.status == 'false'){
                     $('#false').html('');
                     $('#false').show();
                     setTimeout(function() { $("#false").hide('slow'); }, 3000);
                     $('#false').append(data.msg);
-                    console.log(data);
-                    console.log(1);
                 }
             },
         });

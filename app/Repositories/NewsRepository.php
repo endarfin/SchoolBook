@@ -59,7 +59,7 @@ class NewsRepository extends CoreRepository
             $news['img'] = $pant;
         }
         $news = $request->input();
-        //dd($news, $news['slug'], $pant, is_null($news->file('img')));
+
         $result = $this->startConditions()
             ->create($news);
         return $result;

@@ -66,7 +66,7 @@
                                 <label class="form-check-label" for="exampleRadios2">
                                     Снять с публикации
                                 </label>
-                        </div>
+                            </div>
                     </div>
                     <div class="float-right">
                         <a class="btn btn-primary" href="{{ route('admin.news.index') }}">Back</a>

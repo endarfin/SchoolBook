@@ -7,6 +7,7 @@ use App\Repositories\CoursesRepository;
 use App\Repositories\GroupsRepository;
 use App\Repositories\LessonsRepository;
 use App\Repositories\NewsRepository;
+use App\Repositories\SlidersRepository;
 use App\Repositories\SubjectRepository;
 use App\Repositories\TimeLessonsRepository;
 use App\Repositories\usersRepository;
@@ -21,7 +22,7 @@ class SiteController extends Controller
     private $coursesRepository;
     private $timeLessonsRepository;
     private $newsRepository;
-
+    private $slidersRepository;
 
     public function __construct()
     {
@@ -33,13 +34,15 @@ class SiteController extends Controller
         $this->coursesRepository = app(coursesRepository::class);
         $this->timeLessonsRepository = app(TimeLessonsRepository::class);
         $this->newsRepository = app(NewsRepository::class);
+        $this->slidersRepository = app(slidersRepository::class);
 }
 
     public function index()
     {
         $allNews = $this->newsRepository->getAllWithPaginateIndex(9);
+        $slider = $this->slidersRepository->getAllWithIsPublished();
         //dd(__METHOD__, $allNews);
-    	return view('index', compact('allNews'));
+    	return view('index', compact('allNews', 'slider'));
     }
 
     public function news($slug)
