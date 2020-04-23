@@ -45,4 +45,7 @@ Route::post('/journals/next-week', 'JournalController@showNextWeek')->name('show
 //CurrentLesson
 Route::get('/current-lesson', 'CurrentLessonController@showCurrentLesson')->name('showCurrentLesson');
 Route::post('/current-lesson/save-data', 'CurrentLessonController@saveCurrentLesson')->name('saveCurrentLesson');
+Route::get('/current-lesson/{lesson_id}/edit', 'CurrentLessonController@editCurrentLesson')->name('editCurrentLesson');
+Route::put('/current-lesson/update', 'CurrentLessonController@updateCurrentLesson')->name('updateCurrentLesson');
+
 

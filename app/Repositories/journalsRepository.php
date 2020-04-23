@@ -22,5 +22,15 @@ class journalsRepository extends CoreRepository
         return $result;
     }
 
+    public function getEdit($lesson_id)
+    {
+        $result = $this->startConditions()
+            ->select()
+            ->where('lessons_id', $lesson_id)
+            ->with('users')
+            ->get();
+        return $result;
+    }
+
 
 }

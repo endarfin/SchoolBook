@@ -10,6 +10,8 @@ use App\Repositories\usersRepository;
 use App\Repositories\LessonsRepository;
 use App\Repositories\TimeLessonsRepository;
 use App\Repositories\journalsRepository;
+use Illuminate\Validation\Rule;
+
 
 class CurrentLessonController extends Controller
 {
@@ -18,6 +20,7 @@ class CurrentLessonController extends Controller
     private $usersRepository;
     private $TimeLessonsRepository;
     private $journalsRepository;
+    private $LessonsRepository;
 
     public function __construct()
     {
@@ -57,7 +60,7 @@ class CurrentLessonController extends Controller
     {
         $arr = $request->input('data');
         foreach ($arr as $param => $arrayValue) {
-            for ($i = 0; $i < count($arr); $i++) {
+            for ($i = 0; $i < count($arr['student_id']); $i++) {
                 $arr1[$i][$param] = $arrayValue[$i];
             }
         }
@@ -70,7 +73,7 @@ class CurrentLessonController extends Controller
             } else {
                 $student = $this->usersRepository->find($class['student_id']);
                 return back()
-                    ->withErrors(['msg' => "The journal entry (about student - $student->name $student->surname) in this lesson is already present"])
+                    ->withErrors(['msg' => "The journal record (about student - $student->name $student->surname) in this lesson is already present"])
                     ->withInput();
             }
         }
@@ -85,4 +88,44 @@ class CurrentLessonController extends Controller
                 ->withInput();
         }
     }
+    public function editCurrentLesson($lesson_id) {
+
+        $lesson = $this->LessonsRepository->getEdit($lesson_id);
+        $journals = $this->journalsRepository->getEdit($lesson_id);
+
+        if (($journals) && ($lesson)) {
+            return view('front.lesson.edit', compact('journals', 'lesson'));
+        } else {
+            return redirect()
+                ->route('showCurrentLesson')
+                ->withErrors(['msg' => 'The journal hasn\'t a record about this lesson. Start lesson please.'])
+                ->withInput();
+        }
+
+    }
+    public function updateCurrentLesson(Request $request) {
+
+        $arr = $request->input('data');
+        foreach ($arr as $param => $arrayValue) {
+            for ($i = 0; $i < count($arr['student_id']); $i++) {
+                $arr1[$i][$param] = $arrayValue[$i];
+            }
+        }
+        for ($i = 0; $i < count($arr1); $i++) {
+                $journal = Journal::where('id', $arr1[$i]['id'])->first();
+                $journal->fill($arr1[$i])->save();
+        }
+
+        if ($journal) {
+            return redirect()
+                ->route('showJournal')
+                ->with(['success' => 'Successfully added']);
+        } else {
+            return back()
+                ->withErrors(['msg' => 'Save error'])
+                ->withInput();
+        }
+    }
+
 }
+

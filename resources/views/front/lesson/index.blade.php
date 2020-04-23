@@ -4,15 +4,11 @@
 
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-7">
+            <div class="col-md-10">
                 <div class="card">
                     <div class="card-header">
                         <div class="float-left">
                                 TODAY: {{$date}}
-                        </div>
-                        <div class="float-right">
-                            <a class="btn btn-success"
-                               href="{{ route('showJournal') }}">Journal</a>
                         </div>
                     </div>
                     <div class="card-body">
@@ -37,6 +33,13 @@
                                     @endforeach
                                 </select>&nbsp;
 
+
+                                <input type="date" name="dateAction" max="2120-12-31"
+                                       min="2020-01-01" class="form-control"
+                                       @if(!empty($dateAction)) value="{{$dateAction}}"
+                                       @else value="{{ date('Y-m-d',(time()+3*60*60)) }}" @endif required>&nbsp;
+
+
                                 <select name="number" id="number" class="form-control" required>
                                     <option value="">{{ __('Select lesson') }} </option>
                                     @foreach ($lessons as $lesson)
@@ -47,7 +50,7 @@
                                     @endforeach
                                 </select>&nbsp;
 
-                                <button type="submit" class="btn btn-outline-info">Select</button>
+                                <button type="submit" class="btn btn-outline-info">Start lesson</button>
                             </form>
                         </div>
 
@@ -87,6 +90,12 @@
                         </tbody>
                     </form>
                     </table>
+                        <div class="card-footer">
+                            <div class="float-right">
+                            <a class="btn btn-outline-info"
+                               href="{{ route('editCurrentLesson',[ 'lesson_id'=>$lessons_id]) }}">Edit lesson</a>
+                            </div>
+                        </div>
                         @endif
                 </div>
             </div>
