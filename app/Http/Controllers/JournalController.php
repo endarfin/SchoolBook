@@ -41,7 +41,7 @@ class JournalController extends Controller
         if (($group_id) && ($subject_id)) {
 
             $students = $this->usersRepository->getStudents($group_id);
-            $dates = $this->LessonsRepository->getPeriod($group_id, $subject_id, $periodBegin, $periodEnd);
+            $dates = $this->LessonsRepository->getPeriod($group_id, $subject_id, $periodBegin, $periodEnd)->flatten()->unique();
             $marks = $this->LessonsRepository->getStudentsDateMarks($group_id, $subject_id, $periodBegin, $periodEnd);
             $lessons = $this->TimeLessonsRepository->getAll();
 

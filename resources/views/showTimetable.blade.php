@@ -4,7 +4,7 @@
     <div class="row align-items-center ">
         <div class="container">
             <div class="row">
-                <div class="col-12">
+                <div class="col-14">
                     <table class="table table-hover">
         @php
             for ($i = 0; $i < 7; $i++) {

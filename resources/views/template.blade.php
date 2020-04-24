@@ -37,6 +37,7 @@
         </div>
         <div class="float-right ">
             <nav class="nav">
+                <a class="nav-link" href="/admin">Админ</a>
                 <a class="nav-link" href="#">Личный кабинет</a>
                 <a class="nav-link" href="login">Login</a>
                 <a class="nav-link" href="register">Register</a>
