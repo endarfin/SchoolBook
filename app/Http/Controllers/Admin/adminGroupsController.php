@@ -62,7 +62,7 @@ class adminGroupsController extends Controller
                 ->with(['success' => 'Успешно создано']);
         }else {
             return back()
-                ->withErrors(['msg' => 'Ошибка соханения'])
+                ->withErrors(['msg' => 'Ошибка сохранения'])
                 ->withInput();
         }
     }

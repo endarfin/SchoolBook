@@ -10,10 +10,10 @@
                         <thead>
                         <tr>
                             <th scope="col">id</th>
-                            <th scope="col">Группы</th>
+                            <th scope="col">Группа</th>
                             <th scope="col">Предмет</th>
                             <th scope="col">Учитель</th>
-                            <th scope="col">Аудетория</th>
+                            <th scope="col">Аудитория</th>
                             <th scope="col">Дата</th>
                             <th scope="col">Пара</th>
                             <th scope="col">Изменить</th>
@@ -61,7 +61,7 @@
                     <div class="card">
 
                         <nav class="nav nav-pills nav-justified">
-                            <a class="nav-item nav-link active" href="{{route('admin.lessons.create')}} ">Дбавить
+                            <a class="nav-item nav-link active" href="{{route('admin.lessons.create')}} ">Добавить
                                 урок</a>
                         </nav>
                     </div>

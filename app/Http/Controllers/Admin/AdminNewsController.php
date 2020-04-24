@@ -60,7 +60,7 @@ class AdminNewsController extends Controller
                 ->with(['success' => 'Успешно создано']);
         } else {
             return back()
-                ->withErrors(['msg' => 'Ошибка соханения'])
+                ->withErrors(['msg' => 'Ошибка сохранения'])
                 ->withInput();
         }
     }
@@ -111,10 +111,10 @@ class AdminNewsController extends Controller
         if ($result) {
             return redirect()
                 ->route('admin.news.edit', $ed_news->id)
-                ->with(['success' => 'Успешно измененно']);
+                ->with(['success' => 'Успешно изменено']);
         } else {
             return back()
-                ->withErrors(['msg' => 'Ошибка соханения'])
+                ->withErrors(['msg' => 'Ошибка сохранения'])
                 ->withInput();
         }
     }
@@ -132,7 +132,7 @@ class AdminNewsController extends Controller
         if ($softDelete) {
             return redirect()
                 ->route('admin.news.index')
-                ->with(['success' => 'Успешно удалина']);
+                ->with(['success' => 'Успешно удалена']);
         }
     }
 }

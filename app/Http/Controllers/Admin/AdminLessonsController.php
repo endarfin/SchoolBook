@@ -208,7 +208,7 @@ class AdminLessonsController extends Controller
                                 $result = $this->lessonsRepository->upDate($ed_lesson, $request);
                             }else{return response()->json([
                                 'status' => 'false',
-                                'msg' => 'Кабинет в это времязанят']);}
+                                'msg' => 'Кабинет в это время занят']);}
                         }else{return response()->json([
                             'status' => 'false',
                             'msg' => 'У группы уже запланирован урок в это время']);}
@@ -220,7 +220,7 @@ class AdminLessonsController extends Controller
                     'msg' => 'Такой урок уже есть']);}
             }else{return response()->json([
                 'status' => 'false',
-                'msg' => 'Преподаватель не проподает такой придмет']);}
+                'msg' => 'Преподаватель не преподает такой придмет']);}
         }else{ return response()->json([
             'status' => 'false',
             'msg' => 'У группы нет такого предмета']);}
@@ -233,7 +233,7 @@ class AdminLessonsController extends Controller
         } else {
             return response()->json([
                 'status' => 'false',
-                'msg' => 'Ошибка соханения']);
+                'msg' => 'Ошибка сохранения']);
         }
 
     }
@@ -251,7 +251,7 @@ class AdminLessonsController extends Controller
         if ($softDelete) {
             return redirect()
                 ->route('admin.lessons.index')
-                ->with(['success' => 'Успешно удалина']);
+                ->with(['success' => 'Успешно удалена']);
         }
     }
 }

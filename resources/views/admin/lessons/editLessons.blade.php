@@ -39,7 +39,7 @@
                                 </select><br>
                             </div>
                             <div class="form-group">
-                                <label for="formGroupExampleInput2">Учителль</label>
+                                <label for="formGroupExampleInput2">Учитель</label>
                                 <select class="form-control" name="user_id" id="teacher" required>
                                     <option value="{{$lesson->user_id}}">{{$lesson->User->name}} {{$lesson->User->surname}}</option>
                                     @foreach($teachers as $teacher)
@@ -52,7 +52,7 @@
                                 </select><br>
                             </div>
                             <div class="form-group">
-                                <label for="formGroupExampleInput2">Аудитероя</label>
+                                <label for="formGroupExampleInput2">Аудитория</label>
                                 <select class="form-control" name="class_room_id" id="classRoom" required>
                                     <option value="{{$lesson->class_room_id}}">{{$lesson->ClassRooms->name}}</option>
                                     @foreach($classRooms as $classRoom)

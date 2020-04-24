@@ -108,7 +108,7 @@ class AdminSliderController extends Controller
         }else{
             return response()->json([
                 'status' => 'false',
-                'msg' => 'Что-то пошло нет так']);
+                'msg' => 'Что-то пошло не так']);
         }
     }
 
