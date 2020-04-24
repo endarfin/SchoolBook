@@ -8,10 +8,6 @@
                     <div class="float-left">
                         <div>Journal</div>
                     </div>
-                    <div class="float-right">
-                        <a class="btn btn-success"
-                           href="{{ route('showCurrentLesson') }}">Start lesson</a>
-                    </div>
                 </div>
                 <div class="card-body">
                     <div class="form-row">
@@ -45,9 +41,11 @@
                                    @if(!empty($periodEnd)) value="{{$periodEnd}}"
                                    @else value="{{ date('Y-m-d',(time()+3*60*60)) }}" @endif required>&nbsp;
 
-                            <button type="submit" class="btn btn-outline-info">Select</button>
+                            <button type="submit" class="btn btn-outline-info">Select</button>&nbsp;
                         </form>
                         @if(!empty($dates)&&!empty($schedule)&&!empty($users)&&!empty($period))
+                            <a class="btn btn-outline-success"
+                               href="{{ route('showCurrentLesson')}}?group_id={{$group_id}}&subject_id={{$subject_id}}">Start lesson</a>
                         <div class="col">
                             <div class="float-right">
                                 <form action="{{ route('showNextWeek') }}" method="post">

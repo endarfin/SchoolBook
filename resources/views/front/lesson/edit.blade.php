@@ -12,8 +12,8 @@
                     <div class="card-header">
                         <div class="float-left">Card for edit</div>
                         <div class="float-right">
-                            <a class="btn btn-success btn-sm"
-                               href="{{ route('showCurrentLesson') }}">Create lesson</a>
+                            <a class="btn btn-outline-success btn-sm"
+                               href="{{ route('showCurrentLesson') }}?group_id={{$lesson->group_id}}&subject_id={{$lesson->subject_id}}">Create lesson</a>
                         </div>
                     </div>
                     <div class="card-body">
@@ -28,7 +28,7 @@
                         <tr>
                             <th>Students</th>
                             <th>  <div> Marks
-                                    <button type="submit" class="btn btn-danger btn-sm">Save</button>
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">Save</button>
                                 </div> </th>
                         </tr>
                         </thead>
@@ -37,8 +37,6 @@
                             <tr>
                                 <td>{{$journal->users->surname}} {{$journal->users->name}}</td>
                                 <td>
-{{--                                    <input name=data[mark][] type="text" class="form-control"--}}
-{{--                                           value="{{$journal->mark}}">--}}
 
                                     <select name=data[mark][] id="mark" class="form-control-sm">
                                         <option value="{{$journal->mark}}" selected>{{$journal->mark}}</option>

@@ -33,7 +33,6 @@ class JournalController extends Controller
     {
         $groups = $this->groupsRepository->getForComboBox();
         $subjects = $this->subjectRepository->getForComboBox();
-
         $group_id = $request->get('group_id');
         $subject_id = $request->get('subject_id');
         $periodBegin = $request->get('periodBegin');

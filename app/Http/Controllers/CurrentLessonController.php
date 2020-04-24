@@ -117,8 +117,9 @@ class CurrentLessonController extends Controller
 
         if ($journal) {
             return redirect()
-                ->route('showJournal')
+                ->back()
                 ->with(['success' => 'Successfully added']);
+
         } else {
             return back()
                 ->withErrors(['msg' => 'Save error'])

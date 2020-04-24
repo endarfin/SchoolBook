@@ -63,7 +63,7 @@
                         <tr>
                             <th>Students</th>
                             <th>  <div> Marks
-                                    <button type="submit" class="btn btn-danger btn-sm">Save</button>
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">Save</button>
                                 </div> </th>
                         </tr>
                         </thead>
@@ -92,7 +92,7 @@
                     </table>
                         <div class="card-footer">
                             <div class="float-right">
-                            <a class="btn btn-outline-info"
+                            <a class="btn btn-outline-success"
                                href="{{ route('editCurrentLesson',[ 'lesson_id'=>$lessons_id]) }}">Edit lesson</a>
                             </div>
                         </div>
