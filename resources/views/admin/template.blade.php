@@ -39,7 +39,7 @@
               <a class="nav-link" href="/">На сайт</a>
               </li>
               <li class="nav-item">
-              <a class="nav-link" href="/">Выйти</a>
+              <a class="nav-link" href="{{ url('/logout') }}" >Выйти</a>
               </li>
           </ul>
 
