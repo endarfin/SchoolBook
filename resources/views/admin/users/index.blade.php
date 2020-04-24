@@ -4,8 +4,8 @@
 
     </div>
     <div class="row align-items-center">
-        <div class="container">
-            @include('alert')
+        <br><div class="container">
+            <br>@include('alert')
             <br><div class="card">
                 <div class="card-header">
                     <div class="float-left">User List</div>
