@@ -1,11 +1,11 @@
 @extends('admin.template')
 @section('content')
         <br>
-        <div class="container">
-            @include('alert')
+        <br><div class="container">
+            <br> @include('alert')
             <div class="row justify-content-center">
                 <div class="col-md-8">
-                    <div class="card">
+                   <div class="card">
                         <div class="card-header">
                             <div class="float-left">{{$user->type->name}}: {{$user->surname}} {{$user->name}}</div>
                             <div class="float-right">ID: {{ $user->id }}</div>

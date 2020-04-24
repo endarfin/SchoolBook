@@ -129,8 +129,16 @@ class AdminUserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
-
+//        $user->softDelete = 'true';
+//            $user->Delete();
+        try
+        {
+            $user->Delete();
+        }
+        catch(Exception $ex) {
+            $user->softDelete = 'true';
+            $user->Delete();
+        }
         if ($user) {
             return redirect()
                 ->route('admin.users.index')
@@ -138,7 +146,6 @@ class AdminUserController extends Controller
         } else {
             return back()
                 ->withErrors(['msg' => 'Ошибка сохранения']);
-
         }
     }
 }

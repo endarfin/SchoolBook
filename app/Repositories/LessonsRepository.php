@@ -162,5 +162,19 @@ public function upDate($ed_lesson, $request)
         return $result;
     }
 
+    public function getLessonId($data, $date)
+    {
+       $result = $this->startConditions()
+            ->select('id')
+            ->where('group_id', $data->group_id)
+            ->where('subject_id', $data->subject_id)
+            ->where('lesson', $data['number'])
+            ->where('date_event', $date)
+            ->pluck('id')
+            ->first();
+        return $result;
+    }
+
+
 }
 

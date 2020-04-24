@@ -1,0 +1,75 @@
++--------+-----------+-------------------------------+------------------------+---------------------------------------------------------------+------------------------------------------------------+
+|[32m Domain [39m|[32m Method    [39m|[32m URI                           [39m|[32m Name                   [39m|[32m Action                                                        [39m|[32m Middleware                                           [39m|
++--------+-----------+-------------------------------+------------------------+---------------------------------------------------------------+------------------------------------------------------+
+|        | GET|HEAD  | /                             | index                  | App\Http\Controllers\SiteController@index                     | web                                                  |
+|        | GET|HEAD  | _debugbar/assets/javascript   | debugbar.assets.js     | Barryvdh\Debugbar\Controllers\AssetController@js              | Barryvdh\Debugbar\Middleware\DebugbarEnabled,Closure |
+|        | GET|HEAD  | _debugbar/assets/stylesheets  | debugbar.assets.css    | Barryvdh\Debugbar\Controllers\AssetController@css             | Barryvdh\Debugbar\Middleware\DebugbarEnabled,Closure |
+|        | DELETE    | _debugbar/cache/{key}/{tags?} | debugbar.cache.delete  | Barryvdh\Debugbar\Controllers\CacheController@delete          | Barryvdh\Debugbar\Middleware\DebugbarEnabled,Closure |
+|        | GET|HEAD  | _debugbar/clockwork/{id}      | debugbar.clockwork     | Barryvdh\Debugbar\Controllers\OpenHandlerController@clockwork | Barryvdh\Debugbar\Middleware\DebugbarEnabled,Closure |
+|        | GET|HEAD  | _debugbar/open                | debugbar.openhandler   | Barryvdh\Debugbar\Controllers\OpenHandlerController@handle    | Barryvdh\Debugbar\Middleware\DebugbarEnabled,Closure |
+|        | GET|HEAD  | _debugbar/telescope/{id}      | debugbar.telescope     | Barryvdh\Debugbar\Controllers\TelescopeController@show        | Barryvdh\Debugbar\Middleware\DebugbarEnabled,Closure |
+|        | GET|HEAD  | admin                         |                        | App\Http\Controllers\Admin\IndexController@index              | web                                                  |
+|        | GET|HEAD  | admin/Lessons                 | admin.lessons.index    | App\Http\Controllers\Admin\AdminLessonsController@index       | web                                                  |
+|        | POST      | admin/Lessons                 | admin.lessons.store    | App\Http\Controllers\Admin\AdminLessonsController@store       | web                                                  |
+|        | GET|HEAD  | admin/Lessons/create          | admin.lessons.create   | App\Http\Controllers\Admin\AdminLessonsController@create      | web                                                  |
+|        | PUT|PATCH | admin/Lessons/{Lesson}        | admin.lessons.update   | App\Http\Controllers\Admin\AdminLessonsController@update      | web                                                  |
+|        | DELETE    | admin/Lessons/{Lesson}        | admin.lessons.destroy  | App\Http\Controllers\Admin\AdminLessonsController@destroy     | web                                                  |
+|        | GET|HEAD  | admin/Lessons/{Lesson}/edit   | admin.lessons.edit     | App\Http\Controllers\Admin\AdminLessonsController@edit        | web                                                  |
+|        | GET|HEAD  | admin/News                    | admin.news.index       | App\Http\Controllers\Admin\AdminNewsController@index          | web                                                  |
+|        | POST      | admin/News                    | admin.news.store       | App\Http\Controllers\Admin\AdminNewsController@store          | web                                                  |
+|        | GET|HEAD  | admin/News/create             | admin.news.create      | App\Http\Controllers\Admin\AdminNewsController@create         | web                                                  |
+|        | PUT|PATCH | admin/News/{News}             | admin.news.update      | App\Http\Controllers\Admin\AdminNewsController@update         | web                                                  |
+|        | DELETE    | admin/News/{News}             | admin.news.destroy     | App\Http\Controllers\Admin\AdminNewsController@destroy        | web                                                  |
+|        | GET|HEAD  | admin/News/{News}/edit        | admin.news.edit        | App\Http\Controllers\Admin\AdminNewsController@edit           | web                                                  |
+|        | POST      | admin/courses                 | admin.courses.store    | App\Http\Controllers\Admin\AdminCourseController@store        | web                                                  |
+|        | GET|HEAD  | admin/courses                 | admin.courses.index    | App\Http\Controllers\Admin\AdminCourseController@index        | web                                                  |
+|        | GET|HEAD  | admin/courses/create          | admin.courses.create   | App\Http\Controllers\Admin\AdminCourseController@create       | web                                                  |
+|        | DELETE    | admin/courses/{course}        | admin.courses.destroy  | App\Http\Controllers\Admin\AdminCourseController@destroy      | web                                                  |
+|        | GET|HEAD  | admin/courses/{course}        | admin.courses.show     | App\Http\Controllers\Admin\AdminCourseController@show         | web                                                  |
+|        | PUT|PATCH | admin/courses/{course}        | admin.courses.update   | App\Http\Controllers\Admin\AdminCourseController@update       | web                                                  |
+|        | GET|HEAD  | admin/courses/{course}/edit   | admin.courses.edit     | App\Http\Controllers\Admin\AdminCourseController@edit         | web                                                  |
+|        | GET|HEAD  | admin/groups                  | admin.groups.index     | App\Http\Controllers\Admin\adminGroupsController@index        | web                                                  |
+|        | POST      | admin/groups                  | admin.groups.store     | App\Http\Controllers\Admin\adminGroupsController@store        | web                                                  |
+|        | GET|HEAD  | admin/groups/create           | admin.groups.create    | App\Http\Controllers\Admin\adminGroupsController@create       | web                                                  |
+|        | DELETE    | admin/groups/{group}          | admin.groups.destroy   | App\Http\Controllers\Admin\adminGroupsController@destroy      | web                                                  |
+|        | PUT|PATCH | admin/groups/{group}          | admin.groups.update    | App\Http\Controllers\Admin\adminGroupsController@update       | web                                                  |
+|        | GET|HEAD  | admin/groups/{group}/edit     | admin.groups.edit      | App\Http\Controllers\Admin\adminGroupsController@edit         | web                                                  |
+|        | POST      | admin/rooms                   | admin.rooms.store      | App\Http\Controllers\Admin\AdminRoomController@store          | web                                                  |
+|        | GET|HEAD  | admin/rooms                   | admin.rooms.index      | App\Http\Controllers\Admin\AdminRoomController@index          | web                                                  |
+|        | GET|HEAD  | admin/rooms/create            | admin.rooms.create     | App\Http\Controllers\Admin\AdminRoomController@create         | web                                                  |
+|        | GET|HEAD  | admin/rooms/{room}            | admin.rooms.show       | App\Http\Controllers\Admin\AdminRoomController@show           | web                                                  |
+|        | PUT|PATCH | admin/rooms/{room}            | admin.rooms.update     | App\Http\Controllers\Admin\AdminRoomController@update         | web                                                  |
+|        | DELETE    | admin/rooms/{room}            | admin.rooms.destroy    | App\Http\Controllers\Admin\AdminRoomController@destroy        | web                                                  |
+|        | GET|HEAD  | admin/rooms/{room}/edit       | admin.rooms.edit       | App\Http\Controllers\Admin\AdminRoomController@edit           | web                                                  |
+|        | POST      | admin/subjects                | admin.subjects.store   | App\Http\Controllers\Admin\AdminSubjectController@store       | web                                                  |
+|        | GET|HEAD  | admin/subjects                | admin.subjects.index   | App\Http\Controllers\Admin\AdminSubjectController@index       | web                                                  |
+|        | GET|HEAD  | admin/subjects/create         | admin.subjects.create  | App\Http\Controllers\Admin\AdminSubjectController@create      | web                                                  |
+|        | DELETE    | admin/subjects/{subject}      | admin.subjects.destroy | App\Http\Controllers\Admin\AdminSubjectController@destroy     | web                                                  |
+|        | PUT|PATCH | admin/subjects/{subject}      | admin.subjects.update  | App\Http\Controllers\Admin\AdminSubjectController@update      | web                                                  |
+|        | GET|HEAD  | admin/subjects/{subject}      | admin.subjects.show    | App\Http\Controllers\Admin\AdminSubjectController@show        | web                                                  |
+|        | GET|HEAD  | admin/subjects/{subject}/edit | admin.subjects.edit    | App\Http\Controllers\Admin\AdminSubjectController@edit        | web                                                  |
+|        | GET|HEAD  | admin/users                   | admin.users.index      | App\Http\Controllers\Admin\AdminUserController@index          | web                                                  |
+|        | POST      | admin/users                   | admin.users.store      | App\Http\Controllers\Admin\AdminUserController@store          | web                                                  |
+|        | GET|HEAD  | admin/users/create            | admin.users.create     | App\Http\Controllers\Admin\AdminUserController@create         | web                                                  |
+|        | GET|HEAD  | admin/users/types             | admin.types.index      | App\Http\Controllers\Admin\AdminTypeUserController@index      | web                                                  |
+|        | POST      | admin/users/types             | admin.types.store      | App\Http\Controllers\Admin\AdminTypeUserController@store      | web                                                  |
+|        | GET|HEAD  | admin/users/types/create      | admin.types.create     | App\Http\Controllers\Admin\AdminTypeUserController@create     | web                                                  |
+|        | DELETE    | admin/users/types/{type}      | admin.types.destroy    | App\Http\Controllers\Admin\AdminTypeUserController@destroy    | web                                                  |
+|        | PUT|PATCH | admin/users/types/{type}      | admin.types.update     | App\Http\Controllers\Admin\AdminTypeUserController@update     | web                                                  |
+|        | GET|HEAD  | admin/users/types/{type}      | admin.types.show       | App\Http\Controllers\Admin\AdminTypeUserController@show       | web                                                  |
+|        | GET|HEAD  | admin/users/types/{type}/edit | admin.types.edit       | App\Http\Controllers\Admin\AdminTypeUserController@edit       | web                                                  |
+|        | PUT|PATCH | admin/users/{user}            | admin.users.update     | App\Http\Controllers\Admin\AdminUserController@update         | web                                                  |
+|        | DELETE    | admin/users/{user}            | admin.users.destroy    | App\Http\Controllers\Admin\AdminUserController@destroy        | web                                                  |
+|        | GET|HEAD  | admin/users/{user}            | admin.users.show       | App\Http\Controllers\Admin\AdminUserController@show           | web                                                  |
+|        | GET|HEAD  | admin/users/{user}/edit       | admin.users.edit       | App\Http\Controllers\Admin\AdminUserController@edit           | web                                                  |
+|        | GET|HEAD  | api/user                      |                        | Closure                                                       | api,auth:api                                         |
+|        | GET|HEAD  | current-lesson                | showCurrentLesson      | App\Http\Controllers\JournalController@showCurrentLesson      | web                                                  |
+|        | POST      | current-lesson/save-data      | saveCurrentLesson      | App\Http\Controllers\JournalController@save                   | web                                                  |
+|        | GET|HEAD  | home                          | home                   | App\Http\Controllers\HomeController@index                     | web,auth                                             |
+|        | GET|HEAD  | journals                      | front.journals.index   | App\Http\Controllers\JournalController@index                  | web                                                  |
+|        | POST      | journals/next-week            | front.journals.post    | App\Http\Controllers\JournalController@post                   | web                                                  |
+|        | GET|HEAD  | news/{slug}                   | news                   | App\Http\Controllers\SiteController@news                      | web                                                  |
+|        | GET|HEAD  | rank                          |                        | App\Http\Controllers\SiteController@rank                      | web                                                  |
+|        | GET|HEAD  | timetable                     | Timetable              | App\Http\Controllers\SiteController@timetable                 | web                                                  |
+|        | GET|HEAD  | timetable/{name}/{id}         | showTimetable          | App\Http\Controllers\SiteController@showTimetable             | web                                                  |
++--------+-----------+-------------------------------+------------------------+---------------------------------------------------------------+------------------------------------------------------+

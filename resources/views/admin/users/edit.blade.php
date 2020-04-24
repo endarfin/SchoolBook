@@ -4,10 +4,10 @@
         @method('PUT')
         @csrf
         <br>
-        <div class="container">
+        <br><div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-8">
-                    @include('alert')
+                    <br>@include('alert')
                     <div class="card">
                         <div class="card-header">
                             <div class="float-left">{{$user->type->name}}: {{$user->surname}} {{$user->name}}</div>

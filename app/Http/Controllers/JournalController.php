@@ -3,20 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use PhpParser\Node\Stmt\Foreach_;
 use App\Repositories\SubjectRepository;
 use App\Repositories\GroupsRepository;
 use App\Repositories\usersRepository;
 use App\Repositories\LessonsRepository;
 use App\Repositories\TimeLessonsRepository;
+use App\Repositories\journalsRepository;
 use DateTime;
+
 class JournalController extends Controller
 {
     private $subjectRepository;
     private $groupsRepository;
     private $usersRepository;
     private $TimeLessonsRepository;
+    private $journalsRepository;
 
     public function __construct()
     {
@@ -25,19 +26,19 @@ class JournalController extends Controller
         $this->usersRepository = app(usersRepository::class);
         $this->LessonsRepository = app(LessonsRepository::class);
         $this->TimeLessonsRepository = app(TimeLessonsRepository::class);
+        $this->journalsRepository = app(journalsRepository::class);
     }
 
-    public function index(Request $request)
+    public function showJournal(Request $request)
     {
         $groups = $this->groupsRepository->getForComboBox();
         $subjects = $this->subjectRepository->getForComboBox();
+        $group_id = $request->get('group_id');
+        $subject_id = $request->get('subject_id');
+        $periodBegin = $request->get('periodBegin');
+        $periodEnd = $request->get('periodEnd');
 
-            $group_id = $request->get('group_id');
-            $subject_id = $request->get('subject_id');
-            $periodBegin = $request->get('periodBegin');
-            $periodEnd = $request->get('periodEnd');
-
-        if (($group_id)&&($subject_id)) {
+        if (($group_id) && ($subject_id)) {
 
             $students = $this->usersRepository->getStudents($group_id);
             $dates = $this->LessonsRepository->getPeriod($group_id, $subject_id, $periodBegin, $periodEnd);
@@ -61,14 +62,15 @@ class JournalController extends Controller
             foreach ($students as $student) {
                 $users[$student->login] = $student->surname . ' ' . $student->name;
             }
-            return view('front.journals.index', compact('groups','subjects', 'periodBegin', 'periodEnd','group_id', 'subject_id', 'users', 'schedule', 'dates', 'period'));
+            return view('front.journals.index', compact('groups', 'subjects', 'periodBegin', 'periodEnd', 'group_id', 'subject_id', 'users', 'schedule', 'dates', 'period'));
 
         } else {
             return view('front.journals.index', compact('groups', 'subjects'));
         }
     }
 
-    public function post(Request $request) {
+    public function showNextWeek(Request $request)
+    {
 
         $group_id = $request->get('group_id');
         $subject_id = $request->get('subject_id');
@@ -76,7 +78,7 @@ class JournalController extends Controller
         $periodBegin = new DateTime($request->get('periodBegin'));
         $periodEnd = new DateTime($request->get('periodEnd'));
 
-        switch(request('submit_key')) {
+        switch (request('submit_key')) {
             case 'forward':
                 $periodBegin = $periodBegin->modify('+7 day')->format('Y-m-d');
                 $periodEnd = $periodEnd->modify('+7 day')->format('Y-m-d');
@@ -87,6 +89,7 @@ class JournalController extends Controller
                 break;
         }
         return redirect()
-            ->route('front.journals.index',compact( 'group_id', 'subject_id', 'periodBegin', 'periodEnd' ));
+            ->route('showJournal', compact('group_id', 'subject_id', 'periodBegin', 'periodEnd'));
     }
+
 }

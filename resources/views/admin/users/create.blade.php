@@ -3,10 +3,10 @@
     <form action="{{ route('admin.users.store') }}" method="post">
         @csrf
         <br>
-        <div class="container">
+        <br><div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-8">
-                    @include('alert')
+                    <br>@include('alert')
                     <div class="card">
                         <div class="card-header">
                             <div class="float-rigth">New User</div>
@@ -68,10 +68,10 @@
                                         <th>Subject</th>
                                         <td>
                                             <select class="form-control" name="subjects[]"  multiple type="text">
-                                                <option value="" selected>---no---</option>
+                                                <option value="">---no---</option>
                                                 @foreach($subjects as $id => $subjects)
                                                     <option name='subject'
-                                                            value="{{ $id }}" {{ (in_array($id, old('$subjects', []))) ? 'selected' : '' }}>{{ $subjects }}</option>
+                                                            value="{{ $id }}" {{ (in_array($id, old('subjects', []))) ? 'selected' : '' }}>{{ $subjects }}</option>
                                                 @endforeach
                                             </select>
                                         </td>
@@ -82,7 +82,7 @@
                                             <select class="form-control" name="group_id" type="text">
                                                 <option value="" selected>Select group</option>
                                                 @foreach($groups as $group)
-                                                    <option value="{{$group->id}}">{{$group->name}}</option>
+                                                    <option value="{{$group->id}}" {{ old('group_id') == $group->id ? 'selected' : '' }}>{{$group->name}}</option>
                                                 @endforeach
                                             </select>
                                         </td>

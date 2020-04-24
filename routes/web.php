@@ -45,5 +45,13 @@ Route::group(['namespace' => 'Admin', 'prefix' =>'admin'],function ()
 });
 
 //Journal
-Route::get('/journals', 'JournalController@index')->name('front.journals.index');
-Route::post('/journals/next-week', 'JournalController@post')->name('front.journals.post');
+Route::get('/journals', 'JournalController@showJournal')->name('showJournal');
+Route::post('/journals/next-week', 'JournalController@showNextWeek')->name('showNextWeek');
+
+//CurrentLesson
+Route::get('/current-lesson', 'CurrentLessonController@showCurrentLesson')->name('showCurrentLesson');
+Route::post('/current-lesson/save-data', 'CurrentLessonController@saveCurrentLesson')->name('saveCurrentLesson');
+Route::get('/current-lesson/{lesson_id}/edit', 'CurrentLessonController@editCurrentLesson')->name('editCurrentLesson');
+Route::put('/current-lesson/update', 'CurrentLessonController@updateCurrentLesson')->name('updateCurrentLesson');
+
+

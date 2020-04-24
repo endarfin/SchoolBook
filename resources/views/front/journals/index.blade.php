@@ -1,17 +1,6 @@
 @extends('template')
 @section('content')
-    @if($errors->any())
-        <div class="row justify-content-center">
-            <div class="col-md-10">
-                <div class="alert alert-danger" role="alert">
-                    <button type="submit" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">x</span>
-                    </button>
-                    {!! $errors->first() !!}
-                </div>
-            </div>
-        </div>
-    @endif
+    @include('alert')
     <div class="container-fluid">
         <div clas="row">
             <div class="card w-100">
@@ -22,7 +11,7 @@
                 </div>
                 <div class="card-body">
                     <div class="form-row">
-                        <form action="{{ route('front.journals.index') }}" class="form-inline">
+                        <form action="{{ route('showJournal') }}" class="form-inline">
 
                             <select name="group_id" id="group_id" class="form-control" required>
                                 <option value="" selected>{{ __('Select group') }}</option>
@@ -52,16 +41,18 @@
                                    @if(!empty($periodEnd)) value="{{$periodEnd}}"
                                    @else value="{{ date('Y-m-d',(time()+3*60*60)) }}" @endif required>&nbsp;
 
-                            <button type="submit" class="btn btn-outline-info">Select</button>
+                            <button type="submit" class="btn btn-outline-info">Select</button>&nbsp;
                         </form>
                         @if(!empty($dates)&&!empty($schedule)&&!empty($users)&&!empty($period))
+                            <a class="btn btn-outline-success"
+                               href="{{ route('showCurrentLesson')}}?group_id={{$group_id}}&subject_id={{$subject_id}}">Start lesson</a>
                         <div class="col">
                             <div class="float-right">
-                                <form action="{{ route('front.journals.post') }}" method="post">
+                                <form action="{{ route('showNextWeek') }}" method="post">
                                     @csrf
-                                    <button type="submit" name="submit_key" value="back" class="btn btn-danger btn-sm"><<<
+                                    <button type="submit" name="submit_key" value="back" class="btn btn-outline-primary btn-sm"><<<
                                     </button>
-                                    <button type="submit" name="submit_key" value="forward" class="btn btn-danger btn-sm">>>>
+                                    <button type="submit" name="submit_key" value="forward" class="btn btn-outline-primary btn-sm">>>>
                                     </button>
                                     <input type="hidden" name="group_id" value="{{ $group_id }}">
                                     <input type="hidden" name="subject_id" value="{{ $subject_id }}">
