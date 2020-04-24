@@ -48,6 +48,12 @@
                                                                               height="75" border="0" alt="Новости"></a>
                             </div>
                         </th>
+                        <th>
+                            <div><a href="{{route('admin.slider.index')}}"><img src="{{ asset('/img/slides.png')}}"
+                                                                              width="75"
+                                                                              height="75" border="0" alt="Слайды"></a>
+                            </div>
+                        </th>
                     </tr>
                     <tr valign=bottom align="center">
                         <td>Пользователи</td>
@@ -57,6 +63,7 @@
                         <td>Предметы</td>
                         <td>Аудитории</td>
                         <td>Новости</td>
+                        <td>Слайды</td>
                     </tr>
                 </table>
             </div>
