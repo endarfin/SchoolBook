@@ -90,5 +90,20 @@ Route::group(['middleware' => ['status','auth']], function () {
 //        Route::get('/','IndexController@index');
 //        Route::resource('subjects', 'AdminSubjectController')->names('admin.subjects');
     });
+    });
+
+        /** Student side */
+        Route::group(['middleware' => ['student','auth']], function () {
+            $groupeData = [
+                'namespace' => 'student',
+                'prefix' => 'student',
+            ];
+            Route::group($groupeData, function () {
+                Route::resource('index', 'IndexController')
+                    ->names('student.index');
+
+
+            });
+
 
 });

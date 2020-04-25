@@ -10,7 +10,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <link rel="stylesheet" href="{{ asset('/css/style.css')}}">
 
-
+      <style>
+          .top-right a {
+              padding: 5px;
+              margin-right: 40px;
+          }
+      </style>
     <title>AcademyBook</title>
   </head>
 
@@ -20,8 +25,14 @@
           <div class="float-left">
             <nav class="nav">
               <a class="nav-link" href="/" disabled>AcademyBook</a>
+                @can('isTeacher')
               <a class="nav-link" href="{{route('Timetable')}}">Расписание</a>
               <a class="nav-link" href="{{route('front.journals.index')}}">Электронный журнал</a>
+                @endcan
+                @can('isAdmin')
+                    <a class="nav-link" href="{{route('Timetable')}}">Расписание</a>
+                    <a class="nav-link" href="{{route('front.journals.index')}}">Электронный журнал</a>
+                @endcan
               <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle " data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="       false">Наша Академия</a>
                     <div class="dropdown-menu alert-light">
@@ -41,37 +52,38 @@
                       @auth
 
                           @if(Auth::user()->isStudent())
-                              <strong>  <a href="{{ url('/') }}" style="color: #0b3e6f; text-decoration: none">Главная</a></strong>
+                              <strong>  <a href="{{ url('/student/index') }}" >Профиль</a></strong>
+                              <strong>  <a href="{{ url('/') }}" >Главная</a></strong>
                           @elseif(Auth::user()->isTeacher())
-                              <strong>  <a href="{{ url('/teacher/index') }}" style="color: #0b3e6f; text-decoration: none">Кабинет</a></strong>
-                              <strong>  <a href="{{ url('/') }}" style="color: #0b3e6f; text-decoration: none">Главная</a></strong>
+                              <strong>  <a href="{{ url('/teacher/index') }}" >Кабинет</a></strong>
+                              <strong>  <a href="{{ url('/') }}" >Главная</a></strong>
                           @elseif(Auth::user()->isVisitor())
-                              <strong>   <a href="{{ url('/') }}" style="color: #0b3e6f; text-decoration: none">Главная</a></strong>
+                              <strong>   <a href="{{ url('/') }}" >Главная</a></strong>
                           @elseif(Auth::user()->isAdministrator())
-                              <strong><a href="{{ url('/admin/index') }}" style="color: #0b3e6f; text-decoration: none; cursor: pointer">Панель Администратора</a></strong>
-                              <strong> <a href="{{ url('/') }}" style="color: #0b3e6f; text-decoration: none">Главная</a></strong>
+                              <strong><a href="{{ url('/admin/index') }}" >Панель Администратора</a></strong>
+                              <strong> <a href="{{ url('/') }}" >Главная</a></strong>
                           @endif
 
                           <strong>
-                              <a class="dropdown-item" href="{{ route('logout') }}" style="color: #0b3e6f; text-decoration: none"
+                              <a  href="{{ route('logout') }}"
                                  onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
                                   Выйти
                               </a>
                           </strong>
 
-                          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                          <form id="logout-form" action="{{ route('logout') }}" method="POST" >
                               @csrf
                           </form>
 
                       @else
                           <strong>
-                              <a href="{{ route('login') }}" style="color: #0b3e6f; text-decoration: none">Войти</a>
+                              <a href="{{ route('login') }}" >Войти</a>
                           </strong>
 
                           @if (Route::has('register'))
                               <strong>
-                                  <a href="{{ route('register') }}" style="color: #0b3e6f; text-decoration: none">Регистрация</a>
+                                  <a href="{{ route('register') }}" >Регистрация</a>
                               </strong>
                           @endif
                       @endauth

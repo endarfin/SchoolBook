@@ -11,6 +11,7 @@ use App\Repositories\usersRepository;
 use App\Repositories\LessonsRepository;
 use App\Repositories\TimeLessonsRepository;
 use DateTime;
+use Gate;
 class JournalController extends Controller
 {
     private $subjectRepository;
@@ -29,6 +30,9 @@ class JournalController extends Controller
 
     public function index(Request $request)
     {
+//        if (!\Gate::allows('isAdmin') || !\Gate::allows('isTeacher')){
+//            abort(403,"Извините, у Вас нет прав на єто действие! Вернитесь назад.");
+//        }
         $groups = $this->groupsRepository->getForComboBox();
         $subjects = $this->subjectRepository->getForComboBox();
 

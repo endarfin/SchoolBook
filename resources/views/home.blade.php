@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+    <meta http-equiv="refresh" content="5; url=/">
 <div class="container">
+
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -14,7 +16,8 @@
                         </div>
                     @endif
 
-                    You are logged in!
+
+                    Вы успешно авторизовались и будете перенаправлены на главную страницу!
                 </div>
             </div>
         </div>
