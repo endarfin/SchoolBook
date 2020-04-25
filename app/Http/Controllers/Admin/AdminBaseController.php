@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\BaseController as MainBaseController
+use App\Http\Controllers\BaseController as MainBaseController;
 
 abstract class AdminBaseController extends MainBaseController
 {

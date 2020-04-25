@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Controllers\Controller;
@@ -9,8 +9,9 @@ use App\Http\Controllers\Auth;
 
 class IndexController extends Controller
 {
+
     public function index()
     {
-    	return view('admin.index');
+    	return view('teacher.index');
     }
 }

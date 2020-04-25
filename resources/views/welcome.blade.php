@@ -78,7 +78,7 @@
                 @if(Auth::user()->isStudent())
                     <strong>  <a href="{{ url('/') }}" style="color: #0b3e6f; text-decoration: none">Главная</a></strong>
                 @elseif(Auth::user()->isTeacher())
-                    <strong>  <a href="{{ url('/user/index') }}" style="color: #0b3e6f; text-decoration: none">Кабинет</a></strong>
+                    <strong>  <a href="{{ url('/teacher/index') }}" style="color: #0b3e6f; text-decoration: none">Кабинет</a></strong>
                     <strong>  <a href="{{ url('/') }}" style="color: #0b3e6f; text-decoration: none">Главная</a></strong>
                 @elseif(Auth::user()->isVisitor())
                     <strong>   <a href="{{ url('/') }}" style="color: #0b3e6f; text-decoration: none">Главная</a></strong>

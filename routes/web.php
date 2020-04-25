@@ -22,7 +22,7 @@ Route::get('admin/ajaxSliderProfile', 'Ajax\SliderAjaxController@profile');
 
 Auth::routes();
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
->>>>>>> Roles
+
 Route::get('/', 'SiteController@index')->name('index');
 Route::get('/timetable', 'SiteController@timetable')->name('Timetable');;
 Route::get('/timetable/{name}/{id}', 'SiteController@showTimetable')->name('showTimetable');
@@ -48,9 +48,7 @@ Route::group(['namespace' => 'Admin', 'prefix' =>'admin'],function ()
     Route::resource('Lessons', 'AdminLessonsController')->except("show")->names('admin.lessons');
     Route::resource('News', 'AdminNewsController')->except("show")->names('admin.news');
     Route::resource('Slider', 'AdminSliderController')->names('admin.slider');
-=======
 
->>>>>>> Roles
 });
 
 //Journal
@@ -78,25 +76,19 @@ Route::group(['middleware' => ['status','auth']], function () {
         Route::resource('Lessons', 'AdminLessonsController')->except("show")->names('admin.lessons');
         Route::resource('News', 'AdminNewsController')->except("show")->names('admin.news');
     });
-
+});
     /** Teacher side */
-
+    Route::group(['middleware' => ['teacher','auth']], function () {
     $groupeData = [
         'namespace' => 'Teacher',
-qa
-
-
-
-
-
-
+        'prefix' => 'teacher',
     ];
     Route::group($groupeData, function () {
         Route::resource('index', 'IndexController')
             ->names('teacher.index');
 
-        Route::get('/','IndexController@index');
-        Route::resource('subjects', 'AdminSubjectController')->names('admin.subjects');
+//        Route::get('/','IndexController@index');
+//        Route::resource('subjects', 'AdminSubjectController')->names('admin.subjects');
     });
 
 });
